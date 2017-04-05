@@ -8,7 +8,7 @@ namespace ActivityTracking.DAL.EntityFramework
 {
     public class GroupDomainModel : BaseDomainModel
     {
-        public IEnumerable<GroupModel> GetAll()
+        public IEnumerable<ActivityTracking.DomainModel.Group> GetAll()
         {
             using (var repository = new BaseRepository<GroupModel, long>())
             {
