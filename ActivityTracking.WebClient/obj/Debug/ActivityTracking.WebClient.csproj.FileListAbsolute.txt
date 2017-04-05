@@ -1,0 +1,234 @@
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\ApplicationInsights.config
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\csc.exe
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\vbc.exe
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\VBCSCompiler.exe
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.WebClient.dll.config
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.WebClient.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.WebClient.pdb
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.DAL.EntityFramework.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.DomainModel.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Antlr3.Runtime.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\EntityFramework.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\EntityFramework.SqlServer.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AI.Web.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.ApplicationInsights.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.Owin.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.Owin.Security.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Newtonsoft.Json.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Owin.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Helpers.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Mvc.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Optimization.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Razor.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.WebPages.Deployment.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.WebPages.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.WebPages.Razor.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\WebGrease.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.DAL.EntityFramework.pdb
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.DomainModel.pdb
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\EntityFramework.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\EntityFramework.SqlServer.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AI.Web.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.ApplicationInsights.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.Owin.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.Owin.Security.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Helpers.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Mvc.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Optimization.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Razor.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.WebPages.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.WebPages.Deployment.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.WebPages.Razor.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Antlr3.Runtime.pdb
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\bin\Newtonsoft.Json.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\obj\Debug\ActivityTracking.WebClient.csprojResolveAssemblyReference.cache
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\obj\Debug\ActivityTracking.WebClient.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.WebClient\obj\Debug\ActivityTracking.WebClient.pdb
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\ApplicationInsights.config
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\csc.exe
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\vbc.exe
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\VBCSCompiler.exe
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.WebClient.dll.config
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.WebClient.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.WebClient.pdb
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.DAL.EntityFramework.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.DomainModel.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Antlr3.Runtime.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\EntityFramework.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\EntityFramework.SqlServer.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AI.Web.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.ApplicationInsights.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.Owin.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.Owin.Security.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Newtonsoft.Json.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Owin.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Helpers.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Mvc.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Optimization.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Razor.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.WebPages.Deployment.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.WebPages.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.WebPages.Razor.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\WebGrease.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.DAL.EntityFramework.pdb
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.DomainModel.pdb
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\EntityFramework.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\EntityFramework.SqlServer.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AI.Web.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.ApplicationInsights.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.Owin.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.Owin.Security.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Helpers.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Mvc.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Optimization.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Razor.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.WebPages.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.WebPages.Deployment.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.WebPages.Razor.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Antlr3.Runtime.pdb
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\bin\Newtonsoft.Json.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\obj\Debug\ActivityTracking.WebClient.csprojResolveAssemblyReference.cache
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\obj\Debug\ActivityTracking.WebClient.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.WebClient\obj\Debug\ActivityTracking.WebClient.pdb
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\ApplicationInsights.config
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\roslyn\csc.exe
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\roslyn\System.Collections.Immutable.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\roslyn\System.Reflection.Metadata.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\roslyn\vbc.exe
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\roslyn\VBCSCompiler.exe
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\roslyn\VBCSCompiler.exe.config
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\ActivityTracking.WebClient.dll.config
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\ActivityTracking.WebClient.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\ActivityTracking.WebClient.pdb
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\ActivityTracking.DAL.EntityFramework.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\ActivityTracking.DomainModel.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Antlr3.Runtime.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\EntityFramework.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\EntityFramework.SqlServer.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.AI.Agent.Intercept.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.AI.DependencyCollector.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.AI.PerfCounterCollector.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.AI.ServerTelemetryChannel.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.AI.Web.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.AI.WindowsServer.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.ApplicationInsights.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.AspNet.Identity.Core.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.Owin.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.Owin.Security.Cookies.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.Owin.Security.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.Owin.Security.OAuth.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.Web.Infrastructure.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Newtonsoft.Json.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Owin.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\System.Web.Helpers.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\System.Web.Mvc.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\System.Web.Optimization.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\System.Web.Razor.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\System.Web.WebPages.Deployment.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\System.Web.WebPages.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\System.Web.WebPages.Razor.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\WebGrease.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\ActivityTracking.DAL.EntityFramework.pdb
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\ActivityTracking.DomainModel.pdb
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\EntityFramework.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\EntityFramework.SqlServer.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.AI.DependencyCollector.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.AI.ServerTelemetryChannel.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.AI.Web.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.AI.WindowsServer.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.ApplicationInsights.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.AspNet.Identity.Core.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.Owin.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.Owin.Security.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.Owin.Security.Cookies.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Microsoft.Owin.Security.OAuth.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\System.Web.Helpers.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\System.Web.Mvc.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\System.Web.Optimization.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\System.Web.Razor.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\System.Web.WebPages.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\System.Web.WebPages.Deployment.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\System.Web.WebPages.Razor.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Antlr3.Runtime.pdb
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\bin\Newtonsoft.Json.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\obj\Debug\ActivityTracking.WebClient.csprojResolveAssemblyReference.cache
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\obj\Debug\ActivityTracking.WebClient.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.WebClient\obj\Debug\ActivityTracking.WebClient.pdb

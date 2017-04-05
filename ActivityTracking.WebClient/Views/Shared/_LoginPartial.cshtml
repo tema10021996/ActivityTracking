@@ -1,0 +1,20 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>@Html.ActionLink("Hello "+ @User.Identity.GetUserName()+"!", "AccountInfo", "Account")</li>
+            <li>@Html.ActionLink("Log out", "Logout", "Account")</li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account")</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account")</li>
+    </ul>
+}
+

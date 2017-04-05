@@ -1,0 +1,48 @@
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.dll.config
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.pdb
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DomainModel.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\EntityFramework.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DomainModel.pdb
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\EntityFramework.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.csprojResolveAssemblyReference.cache
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\ActivityTracking\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.pdb
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.dll.config
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.pdb
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DomainModel.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\EntityFramework.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DomainModel.pdb
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\EntityFramework.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.csprojResolveAssemblyReference.cache
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.dll
+C:\Users\Alexandr\Documents\Visual Studio 2015\Projects\Резерв\ActivityTracking\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.pdb
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.dll.config
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.pdb
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DomainModel.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.DAL.EntityFramework\bin\Debug\EntityFramework.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.DAL.EntityFramework\bin\Debug\EntityFramework.SqlServer.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.DAL.EntityFramework\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.DAL.EntityFramework\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DomainModel.pdb
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.DAL.EntityFramework\bin\Debug\EntityFramework.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.DAL.EntityFramework\bin\Debug\EntityFramework.SqlServer.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.DAL.EntityFramework\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.DAL.EntityFramework\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.csprojResolveAssemblyReference.cache
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.dll
+D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.pdb

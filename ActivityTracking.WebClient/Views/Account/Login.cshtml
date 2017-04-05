@@ -1,0 +1,29 @@
+﻿@model ActivityTracking.WebClient.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Sign in</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        @Html.ValidationSummary()
+        <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+        <p>
+            <label>Login</label><br />
+            @Html.EditorFor(x => x.Login)
+        </p>
+        <p>
+            <label>Password</label><br />
+            @Html.EditorFor(x => x.Password)
+        </p>
+        <button type="submit">Sign in</button>
+        <button type="button" onclick="location.href='@Url.Action("Register","Account")'">Registration</button>
+    </div>
+    @*@Html.ActionLink("Register", "Register", null, new { @class = "btn btn-default" })*@
+}
