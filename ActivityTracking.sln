@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivityTracking.DomainMode
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivityTracking.DAL.EntityFramework", "ActivityTracking.DAL.EntityFramework\ActivityTracking.DAL.EntityFramework.csproj", "{A76F7746-D072-43DF-BA3D-E1E771F4AFC3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivityTracking.DesktopClient", "ActivityTracking.DesktopClient\ActivityTracking.DesktopClient.csproj", "{99BA1FAD-AE83-4C43-B313-E2502EF1C47C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A76F7746-D072-43DF-BA3D-E1E771F4AFC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A76F7746-D072-43DF-BA3D-E1E771F4AFC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A76F7746-D072-43DF-BA3D-E1E771F4AFC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99BA1FAD-AE83-4C43-B313-E2502EF1C47C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99BA1FAD-AE83-4C43-B313-E2502EF1C47C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99BA1FAD-AE83-4C43-B313-E2502EF1C47C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99BA1FAD-AE83-4C43-B313-E2502EF1C47C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

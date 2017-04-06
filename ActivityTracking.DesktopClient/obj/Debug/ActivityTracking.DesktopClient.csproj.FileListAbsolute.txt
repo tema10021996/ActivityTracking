@@ -1,0 +1,10 @@
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DesktopClient\bin\Debug\ActivityTracking.DesktopClient.exe.config
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DesktopClient\bin\Debug\ActivityTracking.DesktopClient.exe
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DesktopClient\bin\Debug\ActivityTracking.DesktopClient.pdb
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DesktopClient\obj\Debug\ActivityTracking.DesktopClient.csprojResolveAssemblyReference.cache
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DesktopClient\obj\Debug\ActivityTracking.DesktopClient.Properties.Resources.resources
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DesktopClient\obj\Debug\ActivityTracking.DesktopClient.csproj.GenerateResource.Cache
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DesktopClient\obj\Debug\ActivityTracking.DesktopClient.exe
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DesktopClient\obj\Debug\ActivityTracking.DesktopClient.pdb
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DesktopClient\obj\Debug\ActivityTracking.DesktopClient.CommentForm.resources
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DesktopClient\obj\Debug\ActivityTracking.DesktopClient.QuestionForm.resources
