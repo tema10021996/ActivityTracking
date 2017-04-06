@@ -40,3 +40,17 @@ D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking
 D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.DomainModel\obj\Debug\ActivityTracking.DomainModel.csprojResolveAssemblyReference.cache
 D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.DomainModel\obj\Debug\ActivityTracking.DomainModel.dll
 D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.DomainModel\obj\Debug\ActivityTracking.DomainModel.pdb
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel\bin\Debug\ActivityTracking.DomainModel.dll.config
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel\bin\Debug\ActivityTracking.DomainModel.dll
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel\bin\Debug\ActivityTracking.DomainModel.pdb
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel\bin\Debug\EntityFramework.dll
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel\bin\Debug\EntityFramework.xml
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel\obj\Debug\ActivityTracking.DomainModel.csprojResolveAssemblyReference.cache
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel\obj\Debug\ActivityTracking.DomainModel.dll
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel\obj\Debug\ActivityTracking.DomainModel.pdb
