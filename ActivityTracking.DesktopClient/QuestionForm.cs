@@ -12,8 +12,10 @@ namespace ActivityTracking.DesktopClient
 {
     public partial class QuestionForm : Form
     {
+        KeyboardHook keyboardHook;
+        MouseHook mouseHook;
+
         Timer timer;
-        UserActivityHook hook;
         public Timer Timer
         {
             get { return timer; }
@@ -23,9 +25,18 @@ namespace ActivityTracking.DesktopClient
         {
             InitializeComponent();
             TopMost = true;
-            hook = new UserActivityHook();
-            hook.KeyDown += HookKeyDown;
-            hook.OnMouseActivity += HookMouseActivity;
+
+            keyboardHook = new KeyboardHook();
+            keyboardHook.KeyDown += new KeyboardHook.KeyboardHookCallback(HookKeyDown);
+            keyboardHook.Install();
+
+            mouseHook = new MouseHook();
+            mouseHook.MouseMove += new MouseHook.MouseHookCallback(HookMouseActivity);
+            mouseHook.MouseWheel += new MouseHook.MouseHookCallback(HookMouseActivity);
+            mouseHook.LeftButtonDown += new MouseHook.MouseHookCallback(HookMouseActivity);
+            mouseHook.MiddleButtonDown += new MouseHook.MouseHookCallback(HookMouseActivity);
+            mouseHook.RightButtonDown += new MouseHook.MouseHookCallback(HookMouseActivity);
+            mouseHook.Install(); ;
 
             timer = new Timer();
             timer.Interval = 5000;
@@ -33,13 +44,13 @@ namespace ActivityTracking.DesktopClient
             timer.Tick += timerTick;
         }
 
-        private void HookMouseActivity(object sender, MouseEventArgs e)
+        private void HookMouseActivity(MouseHook.MSLLHOOKSTRUCT mouseStruc)
         {
             timer.Stop();
             timer.Start();
         }
 
-        private void HookKeyDown(object sender, KeyEventArgs e)
+        private void HookKeyDown(KeyboardHook.VKeys key)
         {
             timer.Stop();
             timer.Start();
