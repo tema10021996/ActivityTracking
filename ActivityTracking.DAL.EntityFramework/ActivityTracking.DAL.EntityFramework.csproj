@@ -59,11 +59,11 @@
   <ItemGroup>
     <Compile Include="ApplicationContext.cs" />
     <Compile Include="BaseDomainModel.cs" />
-    <Compile Include="BaseRepository.cs" />
     <Compile Include="GroupDomainModel.cs" />
     <Compile Include="GroupModel.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

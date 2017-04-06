@@ -8,32 +8,24 @@ using System.Threading.Tasks;
 
 namespace ActivityTracking.DAL.EntityFramework
 {
-    public interface IRepository<TEntity, Key> : IDisposable
-        where TEntity : class, new()
+    public interface IRepository<TEntity> : IDisposable where TEntity : class
     {
         // [TransactionFlow(TransactionFlowOption.Allowed)]
-        void Delete(Key id);
+        void Delete(int id);
 
         // [TransactionFlow(TransactionFlowOption.Allowed)]
-        TEntity Get(Key id);
+        TEntity GetItem(int id);
+
+        IEnumerable<TEntity> GetList();
+
+
 
         //[TransactionFlow(TransactionFlowOption.Allowed)]
-        void Insert(TEntity entity);
+        void Create(TEntity entity);
 
         //[TransactionFlow(TransactionFlowOption.Allowed)]
         void Update(TEntity entity);
 
-        // [TransactionFlow(TransactionFlowOption.Allowed)]
-        IEnumerable<ValueType> SqlQuery<ValueType>(string sql, CommandType sqlType, object[] parameters);
-
-        //[TransactionFlow(TransactionFlowOption.Allowed)]
-        IQueryable<TEntity> Query(
-            Expression<Func<TEntity, bool>> predicate = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            int? pageNumber = null,
-            int? pageSize = null);
-
-        //[TransactionFlow(TransactionFlowOption.Allowed)]
-        TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate = null);
+        
     }
 }
