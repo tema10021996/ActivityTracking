@@ -14,11 +14,11 @@ namespace ActivityTracking.DAL.EntityFramework
             using (var repository = new Repository<Group>())
             {
                 var list = repository.GetList();
-                //var list = repository.Query().Select(x => new ActivityTracking.DomainModel.Group
+                //var list = repository.GetList().Select(x => new ActivityTracking.DomainModel.Group
                 //{
                 //    Id = x.Id,
-                //    Name = x.Name,                    
-                //    MayAbsentTime = x.MayAbsentTime                    
+                //    Name = x.Name,
+                //    MayAbsentTime = x.MayAbsentTime
                 //}).ToList();
                 return list;
             }
