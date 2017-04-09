@@ -31,7 +31,7 @@ namespace ActivityTracking.DAL.EntityFramework
         }
         public IEnumerable<TEntity> GetList()
         {
-            return dbSet.ToList(); ;
+            return dbSet.ToList();
         }
 
         public void Create(TEntity item)

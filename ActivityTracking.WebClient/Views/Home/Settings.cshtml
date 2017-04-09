@@ -6,21 +6,12 @@
 
 <h2>@ViewBag.Title</h2>
 
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Time</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var group in Model)
-        {
-            <tr>
-                <td>
-                    <div>@Html.DisplayFor(modelUser => group.Name)</div>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<h2>Your group</h2>
+
+@Html.DropDownList("groups", Model.Select(item => new SelectListItem
+{
+    Value = item.Id.ToString(),
+    Text = item.Name.ToString(),
+    Selected = "select" == item.Id.ToString()
+}))
+<p><input type="submit" value="Выбрать" /></p>

@@ -1,0 +1,5 @@
+D:\Игры\C#\Курсы\ActivityTracking\ActivityTracking.Models\bin\Debug\ActivityTracking.Models.dll
+D:\Игры\C#\Курсы\ActivityTracking\ActivityTracking.Models\bin\Debug\ActivityTracking.Models.pdb
+D:\Игры\C#\Курсы\ActivityTracking\ActivityTracking.Models\obj\Debug\ActivityTracking.Models.csprojResolveAssemblyReference.cache
+D:\Игры\C#\Курсы\ActivityTracking\ActivityTracking.Models\obj\Debug\ActivityTracking.Models.dll
+D:\Игры\C#\Курсы\ActivityTracking\ActivityTracking.Models\obj\Debug\ActivityTracking.Models.pdb
