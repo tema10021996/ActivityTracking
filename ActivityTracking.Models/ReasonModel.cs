@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 
-namespace ActivityTracking.DAL.EntityFramework
+namespace ActivityTracking.Models
 {
-    public class GroupModel
+    public class ReasonModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public TimeSpan MayAbsentTime { get; set; }
+        public DateTime AddingTime { get; set; }
+
+        public int UserWhoAddedId { get; set; }
     }
 }
