@@ -309,6 +309,10 @@
       <Project>{3a6c6b96-2b71-451a-9cf5-8ba07f766598}</Project>
       <Name>ActivityTracking.DomainModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ActivityTracking.Models\ActivityTracking.Models.csproj">
+      <Project>{f55eb3f1-e35e-460e-be25-a395c72ad473}</Project>
+      <Name>ActivityTracking.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
