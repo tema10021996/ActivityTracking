@@ -48,6 +48,7 @@ namespace ActivityTracking.WebClient.Controllers
                     IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
+                        await UserManager.AddToRoleAsync(user.Id, "user");
                         return RedirectToAction("Login", "Account");
                     }
                     else
