@@ -51,6 +51,7 @@ C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel
 C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
-C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel\obj\Debug\ActivityTracking.DomainModel.csprojResolveAssemblyReference.cache
 C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel\obj\Debug\ActivityTracking.DomainModel.dll
 C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel\obj\Debug\ActivityTracking.DomainModel.pdb
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel\bin\Debug\ru\Microsoft.AspNet.Identity.Core.resources.dll
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DomainModel\bin\Debug\ru\Microsoft.AspNet.Identity.EntityFramework.resources.dll

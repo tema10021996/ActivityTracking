@@ -11,12 +11,12 @@ namespace ActivityTracking.DomainModel
         public int Id { get; set; }
 
         public int? JustUserId { get; set; }
-        public JustUser JustUser { get; set; }
+        public virtual JustUser JustUser { get; set; }
 
         public int? TimeId { get; set; }
-        public Time Time { get; set; }
+        public virtual Time Time { get; set; }
 
-        public ICollection<Absenсe> Absenсes { get; set; }
+        public virtual ICollection<Absenсe> Absenсes { get; set; }
 
         public Report()
         {

@@ -12,9 +12,9 @@ namespace ActivityTracking.DomainModel
         public string Login { get; set; }
 
         public int? StatusId { get; set; }
-        public Status Status { get; set; }
+        public virtual Status Status { get; set; }
  
-        public ICollection<Group> Groups { get; set; }
+        public virtual ICollection<Group> Groups { get; set; }
 
         public JustUser()
         {

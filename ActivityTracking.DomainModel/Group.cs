@@ -12,9 +12,9 @@ namespace ActivityTracking.DomainModel
         public string Name { get; set; }
         public TimeSpan MayAbsentTime { get; set; }
 
-        public ICollection<Reason> Reasons { get; set; }
+        public virtual ICollection<Reason> Reasons { get; set; }
 
-        public ICollection<JustUser> JustUsers { get; set; }
+        public virtual ICollection<JustUser> JustUsers { get; set; }
 
         public Group()
         {

@@ -13,9 +13,9 @@ namespace ActivityTracking.DomainModel
         public DateTime AddingTime { get; set; }
 
         public int? UserWhoAddedId { get; set; }
-        public JustUser UserWhoAdded { get; set; }
+        public virtual JustUser UserWhoAdded { get; set; }
 
-        public ICollection<Group> Groups { get; set; }
+        public virtual ICollection<Group> Groups { get; set; }
 
         public Reason()
         {

@@ -19,18 +19,13 @@ namespace ActivityTracking.DAL.EntityFramework
             dbSet = context.Set<TEntity>();
         }
 
-        public Repository()
-        {
-            this.context = new ApplicationContext();
-            dbSet = context.Set<TEntity>();
-        }
-
         public TEntity GetItem(int id)
         {
             return dbSet.Find(id);
         }
         public IEnumerable<TEntity> GetList()
         {
+            
             return dbSet.ToList();
         }
 
@@ -51,6 +46,12 @@ namespace ActivityTracking.DAL.EntityFramework
             TEntity item = dbSet.Find(id);
 
             dbSet.Remove(item);
+            context.SaveChanges();
+        }
+
+        public void Save()
+        {
+           
             context.SaveChanges();
         }
 

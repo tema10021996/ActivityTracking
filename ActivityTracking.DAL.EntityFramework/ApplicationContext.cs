@@ -6,7 +6,7 @@ namespace ActivityTracking.DAL.EntityFramework
 {
     public class ApplicationContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationContext() : base("ApplicationDB") { }
+        public ApplicationContext() : base("ApplicationDB") {}
 
         public DbSet<JustUser> JustUsers { get; set; }
         public DbSet<Group> Groups { get; set; }
