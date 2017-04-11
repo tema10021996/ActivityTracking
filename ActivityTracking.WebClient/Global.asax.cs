@@ -14,12 +14,13 @@ namespace ActivityTracking.WebClient
     {
         protected void Application_Start()
         {
+            Database.SetInitializer<ApplicationContext>(new Models.DbInitializer());
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Database.SetInitializer<ApplicationContext>(new DropCreateDatabaseIfModelChanges<ApplicationContext>());
         }
     }
 }

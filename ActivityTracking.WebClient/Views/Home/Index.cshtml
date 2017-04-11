@@ -1,3 +1,59 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using System.Collections.Generic;
+@model IEnumerable<ActivityTracking.DomainModel.Report>
+
+@{
+    List<string> list = new List<string>() { "123", "234", "345" };
 }
+
+@Html.
+
+<script type="text/javascript" src="~/Scripts/canvasjs.min.js"></script>
+<script type="text/javascript">
+
+            window.onload = function () {
+                var chart = new CanvasJS.Chart("chartContainer",
+                        {
+                            theme: 'theme1',
+                            title:
+                          {
+                              text: "Work Time"
+
+                          },
+                            animationEnabled: true,
+                            axisY:
+                          {
+                              title: "hours"
+                          },
+                            legend:
+                          {
+                              horizontalAlign: 'center',
+                              verticalAlign: 'bottom'
+                          },
+                            toolTip:
+                          {
+                              shared: false
+                          },
+                            data: [
+                                  {
+                                      type: "stackedBar",
+                                      showInLegend: true,
+                                      name: "Working",
+                                      dataPoints: [{ y: 350, label: @list[0] }]
+                                  },
+
+                            {
+                                
+                                type: "stackedBar",
+                                showInLegend: true,
+                                name: "Other",
+                                dataPoints:
+                                [{ y: 120, label: "4"}]
+                            }
+                                ]
+                        });
+                chart.render();
+            }
+</script>
+
+<div id="chartContainer" style="height: 300px; width: 100%;">
+</div>

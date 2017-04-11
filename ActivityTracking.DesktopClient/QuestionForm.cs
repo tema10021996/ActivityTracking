@@ -16,7 +16,7 @@ namespace ActivityTracking.DesktopClient
     {
         KeyboardHook keyboardHook;
         MouseHook mouseHook;
-        JustUser user;
+        UserLogin user;
         DAL.EntityFramework.ApplicationContext context;
 
         Timer timer;
@@ -43,10 +43,10 @@ namespace ActivityTracking.DesktopClient
         void InitializeUser()
         {
             //Delete absense
-            Repository<Absenсe> absenseRepository = new Repository<Absenсe>(context);
-            //Absenсe absence = absenseRepository.GetList().First(r => r.Id == 4);
+            //Repository<Absenсe> absenseRepository = new Repository<Absenсe>(context);
+            //Absenсe absence = absenseRepository.GetList().First(r => r.Id == 6);
             //absenseRepository.Delete(absence.Id);
-            Repository <JustUser> usersRepository = new Repository<JustUser>(context);
+            Repository <UserLogin> usersRepository = new Repository<UserLogin>(context);
             var usersList = usersRepository.GetList();
             user = usersList.First(u => u.Login == Environment.UserName);
         }

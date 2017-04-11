@@ -14,7 +14,7 @@ namespace ActivityTracking.DomainModel
         public DateTime? TimeIn { get; set; }
         public DateTime? TimeOut { get; set; }
 
-        public int? JustUserId { get; set; }
-        public virtual JustUser JustUser { get; set; }
+        public int? UserId { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

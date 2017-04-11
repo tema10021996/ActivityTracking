@@ -19,6 +19,12 @@ namespace ActivityTracking.DAL.EntityFramework
             dbSet = context.Set<TEntity>();
         }
 
+        public Repository()
+        {
+            this.context = new ApplicationContext();
+            dbSet = context.Set<TEntity>();
+        }
+
         public TEntity GetItem(int id)
         {
             return dbSet.Find(id);

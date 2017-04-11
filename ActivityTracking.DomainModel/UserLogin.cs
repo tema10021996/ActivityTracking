@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ActivityTracking.DomainModel
 {
-    public class Status
+    public class UserLogin
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Login { get; set; }
     }
 }

@@ -10,8 +10,8 @@ namespace ActivityTracking.DomainModel
     {
         public int Id { get; set; }
 
-        public int? JustUserId { get; set; }
-        public virtual JustUser JustUser { get; set; }
+        public int? tUserId { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
         public int? TimeId { get; set; }
         public virtual Time Time { get; set; }

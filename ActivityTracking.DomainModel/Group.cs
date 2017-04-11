@@ -14,11 +14,11 @@ namespace ActivityTracking.DomainModel
 
         public virtual ICollection<Reason> Reasons { get; set; }
 
-        public virtual ICollection<JustUser> JustUsers { get; set; }
+        public virtual ICollection<ApplicationUser> Users { get; set; }
 
         public Group()
         {
-            JustUsers = new List<JustUser>();
+            Users = new List<ApplicationUser>();
             Reasons = new List<Reason>();
         }
     }

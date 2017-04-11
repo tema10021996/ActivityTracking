@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using ActivityTracking.WebClient.Models;
 using ActivityTracking.DomainModel;
+using  ActivityTracking.DAL.EntityFramework;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -38,17 +39,23 @@ namespace ActivityTracking.WebClient.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user = new ApplicationUser { UserName = model.Login};
-                IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                Repository<UserLogin> userLoginsRepository = new Repository<UserLogin>();
+                var userLogin = userLoginsRepository.GetList().FirstOrDefault(u => u.Login == model.Login);
+                if (userLogin != null)
                 {
-                    return RedirectToAction("Login", "Account");
-                }
-                else
-                {
-                    foreach (string error in result.Errors)
+
+                    ApplicationUser user = new ApplicationUser { UserName = model.Login };
+                    IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+                    if (result.Succeeded)
                     {
-                        ModelState.AddModelError("", error);
+                        return RedirectToAction("Login", "Account");
+                    }
+                    else
+                    {
+                        foreach (string error in result.Errors)
+                        {
+                            ModelState.AddModelError("", error);
+                        }
                     }
                 }
             }
