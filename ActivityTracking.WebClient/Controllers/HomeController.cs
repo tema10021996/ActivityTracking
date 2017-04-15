@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using ActivityTracking.DomainModel;
 using System.Web.UI.DataVisualization.Charting;
+using ActivityTracking.DAL.EntityFramework;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity;
 
 namespace ActivityTracking.WebClient.Controllers
 {
@@ -19,10 +22,14 @@ namespace ActivityTracking.WebClient.Controllers
 
         public ActionResult Settings()
         {
-            using (var groups = new ActivityTracking.DAL.EntityFramework.GroupDomainModel())
-            {
-                return View(groups.GetAll());
-            }
+
+               var groups = new Repository<Group>();
+            
+                SelectList groupList = new SelectList(groups.GetList(), "Id", "Name");
+                ViewBag.groupslist = groupList;
+               
+                return View();
+            
         }
 
         public ActionResult Contact()

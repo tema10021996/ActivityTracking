@@ -16,7 +16,7 @@ namespace ActivityTracking.DesktopClient
     {
         KeyboardHook keyboardHook;
         MouseHook mouseHook;
-        UserLogin user;
+        ApplicationUser user;
         DAL.EntityFramework.ApplicationContext context;
 
         Timer timer;
@@ -42,32 +42,19 @@ namespace ActivityTracking.DesktopClient
 
         void InitializeUser()
         {
-            //Delete absense
-            //Repository<Absenсe> absenseRepository = new Repository<Absenсe>(context);
-            //Absenсe absence = absenseRepository.GetList().First(r => r.Id == 6);
-            //absenseRepository.Delete(absence.Id);
-            Repository <UserLogin> usersRepository = new Repository<UserLogin>(context);
-            var usersList = usersRepository.GetList();
-            user = usersList.First(u => u.Login == Environment.UserName);
+
+            Repository <ApplicationUser> usersRepository = new Repository<ApplicationUser>(context);
+            user = usersRepository.GetList().First(u =>u.UserName == Environment.UserName);
         }
         private void InitializeTimer()
         {
             timer = new Timer();
-            timer.Interval = InitializeInterval();
+            timer.Interval = user.Group.MayAbsentTime.Hours * 216000000 + user.Group.MayAbsentTime.Minutes * 60000 + user.Group.MayAbsentTime.Seconds * 1000;
             timer.Start();
             timer.Tick += timerTick; ;
         }
 
-        private int InitializeInterval()
-        {
-            List<int> allIntervals = new List<int>();
-            foreach (var g in user.Groups)
-            {
-                allIntervals.Add(g.MayAbsentTime.Seconds);
-            }
-            int interval = allIntervals.Min();
-            return interval * 1000;
-        }
+
 
         private void InitializeHooks()
         {
@@ -99,8 +86,11 @@ namespace ActivityTracking.DesktopClient
 
         private void timerTick(object sender, EventArgs e)
         {
+            //TODO
+            //Проверка в здании ли пользователь 
+
             Repository<Absenсe> absenseRepository = new Repository<Absenсe>(context);
-            absenseRepository.Create(new Absenсe { StartAbsence = DateTime.Now, JustUser = user, Date = DateTime.Today });
+            absenseRepository.Create(new Absenсe { StartAbsence = DateTime.Now, User = user, Date = DateTime.Today });
 
             ShowForm();
             timer.Stop();
@@ -126,7 +116,7 @@ namespace ActivityTracking.DesktopClient
                 Repository<Reason> reasonsRepository = new Repository<Reason>(context);
                 Reason reason = reasonsRepository.GetList().First(r => r.Name == "Meeting");
                 Repository<Absenсe> absenseRepository = new Repository<Absenсe>(context);
-                Absenсe absence = absenseRepository.GetList().Last(a => a.JustUser.Login == user.Login);
+                Absenсe absence = absenseRepository.GetList().Last(a => a.User.UserName == user.UserName);
                 absence.Reason = reason;
                 absence.EndAbsence = DateTime.Now;
                 absenseRepository.Update(absence);

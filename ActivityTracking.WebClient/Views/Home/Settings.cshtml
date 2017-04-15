@@ -1,5 +1,5 @@
-﻿@model IEnumerable<ActivityTracking.DomainModel.Group>
-
+﻿@*@model IEnumerable<ActivityTracking.DomainModel.Group>*@
+@*@model ActivityTracking.DomainModel.Group*@
 @{
     ViewBag.Title = "Setting";
 }
@@ -8,10 +8,24 @@
 
 <h2>Your group</h2>
 
-@Html.DropDownList("groups", Model.Select(item => new SelectListItem
+    @*@{
+        foreach (var reason in Model.Reasons)
+        {
+            <div >
+            @Html.CheckBox(reason.Name,false,new { Value = reason.Id })
+            @Html.Label(reason.Name);
+            </div>
+
+        }
+
+    }*@
+
+@*@Html.DropDownList("groups", Model.Select(item => new SelectListItem
 {
     Value = item.Id.ToString(),
     Text = item.Name.ToString(),
     Selected = "select" == item.Id.ToString()
-}))
-<p><input type="submit" value="Выбрать" /></p>
+}))*@
+
+@*@Html.DropDownList("groupslist");
+<p><input type="submit" value="Выбрать" /></p>*@

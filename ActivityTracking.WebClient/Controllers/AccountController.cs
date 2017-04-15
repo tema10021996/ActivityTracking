@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using ActivityTracking.WebClient.Models;
 using ActivityTracking.DomainModel;
-using  ActivityTracking.DAL.EntityFramework;
+using ActivityTracking.DAL.EntityFramework;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -44,6 +44,7 @@ namespace ActivityTracking.WebClient.Controllers
                 if (userLogin != null)
                 {
 
+
                     ApplicationUser user = new ApplicationUser { UserName = model.Login };
                     IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
@@ -64,10 +65,7 @@ namespace ActivityTracking.WebClient.Controllers
         }
         public ActionResult Login(string returnUrl)
         {
-            ViewBag.returnUrl = returnUrl;
-            //ActivityTracking.DAL.EntityFramework.ApplicationContext db = new DAL.EntityFramework.ApplicationContext();
-            //db.Statuses.Add(new Status { Name = "Manager" });
-            //db.SaveChanges();
+            ViewBag.returnUrl = returnUrl;          
             return View();
         }
 
@@ -84,12 +82,24 @@ namespace ActivityTracking.WebClient.Controllers
                 }
                 else
                 {
-                    ClaimsIdentity claim = await UserManager.CreateIdentityAsync(user,  DefaultAuthenticationTypes.ApplicationCookie);
+                    ClaimsIdentity claim = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
                     AuthenticationManager.SignOut();
-                    AuthenticationManager.SignIn(new AuthenticationProperties {IsPersistent = true}, claim);
+                    AuthenticationManager.SignIn(new AuthenticationProperties { IsPersistent = true }, claim);
                     if (String.IsNullOrEmpty(returnUrl))
                     {
-                        return RedirectToAction("Index", "Home");
+ 
+                        if (user.Roles.FirstOrDefault(f => f.RoleId == "1") != null)
+                        {
+                            return RedirectToAction("Index", "Admin");
+                        }
+                        if (user.Roles.FirstOrDefault(f => f.RoleId == "2") != null)
+                        {
+                            return RedirectToAction("Index", "User");
+                        }                      
+                        if (user.Roles.FirstOrDefault(f => f.RoleId == "3") != null)
+                        {
+                            return RedirectToAction("Index", "Manager");
+                        }
                     }
                     return Redirect(returnUrl);
                 }
@@ -99,7 +109,7 @@ namespace ActivityTracking.WebClient.Controllers
         }
         public ActionResult Logout()
         {
-            AuthenticationManager.SignOut();
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Login");
         }
 

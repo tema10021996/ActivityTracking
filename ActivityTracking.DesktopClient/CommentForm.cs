@@ -15,10 +15,10 @@ namespace ActivityTracking.DesktopClient
     public partial class CommentForm : Form
     {
         QuestionForm questionForm;
-        UserLogin user;
+        ApplicationUser user;
         DAL.EntityFramework.ApplicationContext context;
 
-        public CommentForm(QuestionForm questionForm, UserLogin userm, DAL.EntityFramework.ApplicationContext context)
+        public CommentForm(QuestionForm questionForm, ApplicationUser user, DAL.EntityFramework.ApplicationContext context)
         {
             TopMost = true;
             InitializeComponent();

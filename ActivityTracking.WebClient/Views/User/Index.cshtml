@@ -1,0 +1,35 @@
+﻿@model  IEnumerable <ActivityTracking.WebClient.Models.ChartViewModel>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+@{
+    ViewBag.Title = "Index";  
+    
+}
+<h2>User report</h2>
+<script type="text/javascript">
+    google.charts.load("current", { packages: ["timeline"] });
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var container = document.getElementById('container');
+        var chart = new google.visualization.Timeline(container);
+        var dataTable = new google.visualization.DataTable();
+
+        dataTable.addColumn({ type: 'string', id: 'Row label' });
+        dataTable.addColumn({ type: 'string', id: 'Bar label ' });
+        dataTable.addColumn({ type: 'date', id: 'Start' });
+        dataTable.addColumn({ type: 'date', id: 'End' });
+        @foreach (var t in Model)
+             {
+          <text>
+                 dataTable.addRow(['@t.RowLabel', '@t.Barlabel', new Date(0, 0, 0, @t.StartHour, @t.StartMinute, @t.StartSecond), new Date(0, 0, 0, @t.EndHour, @t.EndMinute, @t.EndSecond)]);
+          </text>
+             }
+
+        var options = {
+            timeline: { groupByRowLabel: true}
+        };
+        chart.draw(dataTable, options);
+    }
+</script>
+
+<div id="container" style="height: 200px;"></div>
