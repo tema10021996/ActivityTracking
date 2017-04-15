@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ActivityTracking.DomainModel;
 using System.Web.UI.DataVisualization.Charting;
+using ActivityTracking.GetReportInfo;
 
 namespace ActivityTracking.WebClient.Controllers
 {
@@ -13,8 +14,9 @@ namespace ActivityTracking.WebClient.Controllers
         public ActionResult Index()
         {
             List<Report> reports = new List<Report>();
+            ViewBag.Message = new ReportInfo().GetUserInfo();
 
-            return View(reports);
+                return View(reports);
         }
 
         public ActionResult Settings()

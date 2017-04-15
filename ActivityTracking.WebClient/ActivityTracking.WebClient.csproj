@@ -313,6 +313,10 @@
       <Project>{3a6c6b96-2b71-451a-9cf5-8ba07f766598}</Project>
       <Name>ActivityTracking.DomainModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ActivityTracking.GetReportInfo\ActivityTracking.GetReportInfo.csproj">
+      <Project>{4c561698-576e-44d9-8586-36b5a3cc5cb9}</Project>
+      <Name>ActivityTracking.GetReportInfo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ActivityTracking.Models\ActivityTracking.Models.csproj">
       <Project>{f55eb3f1-e35e-460e-be25-a395c72ad473}</Project>
       <Name>ActivityTracking.Models</Name>

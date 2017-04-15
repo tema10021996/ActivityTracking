@@ -1,0 +1,17 @@
+D:\Игры\ActivityTracking\ActivityTracking.GetReportInfo\bin\Debug\ActivityTracking.GetReportInfo.dll
+D:\Игры\ActivityTracking\ActivityTracking.GetReportInfo\bin\Debug\ActivityTracking.GetReportInfo.pdb
+D:\Игры\ActivityTracking\ActivityTracking.GetReportInfo\bin\Debug\ActivityTracking.DomainModel.dll
+D:\Игры\ActivityTracking\ActivityTracking.GetReportInfo\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\Игры\ActivityTracking\ActivityTracking.GetReportInfo\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+D:\Игры\ActivityTracking\ActivityTracking.GetReportInfo\bin\Debug\EntityFramework.dll
+D:\Игры\ActivityTracking\ActivityTracking.GetReportInfo\bin\Debug\ActivityTracking.DomainModel.pdb
+D:\Игры\ActivityTracking\ActivityTracking.GetReportInfo\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\Игры\ActivityTracking\ActivityTracking.GetReportInfo\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+D:\Игры\ActivityTracking\ActivityTracking.GetReportInfo\bin\Debug\EntityFramework.xml
+D:\Игры\ActivityTracking\ActivityTracking.GetReportInfo\bin\Debug\ru\Microsoft.AspNet.Identity.EntityFramework.resources.dll
+D:\Игры\ActivityTracking\ActivityTracking.GetReportInfo\bin\Debug\ru\Microsoft.AspNet.Identity.Core.resources.dll
+D:\Игры\ActivityTracking\ActivityTracking.GetReportInfo\obj\Debug\ActivityTracking.GetReportInfo.csprojResolveAssemblyReference.cache
+D:\Игры\ActivityTracking\ActivityTracking.GetReportInfo\obj\Debug\ActivityTracking.GetReportInfo.dll
+D:\Игры\ActivityTracking\ActivityTracking.GetReportInfo\obj\Debug\ActivityTracking.GetReportInfo.pdb
+D:\Игры\ActivityTracking\ActivityTracking.GetReportInfo\bin\Debug\ActivityTracking.DAL.EntityFramework.dll
+D:\Игры\ActivityTracking\ActivityTracking.GetReportInfo\bin\Debug\ActivityTracking.DAL.EntityFramework.pdb
