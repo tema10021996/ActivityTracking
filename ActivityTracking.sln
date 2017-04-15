@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivityTracking.DesktopCli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivityTracking.Models", "ActivityTracking.Models\ActivityTracking.Models.csproj", "{F55EB3F1-E35E-460E-BE25-A395C72AD473}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivityTracking.GetReportInfo", "ActivityTracking.GetReportInfo\ActivityTracking.GetReportInfo.csproj", "{4C561698-576E-44D9-8586-36B5A3CC5CB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{F55EB3F1-E35E-460E-BE25-A395C72AD473}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F55EB3F1-E35E-460E-BE25-A395C72AD473}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F55EB3F1-E35E-460E-BE25-A395C72AD473}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C561698-576E-44D9-8586-36B5A3CC5CB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C561698-576E-44D9-8586-36B5A3CC5CB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C561698-576E-44D9-8586-36B5A3CC5CB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C561698-576E-44D9-8586-36B5A3CC5CB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
