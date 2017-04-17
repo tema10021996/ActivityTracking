@@ -13,8 +13,7 @@ namespace ActivityTracking.DomainModel
         public int? UserId { get; set; }
         public virtual ApplicationUser User { get; set; }
 
-        public int? TimeId { get; set; }
-        public virtual Time Time { get; set; }
+        public virtual ICollection<Time> Times { get; set; }
 
         public virtual ICollection<Absenсe> Absenсes { get; set; }
 

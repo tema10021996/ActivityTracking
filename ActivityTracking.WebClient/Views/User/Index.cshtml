@@ -16,20 +16,31 @@
 
         dataTable.addColumn({ type: 'string', id: 'Row label' });
         dataTable.addColumn({ type: 'string', id: 'Bar label ' });
+        dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
         dataTable.addColumn({ type: 'date', id: 'Start' });
         dataTable.addColumn({ type: 'date', id: 'End' });
         @foreach (var t in Model)
              {
           <text>
-                 dataTable.addRow(['@t.RowLabel', '@t.Barlabel', new Date(0, 0, 0, @t.StartHour, @t.StartMinute, @t.StartSecond), new Date(0, 0, 0, @t.EndHour, @t.EndMinute, @t.EndSecond)]);
+        dataTable.addRow(['@t.RowLabel', '@t.Barlabel', createCustomHTMLContent('@t.RowLabel', '@t.Barlabel',@t.Duration.Hours, @t.Duration.Minutes, @t.Duration.Seconds),
+            new Date(0, 0, 0, @t.StartHour, @t.StartMinute, @t.StartSecond), new Date(0, 0, 0, @t.EndHour, @t.EndMinute, @t.EndSecond)]);
           </text>
              }
 
         var options = {
-            timeline: { groupByRowLabel: true}
+            tooltip: {isHtml: true},
+            timeline: { groupByRowLabel: true},
+            focusTarget: 'category'
         };
         chart.draw(dataTable, options);
     }
+    function createCustomHTMLContent(userName, reasonName, durationHours, durationMinutes, durationSeconds) {       
+        return '<div style="padding:20px; width:275px;">'+ '<b>'+userName+'</b>' +'<hr>'+ '<b>'+'Reason: ' +'</b>'+ reasonName + '<br>' + 
+           '<b>' + 'Duration: '+'</b>'+ durationHours +'hours'+ ', ' + durationMinutes + 'minutes' + ', ' + durationSeconds + 'seconds' + '</div>';                          
+            
+    }
+
 </script>
 
 <div id="container" style="height: 200px;"></div>
+

@@ -16,5 +16,8 @@ namespace ActivityTracking.DomainModel
 
         public int? UserId { get; set; }
         public virtual ApplicationUser User { get; set; }
+
+        public int? ReportId { get; set; }
+        public virtual Report Report { get; set; }
     }
 }
