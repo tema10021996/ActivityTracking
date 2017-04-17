@@ -43,6 +43,8 @@ namespace ActivityTracking.WebClient.Models
             Repository<UserLogin> UserLoginRepository = new Repository<UserLogin>(appContext);
             UserLoginRepository.Create(new UserLogin { Login = "svezho" });
             UserLoginRepository.Create(new UserLogin { Login = "Alexandr" });
+            UserLoginRepository.Create(new UserLogin { Login = "руслан" });
+            UserLoginRepository.Create(new UserLogin { Login = "USER" });
 
             Repository<Reason> reasonRepository = new Repository<Reason>(appContext);
             reasonRepository.Create(new Reason { Name = "Meeting", AddingTime = DateTime.Now });
