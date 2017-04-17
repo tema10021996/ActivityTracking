@@ -142,7 +142,7 @@ namespace ActivityTracking.WebClient.Models
             //Repository<Absenсe> absenceRepository = new Repository<Absenсe>(context);
             //Absenсe absense1 = new Absenсe { StartAbsence = new DateTime(2017, 3, 5, 0, 0, 0), EndAbsence = new DateTime(2017, 3, 5, 8, 15, 0), Date = new DateTime(2017, 3, 5), Reason =  };
 
-            //#endregion
+            #endregion
             //Repository<UserLogin> UserLoginRepository = new Repository<UserLogin>(appContext);
             //UserLoginRepository.Create(new UserLogin { Login = "svezho" });
             //UserLoginRepository.Create(new UserLogin { Login = "Alexandr" });
