@@ -127,20 +127,20 @@ namespace ActivityTracking.WebClient.Models
 
             #region Add Absences to user Alexandr
 
-            //Reasons
-            var reasonMeeting = reasonRepository.GetList().First(r => r.Name == "Meeting");
-            var reasonConsultation = reasonRepository.GetList().First(r => r.Name == "Consultation");
-            var reasonEnglish = reasonRepository.GetList().First(r => r.Name == "English");
-            var reasonWorkedWithoutPC = reasonRepository.GetList().First(r => r.Name == "Worked without PC");
-            var reasonOther = reasonRepository.GetList().First(r => r.Name == "Other");
-            //users
-            var userNikitaMaltsev = applicationUserRepository.GetList().First(u => u.UserName == "NikitaMaltsev");
-            var userAlexandrTkachuk = applicationUserRepository.GetList().First(u => u.UserName == "AlexandrTkachuk");
-            var userArtemChuhalo = applicationUserRepository.GetList().First(u => u.UserName == "ArtemChuhalo");
-            var userAlexandraMorozova = applicationUserRepository.GetList().First(u => u.UserName == "AlexandraMorozova");
-            //Add Absences
-            Repository<Absenсe> absenceRepository = new Repository<Absenсe>(context);
-            Absenсe absense1 = new Absenсe { StartAbsence = new DateTime(2017, 3, 5, 0, 0, 0), EndAbsence = new DateTime(2017, 3, 5, 8, 15, 0), Date = new DateTime(2017, 3, 5), Reason =  };
+            ////Reasons
+            //var reasonMeeting = reasonRepository.GetList().First(r => r.Name == "Meeting");
+            //var reasonConsultation = reasonRepository.GetList().First(r => r.Name == "Consultation");
+            //var reasonEnglish = reasonRepository.GetList().First(r => r.Name == "English");
+            //var reasonWorkedWithoutPC = reasonRepository.GetList().First(r => r.Name == "Worked without PC");
+            //var reasonOther = reasonRepository.GetList().First(r => r.Name == "Other");
+            ////users
+            //var userNikitaMaltsev = applicationUserRepository.GetList().First(u => u.UserName == "NikitaMaltsev");
+            //var userAlexandrTkachuk = applicationUserRepository.GetList().First(u => u.UserName == "AlexandrTkachuk");
+            //var userArtemChuhalo = applicationUserRepository.GetList().First(u => u.UserName == "ArtemChuhalo");
+            //var userAlexandraMorozova = applicationUserRepository.GetList().First(u => u.UserName == "AlexandraMorozova");
+            ////Add Absences
+            //Repository<Absenсe> absenceRepository = new Repository<Absenсe>(context);
+            //Absenсe absense1 = new Absenсe { StartAbsence = new DateTime(2017, 3, 5, 0, 0, 0), EndAbsence = new DateTime(2017, 3, 5, 8, 15, 0), Date = new DateTime(2017, 3, 5), Reason =  };
 
             //#endregion
             //Repository<UserLogin> UserLoginRepository = new Repository<UserLogin>(appContext);
