@@ -23,7 +23,14 @@
             {
                 string userGroupName = userViewModel.User.Group == null ? "don't have group" : userViewModel.User.Group.Name;
                 <tr>
-                    <td class="text-left">@userViewModel.User.UserName</td>
+                    @if (userViewModel.User.UserName == "Admin")
+                    {
+                        <td class="text-left">@userViewModel.User.UserName</td>
+                    }
+                    else
+                    {
+                        <td class="text-left">@Html.ActionLink(userViewModel.User.UserName, "ShowUserReport", new { userViewModel.User.Id })</td>
+                    }
                     @if (userViewModel.User.UserName == "Admin")
                     {
                         <td class="text-left"></td>

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ActivityTracking.WebClient.Models;
+using ActivityTracking.DAL.EntityFramework;
+using ActivityTracking.DomainModel;
 
 namespace ActivityTracking.WebClient.Controllers
 {
@@ -12,24 +14,76 @@ namespace ActivityTracking.WebClient.Controllers
         
         public ActionResult Index()
         {
-            //Chart Data
-            ChartViewModel tv1 = new ChartViewModel { RowLabel = HttpContext.User.Identity.Name , Barlabel = "Out the work", StartHour = 0, StartMinute = 0, StartSecond = 0, EndHour = 8, EndMinute = 20, EndSecond = 0, Duration = new TimeSpan(8,20,0) };
-            ChartViewModel tv2 = new ChartViewModel { RowLabel = HttpContext.User.Identity.Name , Barlabel = "Work", StartHour = 8, StartMinute = 20, StartSecond = 0, EndHour = 10, EndMinute = 42, EndSecond = 0, Duration = new TimeSpan(2, 22, 0) };
-            ChartViewModel tv3 = new ChartViewModel { RowLabel = HttpContext.User.Identity.Name, Barlabel = "Meeting", StartHour = 10, StartMinute = 42, StartSecond = 0, EndHour = 11, EndMinute = 30, EndSecond = 0, Duration = new TimeSpan(0,48, 0) };
-            ChartViewModel tv4 = new ChartViewModel { RowLabel = HttpContext.User.Identity.Name, Barlabel = "Work", StartHour = 11,StartMinute = 30, StartSecond = 0, EndHour = 13, EndMinute = 0, EndSecond = 0, Duration = new TimeSpan(1, 30 , 0), };
-            ChartViewModel tv5 = new ChartViewModel { RowLabel = HttpContext.User.Identity.Name, Barlabel = "Dinner", StartHour = 13, StartMinute = 0, StartSecond = 0, EndHour = 13, EndMinute = 45, EndSecond = 0, Duration = new TimeSpan(0,45 , 0) };
-            ChartViewModel tv6 = new ChartViewModel { RowLabel = HttpContext.User.Identity.Name, Barlabel = "Work", StartHour = 13, StartMinute = 45, StartSecond = 0, EndHour = 17, EndMinute = 30, EndSecond = 0, Duration = new TimeSpan(3,45 , 0) };
-            ChartViewModel tv7 = new ChartViewModel { RowLabel = HttpContext.User.Identity.Name, Barlabel = "Out the work", StartHour = 17, StartMinute = 30, StartSecond = 0, EndHour = 24, EndMinute = 0, EndSecond = 0, Duration = new TimeSpan(6,30 , 0) };
-
+            ApplicationContext context = new ApplicationContext();
+            Repository<Time> timeRepository = new Repository<Time>(context);
+            var times = timeRepository.GetList().Where(t => t.User.UserName == HttpContext.User.Identity.Name).ToArray();
+            Repository<Absenсe> absenceRepository = new Repository<Absenсe>(context);
+            
             List<ChartViewModel> list = new List<ChartViewModel>();
-            list.Add(tv1);
-            list.Add(tv2);
-            list.Add(tv3);
-            list.Add(tv4);
-            list.Add(tv5);
-            list.Add(tv6);
-            list.Add(tv7);
-           
+
+            for (int i = 0; i < times.Length; i++)
+            {
+                var absences = absenceRepository.GetList().Where(a => a.User.UserName == HttpContext.User.Identity.Name).Where(a=>a.Date == times[i].Date).ToArray();
+
+                var tempStartAbsence = new DateTime(times[i].Date.Year, times[i].Date.Month, times[i].Date.Day, 0, 0, 0);
+                var tempEndAbsence = new DateTime(times[i].Date.Year, times[i].Date.Month, times[i].Date.Day, absences[0].StartAbsence.Hour, absences[0].StartAbsence.Minute, absences[0].StartAbsence.Second);
+                ChartViewModel beginTv = new ChartViewModel
+                { RowLabel = HttpContext.User.Identity.Name + " " + times[i].Date.ToShortDateString(),
+                    Barlabel = "Out of Work",
+                    StartAbsence = tempStartAbsence,
+                    EndAbsence = tempEndAbsence,
+                    Duration = tempEndAbsence - tempStartAbsence,
+                    Comment = null
+                };
+                list.Add(beginTv);
+
+                for (int j = 0; j < absences.Length; j++)
+                {
+                    DateTime endAbsence = (DateTime)absences[j].EndAbsence;
+                    ChartViewModel tv = new ChartViewModel
+                    {
+                        RowLabel = HttpContext.User.Identity.Name + " " + absences[j].Date.ToShortDateString(),
+                        Barlabel = absences[j].Reason.Name,
+                        StartAbsence = absences[j].StartAbsence,
+                        EndAbsence = endAbsence,
+                        Duration = endAbsence - absences[j].StartAbsence,
+                        Comment = absences[j].Comment
+                    };
+                    list.Add(tv);
+                    if (j != absences.Length - 1)
+                    {
+                        ChartViewModel gapTv = new ChartViewModel
+                        {
+
+                            RowLabel = HttpContext.User.Identity.Name + " " + absences[j].Date.ToShortDateString(),
+                            Barlabel = "Work",
+                            StartAbsence = endAbsence,
+                            EndAbsence = absences[j + 1].StartAbsence,
+                            Duration = absences[j + 1].StartAbsence - endAbsence,
+                            Comment = null
+                        };
+                        list.Add(gapTv);
+                    }
+
+                }
+                DateTime endAbsenceforEndTv = (DateTime)absences[absences.Length - 1].EndAbsence;
+
+                var tempStart = new DateTime(times[i].Date.Year, times[i].Date.Month, times[i].Date.Day, endAbsenceforEndTv.Hour, endAbsenceforEndTv.Minute, endAbsenceforEndTv.Second);
+                var tempEnd = new DateTime(times[i].Date.Year, times[i].Date.Month, times[i].Date.Day, 23, 59, 59);
+                ChartViewModel endTv = new ChartViewModel
+                {
+                    RowLabel = HttpContext.User.Identity.Name + " " + times[i].Date.ToShortDateString(),
+                    Barlabel = "Out of Work",
+                    StartAbsence = tempStart,
+                    EndAbsence = tempEnd,
+                    Duration = tempEnd - tempStart,
+                    Comment = null
+                };
+                list.Add(endTv);
+                
+            }
+
+
             return View(list);
         }
     }

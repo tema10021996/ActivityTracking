@@ -1,11 +1,12 @@
-﻿@model  IEnumerable <ActivityTracking.WebClient.Models.ChartViewModel>
+﻿@model  IEnumerable<ActivityTracking.WebClient.Models.ChartViewModel>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<h2>User report</h2>
+<h2 class="text-center">User report</h2>
+<p>@ViewBag.UserInfo</p>
 <script type="text/javascript">
     google.charts.load("current", { packages: ["timeline"] });
     google.charts.setOnLoadCallback(drawChart);
@@ -51,7 +52,7 @@
     }
     function createCustomHTMLContentWithoutComment(userName, reasonName, startHour, startMinute, startSecond, endHour, endMinute, endSecond, durationHours, durationMinutes, durationSeconds){
         return '<div style="padding:20px; width:375px;">'+ '<b>'+userName+'</b>' +'<hr>'+ '<b>'+'Reason: ' +'</b>'+ reasonName + '<br>' +
-           '<b>' + 'Range: '+'</b>' + startHour + 'h, ' + startMinute + 'm, ' + startSecond + 's - ' +  endHour + 'h, ' + endMinute + 'm, ' + endSecond + 's' + '<br>' + 
+           '<b>' + 'Range: '+'</b>' + startHour + 'h, ' + startMinute + 'm, ' + startSecond + 's - ' +  endHour + 'h, ' + endMinute + 'm, ' + endSecond + 's' + '<br>' +
            '<b>' + 'Duration: '+'</b>'+ durationHours +'hours'+ ', ' + durationMinutes + 'minutes' + ', ' + durationSeconds + 'seconds' + '</div>';
     }
 
@@ -64,4 +65,5 @@
 </script>
 
 <div id="container" style="height: 400px;"></div>
+
 

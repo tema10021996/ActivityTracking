@@ -207,7 +207,7 @@
     <Compile Include="Models\ApplicationUserManager.cs" />
     <Compile Include="Models\ChartViewModel.cs" />
     <Compile Include="Models\DbInitializer.cs" />
-    <Compile Include="Models\GroupViewModel.cs" />
+    <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -292,12 +292,9 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Home\Settings.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
@@ -306,6 +303,9 @@
     <Content Include="Views\Manager\Index.cshtml" />
     <Content Include="Views\Shared\_ManagerLayout.cshtml" />
     <Content Include="Views\Manager\ShowUsers.cshtml" />
+    <Content Include="Views\Shared\_UserLayout.cshtml" />
+    <Content Include="Views\Admin\ShowUserReport.cshtml" />
+    <Content Include="Views\Manager\ShowUserReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -325,6 +325,10 @@
     <ProjectReference Include="..\ActivityTracking.DomainModel\ActivityTracking.DomainModel.csproj">
       <Project>{3a6c6b96-2b71-451a-9cf5-8ba07f766598}</Project>
       <Name>ActivityTracking.DomainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActivityTracking.GetUserInfo\ActivityTracking.GetUserInfo.csproj">
+      <Project>{0b0ece86-ca90-495d-934e-68e9a416f792}</Project>
+      <Name>ActivityTracking.GetUserInfo</Name>
     </ProjectReference>
     <ProjectReference Include="..\ActivityTracking.Models\ActivityTracking.Models.csproj">
       <Project>{f55eb3f1-e35e-460e-be25-a395c72ad473}</Project>

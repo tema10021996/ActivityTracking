@@ -125,23 +125,185 @@ namespace ActivityTracking.WebClient.Models
             groupRepository.Update(ggroup1);
             #endregion
 
-            #region Add Absences to user Alexandr
 
-            ////Reasons
-            //var reasonMeeting = reasonRepository.GetList().First(r => r.Name == "Meeting");
-            //var reasonConsultation = reasonRepository.GetList().First(r => r.Name == "Consultation");
-            //var reasonEnglish = reasonRepository.GetList().First(r => r.Name == "English");
-            //var reasonWorkedWithoutPC = reasonRepository.GetList().First(r => r.Name == "Worked without PC");
-            //var reasonOther = reasonRepository.GetList().First(r => r.Name == "Other");
-            ////users
-            //var userNikitaMaltsev = applicationUserRepository.GetList().First(u => u.UserName == "NikitaMaltsev");
-            //var userAlexandrTkachuk = applicationUserRepository.GetList().First(u => u.UserName == "AlexandrTkachuk");
-            //var userArtemChuhalo = applicationUserRepository.GetList().First(u => u.UserName == "ArtemChuhalo");
-            //var userAlexandraMorozova = applicationUserRepository.GetList().First(u => u.UserName == "AlexandraMorozova");
-            ////Add Absences
-            //Repository<Absenсe> absenceRepository = new Repository<Absenсe>(context);
-            //Absenсe absense1 = new Absenсe { StartAbsence = new DateTime(2017, 3, 5, 0, 0, 0), EndAbsence = new DateTime(2017, 3, 5, 8, 15, 0), Date = new DateTime(2017, 3, 5), Reason =  };
+            #region Add Absences
+            //Reasons
+            var reasonMeeting = reasonRepository.GetList().First(r => r.Name == "Meeting");
+            var reasonConsultation = reasonRepository.GetList().First(r => r.Name == "Consultation");
+            var reasonEnglish = reasonRepository.GetList().First(r => r.Name == "English");
+            var reasonWorkedWithoutPC = reasonRepository.GetList().First(r => r.Name == "Worked without PC");
+            var reasonOther = reasonRepository.GetList().First(r => r.Name == "Other");
+            //users
+            var userAlexandrTkachuk = applicationUserRepository.GetList().First(u => u.UserName == "AlexandrTkachuk");
+            var userNikitaMaltsev = applicationUserRepository.GetList().First(u => u.UserName == "NikitaMaltsev");
+            var userArtemChuhalo = applicationUserRepository.GetList().First(u => u.UserName == "ArtemChuhalo");
+            var userAlexandraMorozova = applicationUserRepository.GetList().First(u => u.UserName == "AlexandraMorozova");
 
+            #region Add Absences and times to user Alexandr
+            //Times for AlexandrTkachuk
+            Repository<Time> timeRepository = new Repository<Time>(context);
+            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 5), TimeIn = new DateTime(2017, 3, 5, 8, 15, 0), TimeOut = new DateTime(2017, 3, 5, 16, 20, 0), User = userAlexandrTkachuk });
+            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 6), TimeIn = new DateTime(2017, 3, 6, 8, 40, 0), TimeOut = new DateTime(2017, 3, 6, 17, 20, 0), User = userAlexandrTkachuk });
+            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 7), TimeIn = new DateTime(2017, 3, 7, 8, 0, 0), TimeOut = new DateTime(2017, 3, 7, 16, 0, 0), User = userAlexandrTkachuk });
+            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 8), TimeIn = new DateTime(2017, 3, 8, 9, 15, 0), TimeOut = new DateTime(2017, 3, 8, 17, 40, 0), User = userAlexandrTkachuk });
+            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 9), TimeIn = new DateTime(2017, 3, 9, 8, 55, 0), TimeOut = new DateTime(2017, 3, 9, 16, 50, 0), User = userAlexandrTkachuk });
+
+            //Add Absences for AlexandrTkachuk
+            Repository<Absenсe> absenceRepository = new Repository<Absenсe>(context);
+            // for 5 march
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 5, 9, 50, 0), EndAbsence = new DateTime(2017, 3, 5, 10, 20, 0), Date = new DateTime(2017, 3, 5), Reason = reasonMeeting, User = userAlexandrTkachuk });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 5, 10, 50, 0), EndAbsence = new DateTime(2017, 3, 5, 11, 20, 0), Date = new DateTime(2017, 3, 5), Reason = reasonConsultation, User = userAlexandrTkachuk });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 5, 13, 0, 0), EndAbsence = new DateTime(2017, 3, 5, 14, 0, 0), Date = new DateTime(2017, 3, 5), Reason = reasonWorkedWithoutPC, User = userAlexandrTkachuk });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 5, 15, 0, 0), EndAbsence = new DateTime(2017, 3, 5, 15, 25, 0), Date = new DateTime(2017, 3, 5), Reason = reasonConsultation, User = userAlexandrTkachuk });
+
+            //for 6 march
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 6, 9, 10, 0), EndAbsence = new DateTime(2017, 3, 6, 9, 40, 0), Date = new DateTime(2017, 3, 6), Reason = reasonConsultation, User = userAlexandrTkachuk });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 6, 11, 0, 0), EndAbsence = new DateTime(2017, 3, 6, 11, 35, 0), Date = new DateTime(2017, 3, 6), Reason = reasonMeeting, User = userAlexandrTkachuk });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 6, 13, 0, 0), EndAbsence = new DateTime(2017, 3, 6, 14, 20, 0), Date = new DateTime(2017, 3, 6), Reason = reasonEnglish, User = userAlexandrTkachuk });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 6, 15, 0, 0), EndAbsence = new DateTime(2017, 3, 6, 15, 20, 0), Date = new DateTime(2017, 3, 6), Reason = reasonConsultation, User = userAlexandrTkachuk });
+
+            //for 7 march
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 7, 9, 20, 0), EndAbsence = new DateTime(2017, 3, 7, 9, 30, 0), Date = new DateTime(2017, 3, 7), Reason = reasonMeeting, User = userAlexandrTkachuk });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 7, 10, 50, 0), EndAbsence = new DateTime(2017, 3, 7, 11, 5, 0), Date = new DateTime(2017, 3, 7), Reason = reasonConsultation, User = userAlexandrTkachuk });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 7, 12, 0, 0), EndAbsence = new DateTime(2017, 3, 7, 12, 20, 0), Date = new DateTime(2017, 3, 7), Reason = reasonConsultation, User = userAlexandrTkachuk });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 7, 15, 0, 0), EndAbsence = new DateTime(2017, 3, 7, 15, 5, 0), Date = new DateTime(2017, 3, 7), Reason = reasonOther, User = userAlexandrTkachuk, Comment = "It was а queue at the toilet" });
+
+            //for 8 march
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 8, 9, 0, 0), EndAbsence = new DateTime(2017, 3, 8, 9, 25, 0), Date = new DateTime(2017, 3, 8), Reason = reasonOther, User = userAlexandrTkachuk, Comment = "I don't want to explain(" });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 8, 10, 15, 0), EndAbsence = new DateTime(2017, 3, 8, 10, 45, 0), Date = new DateTime(2017, 3, 8), Reason = reasonMeeting, User = userAlexandrTkachuk });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 8, 14, 0, 0), EndAbsence = new DateTime(2017, 3, 8, 14, 40, 0), Date = new DateTime(2017, 3, 8), Reason = reasonConsultation, User = userAlexandrTkachuk });
+
+            //for 9 march
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 9, 9, 40, 0), EndAbsence = new DateTime(2017, 3, 9, 9, 55, 0), Date = new DateTime(2017, 3, 9), Reason = reasonEnglish, User = userAlexandrTkachuk });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 9, 11, 25, 0), EndAbsence = new DateTime(2017, 3, 9, 11, 55, 0), Date = new DateTime(2017, 3, 9), Reason = reasonMeeting, User = userAlexandrTkachuk });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 9, 14, 0, 0), EndAbsence = new DateTime(2017, 3, 9, 14, 20, 0), Date = new DateTime(2017, 3, 9), Reason = reasonWorkedWithoutPC, User = userAlexandrTkachuk });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 9, 15, 5, 0), EndAbsence = new DateTime(2017, 3, 9, 15, 35, 0), Date = new DateTime(2017, 3, 9), Reason = reasonConsultation, User = userAlexandrTkachuk });
+
+
+
+            #endregion
+
+
+            #region Add Absences and times for Nikita
+            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 5), TimeIn = new DateTime(2017, 3, 5, 8, 0, 0), TimeOut = new DateTime(2017, 3, 5, 16, 20, 0), User = userNikitaMaltsev });
+            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 6), TimeIn = new DateTime(2017, 3, 6, 9, 0, 0), TimeOut = new DateTime(2017, 3, 6, 17, 20, 0), User = userNikitaMaltsev });
+            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 7), TimeIn = new DateTime(2017, 3, 7, 8, 30, 0), TimeOut = new DateTime(2017, 3, 7, 16, 0, 0), User = userNikitaMaltsev });
+            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 8), TimeIn = new DateTime(2017, 3, 8, 8, 50, 0), TimeOut = new DateTime(2017, 3, 8, 16, 40, 0), User = userNikitaMaltsev });
+            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 9), TimeIn = new DateTime(2017, 3, 9, 10, 0, 0), TimeOut = new DateTime(2017, 3, 9, 18, 20, 0), User = userNikitaMaltsev });
+
+            // for 5 march
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 5, 9, 50, 0), EndAbsence = new DateTime(2017, 3, 5, 10, 20, 0), Date = new DateTime(2017, 3, 5), Reason = reasonMeeting, User = userNikitaMaltsev });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 5, 10, 50, 0), EndAbsence = new DateTime(2017, 3, 5, 11, 20, 0), Date = new DateTime(2017, 3, 5), Reason = reasonConsultation, User = userNikitaMaltsev });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 5, 13, 0, 0), EndAbsence = new DateTime(2017, 3, 5, 14, 0, 0), Date = new DateTime(2017, 3, 5), Reason = reasonWorkedWithoutPC, User = userNikitaMaltsev });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 5, 15, 0, 0), EndAbsence = new DateTime(2017, 3, 5, 15, 25, 0), Date = new DateTime(2017, 3, 5), Reason = reasonConsultation, User = userNikitaMaltsev });
+
+            //for 6 march
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 6, 9, 10, 0), EndAbsence = new DateTime(2017, 3, 6, 9, 40, 0), Date = new DateTime(2017, 3, 6), Reason = reasonConsultation, User = userNikitaMaltsev });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 6, 11, 0, 0), EndAbsence = new DateTime(2017, 3, 6, 11, 35, 0), Date = new DateTime(2017, 3, 6), Reason = reasonMeeting, User = userNikitaMaltsev });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 6, 13, 0, 0), EndAbsence = new DateTime(2017, 3, 6, 14, 20, 0), Date = new DateTime(2017, 3, 6), Reason = reasonConsultation, User = userNikitaMaltsev });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 6, 15, 0, 0), EndAbsence = new DateTime(2017, 3, 6, 15, 20, 0), Date = new DateTime(2017, 3, 6), Reason = reasonEnglish, User = userNikitaMaltsev });
+
+            //for 7 march
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 7, 9, 20, 0), EndAbsence = new DateTime(2017, 3, 7, 9, 30, 0), Date = new DateTime(2017, 3, 7), Reason = reasonMeeting, User = userNikitaMaltsev });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 7, 10, 50, 0), EndAbsence = new DateTime(2017, 3, 7, 11, 5, 0), Date = new DateTime(2017, 3, 7), Reason = reasonConsultation, User = userNikitaMaltsev });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 7, 12, 0, 0), EndAbsence = new DateTime(2017, 3, 7, 12, 20, 0), Date = new DateTime(2017, 3, 7), Reason = reasonConsultation, User = userNikitaMaltsev });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 7, 15, 0, 0), EndAbsence = new DateTime(2017, 3, 7, 15, 15, 0), Date = new DateTime(2017, 3, 7), Reason = reasonOther, User = userNikitaMaltsev, Comment = "It was а queue at the toilet" });
+
+            //for 8 march
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 8, 9, 0, 0), EndAbsence = new DateTime(2017, 3, 8, 9, 25, 0), Date = new DateTime(2017, 3, 8), Reason = reasonOther, User = userNikitaMaltsev, Comment = "I don't want to explain(" });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 8, 10, 15, 0), EndAbsence = new DateTime(2017, 3, 8, 10, 45, 0), Date = new DateTime(2017, 3, 8), Reason = reasonMeeting, User = userNikitaMaltsev });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 8, 14, 0, 0), EndAbsence = new DateTime(2017, 3, 8, 14, 40, 0), Date = new DateTime(2017, 3, 8), Reason = reasonConsultation, User = userNikitaMaltsev });
+
+            //for 9 march
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 9, 9, 40, 0), EndAbsence = new DateTime(2017, 3, 9, 9, 55, 0), Date = new DateTime(2017, 3, 9), Reason = reasonConsultation, User = userNikitaMaltsev });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 9, 11, 25, 0), EndAbsence = new DateTime(2017, 3, 9, 11, 55, 0), Date = new DateTime(2017, 3, 9), Reason = reasonMeeting, User = userNikitaMaltsev });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 9, 14, 0, 0), EndAbsence = new DateTime(2017, 3, 9, 14, 20, 0), Date = new DateTime(2017, 3, 9), Reason = reasonWorkedWithoutPC, User = userNikitaMaltsev });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 9, 15, 5, 0), EndAbsence = new DateTime(2017, 3, 9, 15, 35, 0), Date = new DateTime(2017, 3, 9), Reason = reasonConsultation, User = userNikitaMaltsev });
+
+
+            #endregion
+
+
+            #region Add Abences and time to user ArtemChuhalo
+            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 5), TimeIn = new DateTime(2017, 3, 5, 8, 0, 0), TimeOut = new DateTime(2017, 3, 5, 16, 20, 0), User = userArtemChuhalo });
+            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 6), TimeIn = new DateTime(2017, 3, 6, 9, 0, 0), TimeOut = new DateTime(2017, 3, 6, 17, 20, 0), User = userArtemChuhalo });
+            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 7), TimeIn = new DateTime(2017, 3, 7, 8, 30, 0), TimeOut = new DateTime(2017, 3, 7, 16, 0, 0), User = userArtemChuhalo });
+            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 8), TimeIn = new DateTime(2017, 3, 8, 8, 50, 0), TimeOut = new DateTime(2017, 3, 8, 16, 40, 0), User = userArtemChuhalo });
+            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 9), TimeIn = new DateTime(2017, 3, 9, 10, 0, 0), TimeOut = new DateTime(2017, 3, 9, 18, 20, 0), User = userArtemChuhalo });
+
+            // for 5 march
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 5, 9, 50, 0), EndAbsence = new DateTime(2017, 3, 5, 10, 20, 0), Date = new DateTime(2017, 3, 5), Reason = reasonMeeting, User = userArtemChuhalo });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 5, 10, 50, 0), EndAbsence = new DateTime(2017, 3, 5, 11, 20, 0), Date = new DateTime(2017, 3, 5), Reason = reasonConsultation, User = userArtemChuhalo });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 5, 13, 0, 0), EndAbsence = new DateTime(2017, 3, 5, 14, 0, 0), Date = new DateTime(2017, 3, 5), Reason = reasonWorkedWithoutPC, User = userArtemChuhalo });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 5, 15, 0, 0), EndAbsence = new DateTime(2017, 3, 5, 15, 25, 0), Date = new DateTime(2017, 3, 5), Reason = reasonConsultation, User = userArtemChuhalo });
+
+            //for 6 march
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 6, 9, 10, 0), EndAbsence = new DateTime(2017, 3, 6, 9, 40, 0), Date = new DateTime(2017, 3, 6), Reason = reasonConsultation, User = userArtemChuhalo });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 6, 11, 0, 0), EndAbsence = new DateTime(2017, 3, 6, 11, 35, 0), Date = new DateTime(2017, 3, 6), Reason = reasonMeeting, User = userArtemChuhalo });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 6, 13, 0, 0), EndAbsence = new DateTime(2017, 3, 6, 14, 20, 0), Date = new DateTime(2017, 3, 6), Reason = reasonConsultation, User = userArtemChuhalo });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 6, 15, 0, 0), EndAbsence = new DateTime(2017, 3, 6, 15, 20, 0), Date = new DateTime(2017, 3, 6), Reason = reasonEnglish, User = userArtemChuhalo });
+
+            //for 7 march
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 7, 9, 20, 0), EndAbsence = new DateTime(2017, 3, 7, 9, 30, 0), Date = new DateTime(2017, 3, 7), Reason = reasonMeeting, User = userArtemChuhalo });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 7, 10, 50, 0), EndAbsence = new DateTime(2017, 3, 7, 11, 5, 0), Date = new DateTime(2017, 3, 7), Reason = reasonConsultation, User = userArtemChuhalo });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 7, 12, 0, 0), EndAbsence = new DateTime(2017, 3, 7, 12, 20, 0), Date = new DateTime(2017, 3, 7), Reason = reasonConsultation, User = userArtemChuhalo });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 7, 15, 0, 0), EndAbsence = new DateTime(2017, 3, 7, 15, 15, 0), Date = new DateTime(2017, 3, 7), Reason = reasonOther, User = userArtemChuhalo, Comment = "It was а queue at the toilet" });
+
+            //for 8 march
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 8, 9, 0, 0), EndAbsence = new DateTime(2017, 3, 8, 9, 25, 0), Date = new DateTime(2017, 3, 8), Reason = reasonOther, User = userArtemChuhalo, Comment = "I don't want to explain(" });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 8, 10, 15, 0), EndAbsence = new DateTime(2017, 3, 8, 10, 45, 0), Date = new DateTime(2017, 3, 8), Reason = reasonMeeting, User = userArtemChuhalo });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 8, 14, 0, 0), EndAbsence = new DateTime(2017, 3, 8, 14, 40, 0), Date = new DateTime(2017, 3, 8), Reason = reasonConsultation, User = userArtemChuhalo });
+
+            //for 9 march
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 9, 9, 40, 0), EndAbsence = new DateTime(2017, 3, 9, 9, 55, 0), Date = new DateTime(2017, 3, 9), Reason = reasonConsultation, User = userArtemChuhalo });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 9, 11, 25, 0), EndAbsence = new DateTime(2017, 3, 9, 11, 55, 0), Date = new DateTime(2017, 3, 9), Reason = reasonMeeting, User = userArtemChuhalo });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 9, 14, 0, 0), EndAbsence = new DateTime(2017, 3, 9, 14, 20, 0), Date = new DateTime(2017, 3, 9), Reason = reasonWorkedWithoutPC, User = userArtemChuhalo });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 9, 15, 5, 0), EndAbsence = new DateTime(2017, 3, 9, 15, 35, 0), Date = new DateTime(2017, 3, 9), Reason = reasonConsultation, User = userArtemChuhalo });
+
+            #endregion
+
+
+
+            #region Add absences and times for AlexandraMorozova
+
+            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 5), TimeIn = new DateTime(2017, 3, 5, 8, 0, 0), TimeOut = new DateTime(2017, 3, 5, 16, 20, 0), User = userAlexandraMorozova });
+            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 6), TimeIn = new DateTime(2017, 3, 6, 9, 0, 0), TimeOut = new DateTime(2017, 3, 6, 17, 20, 0), User = userAlexandraMorozova });
+            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 7), TimeIn = new DateTime(2017, 3, 7, 8, 30, 0), TimeOut = new DateTime(2017, 3, 7, 16, 0, 0), User = userAlexandraMorozova });
+            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 8), TimeIn = new DateTime(2017, 3, 8, 8, 50, 0), TimeOut = new DateTime(2017, 3, 8, 16, 40, 0), User = userAlexandraMorozova });
+            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 9), TimeIn = new DateTime(2017, 3, 9, 10, 0, 0), TimeOut = new DateTime(2017, 3, 9, 18, 20, 0), User = userAlexandraMorozova });
+
+            // for 5 march
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 5, 9, 50, 0), EndAbsence = new DateTime(2017, 3, 5, 10, 20, 0), Date = new DateTime(2017, 3, 5), Reason = reasonMeeting, User = userAlexandraMorozova });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 5, 10, 50, 0), EndAbsence = new DateTime(2017, 3, 5, 11, 20, 0), Date = new DateTime(2017, 3, 5), Reason = reasonConsultation, User = userAlexandraMorozova });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 5, 13, 0, 0), EndAbsence = new DateTime(2017, 3, 5, 14, 0, 0), Date = new DateTime(2017, 3, 5), Reason = reasonWorkedWithoutPC, User = userAlexandraMorozova });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 5, 15, 0, 0), EndAbsence = new DateTime(2017, 3, 5, 15, 25, 0), Date = new DateTime(2017, 3, 5), Reason = reasonConsultation, User = userAlexandraMorozova });
+
+            //for 6 march
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 6, 9, 10, 0), EndAbsence = new DateTime(2017, 3, 6, 9, 40, 0), Date = new DateTime(2017, 3, 6), Reason = reasonConsultation, User = userAlexandraMorozova });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 6, 11, 0, 0), EndAbsence = new DateTime(2017, 3, 6, 11, 35, 0), Date = new DateTime(2017, 3, 6), Reason = reasonMeeting, User = userAlexandraMorozova });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 6, 13, 0, 0), EndAbsence = new DateTime(2017, 3, 6, 14, 20, 0), Date = new DateTime(2017, 3, 6), Reason = reasonConsultation, User = userAlexandraMorozova });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 6, 15, 0, 0), EndAbsence = new DateTime(2017, 3, 6, 15, 20, 0), Date = new DateTime(2017, 3, 6), Reason = reasonEnglish, User = userAlexandraMorozova });
+
+            //for 7 march
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 7, 9, 20, 0), EndAbsence = new DateTime(2017, 3, 7, 9, 30, 0), Date = new DateTime(2017, 3, 7), Reason = reasonMeeting, User = userAlexandraMorozova });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 7, 10, 50, 0), EndAbsence = new DateTime(2017, 3, 7, 11, 5, 0), Date = new DateTime(2017, 3, 7), Reason = reasonConsultation, User = userAlexandraMorozova });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 7, 12, 0, 0), EndAbsence = new DateTime(2017, 3, 7, 12, 20, 0), Date = new DateTime(2017, 3, 7), Reason = reasonConsultation, User = userAlexandraMorozova });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 7, 15, 0, 0), EndAbsence = new DateTime(2017, 3, 7, 15, 15, 0), Date = new DateTime(2017, 3, 7), Reason = reasonOther, User = userAlexandraMorozova, Comment = "It was а queue at the toilet" });
+
+            //for 8 march
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 8, 9, 0, 0), EndAbsence = new DateTime(2017, 3, 8, 9, 25, 0), Date = new DateTime(2017, 3, 8), Reason = reasonOther, User = userAlexandraMorozova, Comment = "I don't want to explain(" });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 8, 10, 15, 0), EndAbsence = new DateTime(2017, 3, 8, 10, 45, 0), Date = new DateTime(2017, 3, 8), Reason = reasonMeeting, User = userAlexandraMorozova });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 8, 14, 0, 0), EndAbsence = new DateTime(2017, 3, 8, 14, 40, 0), Date = new DateTime(2017, 3, 8), Reason = reasonConsultation, User = userAlexandraMorozova });
+
+            //for 9 march
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 9, 9, 40, 0), EndAbsence = new DateTime(2017, 3, 9, 9, 55, 0), Date = new DateTime(2017, 3, 9), Reason = reasonConsultation, User = userAlexandraMorozova });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 9, 11, 25, 0), EndAbsence = new DateTime(2017, 3, 9, 11, 55, 0), Date = new DateTime(2017, 3, 9), Reason = reasonMeeting, User = userAlexandraMorozova });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 9, 14, 0, 0), EndAbsence = new DateTime(2017, 3, 9, 14, 20, 0), Date = new DateTime(2017, 3, 9), Reason = reasonWorkedWithoutPC, User = userAlexandraMorozova });
+            absenceRepository.Create(new Absenсe { StartAbsence = new DateTime(2017, 3, 9, 15, 5, 0), EndAbsence = new DateTime(2017, 3, 9, 15, 35, 0), Date = new DateTime(2017, 3, 9), Reason = reasonConsultation, User = userAlexandraMorozova });
+
+
+
+            #endregion
             #endregion
             //Repository<UserLogin> UserLoginRepository = new Repository<UserLogin>(appContext);
             //UserLoginRepository.Create(new UserLogin { Login = "svezho" });
