@@ -11,7 +11,7 @@ namespace ActivityTracking.DAL.EntityFramework
         public DbSet<UserLogin> JustUsers { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Reason> Reasons { get; set;}
-        public DbSet<Absenсe> Absenсes { get; set;}
+        public DbSet<Absence> Absenсes { get; set;}
         public DbSet<Time> Times { get; set;}
         public DbSet<Report> Reports { get; set;}
 

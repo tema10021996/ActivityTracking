@@ -15,11 +15,11 @@ namespace ActivityTracking.DomainModel
 
         public virtual ICollection<Time> Times { get; set; }
 
-        public virtual ICollection<Absenсe> Absenсes { get; set; }
+        public virtual ICollection<Absence> Absenсes { get; set; }
 
         public Report()
         {
-            Absenсes = new List<Absenсe>();
+            Absenсes = new List<Absence>();
         }
     }
 }

@@ -13,6 +13,7 @@ namespace ActivityTracking.DomainModel
         public DateTime AddingTime { get; set; }
         public string Color { get; set; }
 
+
         public int? UserWhoAddedId { get; set; }
         public virtual ApplicationUser UserWhoAdded { get; set; }
 

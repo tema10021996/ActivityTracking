@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ActivityTracking.DomainModel
 {
-    public class Absenсe
+    public class Absence
     {
         public int Id { get; set; }
         public DateTime StartAbsence { get; set; }

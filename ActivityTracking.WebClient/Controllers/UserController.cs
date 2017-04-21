@@ -17,7 +17,7 @@ namespace ActivityTracking.WebClient.Controllers
             ApplicationContext context = new ApplicationContext();
             Repository<Time> timeRepository = new Repository<Time>(context);
             var times = timeRepository.GetList().Where(t => t.User.UserName == HttpContext.User.Identity.Name).ToArray();
-            Repository<Absenсe> absenceRepository = new Repository<Absenсe>(context);
+            Repository<Absence> absenceRepository = new Repository<Absence>(context);
             
             List<ChartViewModel> list = new List<ChartViewModel>();
 

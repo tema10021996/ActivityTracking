@@ -89,8 +89,8 @@ namespace ActivityTracking.DesktopClient
             //TODO
             //Проверка в здании ли пользователь 
 
-            Repository<Absenсe> absenseRepository = new Repository<Absenсe>(context);
-            absenseRepository.Create(new Absenсe { StartAbsence = DateTime.Now, User = user, Date = DateTime.Today });
+            Repository<Absence> absenseRepository = new Repository<Absence>(context);
+            absenseRepository.Create(new Absence { StartAbsence = DateTime.Now, User = user, Date = DateTime.Today });
 
             ShowForm();
             timer.Stop();
@@ -115,8 +115,8 @@ namespace ActivityTracking.DesktopClient
             {
                 Repository<Reason> reasonsRepository = new Repository<Reason>(context);
                 Reason reason = reasonsRepository.GetList().First(r => r.Name == "Meeting");
-                Repository<Absenсe> absenseRepository = new Repository<Absenсe>(context);
-                Absenсe absence = absenseRepository.GetList().Last(a => a.User.UserName == user.UserName);
+                Repository<Absence> absenseRepository = new Repository<Absence>(context);
+                Absence absence = absenseRepository.GetList().Last(a => a.User.UserName == user.UserName);
                 absence.Reason = reason;
                 absence.EndAbsence = DateTime.Now;
                 absenseRepository.Update(absence);
