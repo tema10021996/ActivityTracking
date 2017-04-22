@@ -58,18 +58,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbsenceDomainModel.cs" />
     <Compile Include="ApplicationContext.cs" />
     <Compile Include="BaseDomainModel.cs" />
-    <Compile Include="GroupDomainModel.cs" />
     <Compile Include="IRepository.cs" />
-    <Compile Include="JustUserDomainModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReasonDomainModel.cs" />
-    <Compile Include="ReportDomainModel.cs" />
     <Compile Include="Repository.cs" />
-    <Compile Include="StatusDomainModel.cs" />
-    <Compile Include="TimeDomainModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -79,6 +72,10 @@
     <ProjectReference Include="..\ActivityTracking.DomainModel\ActivityTracking.DomainModel.csproj">
       <Project>{3a6c6b96-2b71-451a-9cf5-8ba07f766598}</Project>
       <Name>ActivityTracking.DomainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActivityTracking.GetUserInfo\ActivityTracking.GetUserInfo.csproj">
+      <Project>{0b0ece86-ca90-495d-934e-68e9a416f792}</Project>
+      <Name>ActivityTracking.GetUserInfo</Name>
     </ProjectReference>
     <ProjectReference Include="..\ActivityTracking.Models\ActivityTracking.Models.csproj">
       <Project>{f55eb3f1-e35e-460e-be25-a395c72ad473}</Project>

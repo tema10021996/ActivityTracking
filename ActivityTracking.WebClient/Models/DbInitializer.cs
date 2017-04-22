@@ -120,7 +120,6 @@ namespace ActivityTracking.WebClient.Models
             groupRepository.Update(ggroup1);
             #endregion
 
-
             #region Add Absences
             //Reasons
             var reasonMeeting = reasonRepository.GetList().First(r => r.Name == "Meeting");
@@ -135,34 +134,34 @@ namespace ActivityTracking.WebClient.Models
 
             #region Add Absences and times to user Alexandr
             //Times for AlexandrTkachuk
-            Repository<Time> timeRepository = new Repository<Time>(context);
+            Repository<GetUserInfo.UserInfoModel> timeRepository = new Repository<GetUserInfo.UserInfoModel>(context);
 
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 13), TimeIn = new DateTime(2017, 4, 13, 8, 40, 0), TimeOut = new DateTime(2017, 4, 13, 10, 20, 0), User = userAlexandrTkachuk });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 13), TimeIn = new DateTime(2017, 4, 13, 10, 40, 0), TimeOut = new DateTime(2017, 4, 13, 17, 20, 0), User = userAlexandrTkachuk });
-
-
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 14), TimeIn = new DateTime(2017, 4, 14, 8, 0, 0), TimeOut = new DateTime(2017, 4, 14, 14, 0, 0), User = userAlexandrTkachuk });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 14), TimeIn = new DateTime(2017, 4, 14, 15, 0, 0), TimeOut = new DateTime(2017, 4, 14, 16, 50, 0), User = userAlexandrTkachuk });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 13), TimeIn = new DateTime(2017, 4, 13, 8, 40, 0), TimeOut = new DateTime(2017, 4, 13, 10, 20, 0), User = userAlexandrTkachuk });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 13), TimeIn = new DateTime(2017, 4, 13, 10, 40, 0), TimeOut = new DateTime(2017, 4, 13, 17, 20, 0), User = userAlexandrTkachuk });
 
 
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 15), TimeIn = new DateTime(2017, 4, 15, 8, 55, 0), TimeOut = new DateTime(2017, 4, 15, 10, 0, 0), User = userAlexandrTkachuk });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 15), TimeIn = new DateTime(2017, 4, 15, 10, 55, 0), TimeOut = new DateTime(2017, 4, 15, 12, 50, 0), User = userAlexandrTkachuk });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 15), TimeIn = new DateTime(2017, 4, 15, 13, 0, 0), TimeOut = new DateTime(2017, 4, 15, 16, 50, 0), User = userAlexandrTkachuk });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 14), TimeIn = new DateTime(2017, 4, 14, 8, 0, 0), TimeOut = new DateTime(2017, 4, 14, 14, 0, 0), User = userAlexandrTkachuk });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 14), TimeIn = new DateTime(2017, 4, 14, 15, 0, 0), TimeOut = new DateTime(2017, 4, 14, 16, 50, 0), User = userAlexandrTkachuk });
 
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 16), TimeIn = new DateTime(2017, 4, 16, 8, 15, 0), TimeOut = new DateTime(2017, 4, 16, 12, 20, 0), User = userAlexandrTkachuk });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 16), TimeIn = new DateTime(2017, 4, 16, 12, 50, 0), TimeOut = new DateTime(2017, 4, 16, 16, 20, 0), User = userAlexandrTkachuk });
 
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 17), TimeIn = new DateTime(2017, 4, 17, 8, 40, 0), TimeOut = new DateTime(2017, 4, 17, 10, 20, 0), User = userAlexandrTkachuk });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 17), TimeIn = new DateTime(2017, 4, 17, 10, 40, 0), TimeOut = new DateTime(2017, 4, 17, 17, 20, 0), User = userAlexandrTkachuk });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 15), TimeIn = new DateTime(2017, 4, 15, 8, 55, 0), TimeOut = new DateTime(2017, 4, 15, 10, 0, 0), User = userAlexandrTkachuk });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 15), TimeIn = new DateTime(2017, 4, 15, 10, 55, 0), TimeOut = new DateTime(2017, 4, 15, 12, 50, 0), User = userAlexandrTkachuk });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 15), TimeIn = new DateTime(2017, 4, 15, 13, 0, 0), TimeOut = new DateTime(2017, 4, 15, 16, 50, 0), User = userAlexandrTkachuk });
 
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 18), TimeIn = new DateTime(2017, 4, 18, 8, 0, 0), TimeOut = new DateTime(2017, 4, 18, 14, 0, 0), User = userAlexandrTkachuk });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 18), TimeIn = new DateTime(2017, 4, 18, 15, 0, 0), TimeOut = new DateTime(2017, 4, 18, 16, 50, 0), User = userAlexandrTkachuk });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 16), TimeIn = new DateTime(2017, 4, 16, 8, 15, 0), TimeOut = new DateTime(2017, 4, 16, 12, 20, 0), User = userAlexandrTkachuk });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 16), TimeIn = new DateTime(2017, 4, 16, 12, 50, 0), TimeOut = new DateTime(2017, 4, 16, 16, 20, 0), User = userAlexandrTkachuk });
 
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 19), TimeIn = new DateTime(2017, 4, 19, 8, 50, 0), TimeOut = new DateTime(2017, 4, 19, 17, 40, 0), User = userAlexandrTkachuk });;
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 17), TimeIn = new DateTime(2017, 4, 17, 8, 40, 0), TimeOut = new DateTime(2017, 4, 17, 10, 20, 0), User = userAlexandrTkachuk });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 17), TimeIn = new DateTime(2017, 4, 17, 10, 40, 0), TimeOut = new DateTime(2017, 4, 17, 17, 20, 0), User = userAlexandrTkachuk });
 
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 20), TimeIn = new DateTime(2017, 4, 20, 8, 55, 0), TimeOut = new DateTime(2017, 4, 20, 10, 0, 0), User = userAlexandrTkachuk });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 20), TimeIn = new DateTime(2017, 4, 20, 10, 55, 0), TimeOut = new DateTime(2017, 4, 20, 12, 50, 0), User = userAlexandrTkachuk });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 20), TimeIn = new DateTime(2017, 4, 20, 13, 0, 0), TimeOut = new DateTime(2017, 4, 20, 16, 50, 0), User = userAlexandrTkachuk });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 18), TimeIn = new DateTime(2017, 4, 18, 8, 0, 0), TimeOut = new DateTime(2017, 4, 18, 14, 0, 0), User = userAlexandrTkachuk });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 18), TimeIn = new DateTime(2017, 4, 18, 15, 0, 0), TimeOut = new DateTime(2017, 4, 18, 16, 50, 0), User = userAlexandrTkachuk });
+
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 19), TimeIn = new DateTime(2017, 4, 19, 8, 50, 0), TimeOut = new DateTime(2017, 4, 19, 17, 40, 0), User = userAlexandrTkachuk });;
+
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 20), TimeIn = new DateTime(2017, 4, 20, 8, 55, 0), TimeOut = new DateTime(2017, 4, 20, 10, 0, 0), User = userAlexandrTkachuk });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 20), TimeIn = new DateTime(2017, 4, 20, 10, 55, 0), TimeOut = new DateTime(2017, 4, 20, 12, 50, 0), User = userAlexandrTkachuk });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 20), TimeIn = new DateTime(2017, 4, 20, 13, 0, 0), TimeOut = new DateTime(2017, 4, 20, 16, 50, 0), User = userAlexandrTkachuk });
 
             //Add Absences for AlexandrTkachuk
             Repository<Absence> absenceRepository = new Repository<Absence>(context);
@@ -218,32 +217,32 @@ namespace ActivityTracking.WebClient.Models
 
 
             #region Add Absences and times for Nikita
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 13), TimeIn = new DateTime(2017, 4, 13, 8, 40, 0), TimeOut = new DateTime(2017, 4, 13, 10, 20, 0), User = userNikitaMaltsev });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 13), TimeIn = new DateTime(2017, 4, 13, 10, 40, 0), TimeOut = new DateTime(2017, 4, 13, 17, 20, 0), User = userNikitaMaltsev });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 13), TimeIn = new DateTime(2017, 4, 13, 8, 40, 0), TimeOut = new DateTime(2017, 4, 13, 10, 20, 0), User = userNikitaMaltsev });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 13), TimeIn = new DateTime(2017, 4, 13, 10, 40, 0), TimeOut = new DateTime(2017, 4, 13, 17, 20, 0), User = userNikitaMaltsev });
 
 
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 14), TimeIn = new DateTime(2017, 4, 14, 8, 0, 0), TimeOut = new DateTime(2017, 4, 14, 14, 0, 0), User = userNikitaMaltsev });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 14), TimeIn = new DateTime(2017, 4, 14, 15, 0, 0), TimeOut = new DateTime(2017, 4, 14, 16, 50, 0), User = userNikitaMaltsev });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 14), TimeIn = new DateTime(2017, 4, 14, 8, 0, 0), TimeOut = new DateTime(2017, 4, 14, 14, 0, 0), User = userNikitaMaltsev });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 14), TimeIn = new DateTime(2017, 4, 14, 15, 0, 0), TimeOut = new DateTime(2017, 4, 14, 16, 50, 0), User = userNikitaMaltsev });
 
 
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 15), TimeIn = new DateTime(2017, 4, 15, 8, 55, 0), TimeOut = new DateTime(2017, 4, 15, 10, 0, 0), User = userNikitaMaltsev });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 15), TimeIn = new DateTime(2017, 4, 15, 10, 55, 0), TimeOut = new DateTime(2017, 4, 15, 12, 50, 0), User = userNikitaMaltsev });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 15), TimeIn = new DateTime(2017, 4, 15, 13, 0, 0), TimeOut = new DateTime(2017, 4, 15, 16, 50, 0), User = userNikitaMaltsev });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 15), TimeIn = new DateTime(2017, 4, 15, 8, 55, 0), TimeOut = new DateTime(2017, 4, 15, 10, 0, 0), User = userNikitaMaltsev });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 15), TimeIn = new DateTime(2017, 4, 15, 10, 55, 0), TimeOut = new DateTime(2017, 4, 15, 12, 50, 0), User = userNikitaMaltsev });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 15), TimeIn = new DateTime(2017, 4, 15, 13, 0, 0), TimeOut = new DateTime(2017, 4, 15, 16, 50, 0), User = userNikitaMaltsev });
 
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 16), TimeIn = new DateTime(2017, 4, 16, 8, 15, 0), TimeOut = new DateTime(2017, 4, 16, 12, 20, 0), User = userNikitaMaltsev });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 16), TimeIn = new DateTime(2017, 4, 16, 12, 50, 0), TimeOut = new DateTime(2017, 4, 16, 16, 20, 0), User = userNikitaMaltsev });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 16), TimeIn = new DateTime(2017, 4, 16, 8, 15, 0), TimeOut = new DateTime(2017, 4, 16, 12, 20, 0), User = userNikitaMaltsev });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 16), TimeIn = new DateTime(2017, 4, 16, 12, 50, 0), TimeOut = new DateTime(2017, 4, 16, 16, 20, 0), User = userNikitaMaltsev });
 
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 17), TimeIn = new DateTime(2017, 4, 17, 8, 40, 0), TimeOut = new DateTime(2017, 4, 17, 10, 20, 0), User = userNikitaMaltsev });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 17), TimeIn = new DateTime(2017, 4, 17, 10, 40, 0), TimeOut = new DateTime(2017, 4, 17, 17, 20, 0), User = userNikitaMaltsev });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 17), TimeIn = new DateTime(2017, 4, 17, 8, 40, 0), TimeOut = new DateTime(2017, 4, 17, 10, 20, 0), User = userNikitaMaltsev });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 17), TimeIn = new DateTime(2017, 4, 17, 10, 40, 0), TimeOut = new DateTime(2017, 4, 17, 17, 20, 0), User = userNikitaMaltsev });
 
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 18), TimeIn = new DateTime(2017, 4, 18, 8, 0, 0), TimeOut = new DateTime(2017, 4, 18, 14, 0, 0), User = userNikitaMaltsev });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 18), TimeIn = new DateTime(2017, 4, 18, 15, 0, 0), TimeOut = new DateTime(2017, 4, 18, 16, 50, 0), User = userNikitaMaltsev });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 18), TimeIn = new DateTime(2017, 4, 18, 8, 0, 0), TimeOut = new DateTime(2017, 4, 18, 14, 0, 0), User = userNikitaMaltsev });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 18), TimeIn = new DateTime(2017, 4, 18, 15, 0, 0), TimeOut = new DateTime(2017, 4, 18, 16, 50, 0), User = userNikitaMaltsev });
 
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 19), TimeIn = new DateTime(2017, 4, 19, 8, 50, 0), TimeOut = new DateTime(2017, 4, 19, 17, 40, 0), User = userNikitaMaltsev }); ;
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 19), TimeIn = new DateTime(2017, 4, 19, 8, 50, 0), TimeOut = new DateTime(2017, 4, 19, 17, 40, 0), User = userNikitaMaltsev }); ;
 
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 20), TimeIn = new DateTime(2017, 4, 20, 8, 55, 0), TimeOut = new DateTime(2017, 4, 20, 10, 0, 0), User = userNikitaMaltsev });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 20), TimeIn = new DateTime(2017, 4, 20, 10, 55, 0), TimeOut = new DateTime(2017, 4, 20, 12, 50, 0), User = userNikitaMaltsev });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 4, 20), TimeIn = new DateTime(2017, 4, 20, 13, 0, 0), TimeOut = new DateTime(2017, 4, 20, 16, 50, 0), User = userNikitaMaltsev });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 20), TimeIn = new DateTime(2017, 4, 20, 8, 55, 0), TimeOut = new DateTime(2017, 4, 20, 10, 0, 0), User = userNikitaMaltsev });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 20), TimeIn = new DateTime(2017, 4, 20, 10, 55, 0), TimeOut = new DateTime(2017, 4, 20, 12, 50, 0), User = userNikitaMaltsev });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 4, 20), TimeIn = new DateTime(2017, 4, 20, 13, 0, 0), TimeOut = new DateTime(2017, 4, 20, 16, 50, 0), User = userNikitaMaltsev });
 
             //Add Absences for Nikita
 
@@ -296,11 +295,11 @@ namespace ActivityTracking.WebClient.Models
 
 
             #region Add Abences and time to user ArtemChuhalo
-            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 5), TimeIn = new DateTime(2017, 3, 5, 8, 0, 0), TimeOut = new DateTime(2017, 3, 5, 16, 20, 0), User = userArtemChuhalo });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 6), TimeIn = new DateTime(2017, 3, 6, 9, 0, 0), TimeOut = new DateTime(2017, 3, 6, 17, 20, 0), User = userArtemChuhalo });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 7), TimeIn = new DateTime(2017, 3, 7, 8, 30, 0), TimeOut = new DateTime(2017, 3, 7, 16, 0, 0), User = userArtemChuhalo });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 8), TimeIn = new DateTime(2017, 3, 8, 8, 50, 0), TimeOut = new DateTime(2017, 3, 8, 16, 40, 0), User = userArtemChuhalo });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 9), TimeIn = new DateTime(2017, 3, 9, 8, 30, 0), TimeOut = new DateTime(2017, 3, 9, 18, 20, 0), User = userArtemChuhalo });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 3, 5), TimeIn = new DateTime(2017, 3, 5, 8, 0, 0), TimeOut = new DateTime(2017, 3, 5, 16, 20, 0), User = userArtemChuhalo });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 3, 6), TimeIn = new DateTime(2017, 3, 6, 9, 0, 0), TimeOut = new DateTime(2017, 3, 6, 17, 20, 0), User = userArtemChuhalo });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 3, 7), TimeIn = new DateTime(2017, 3, 7, 8, 30, 0), TimeOut = new DateTime(2017, 3, 7, 16, 0, 0), User = userArtemChuhalo });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 3, 8), TimeIn = new DateTime(2017, 3, 8, 8, 50, 0), TimeOut = new DateTime(2017, 3, 8, 16, 40, 0), User = userArtemChuhalo });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 3, 9), TimeIn = new DateTime(2017, 3, 9, 8, 30, 0), TimeOut = new DateTime(2017, 3, 9, 18, 20, 0), User = userArtemChuhalo });
 
             // for 5 march
             absenceRepository.Create(new Absence { StartAbsence = new DateTime(2017, 3, 5, 9, 50, 0), EndAbsence = new DateTime(2017, 3, 5, 10, 20, 0), Date = new DateTime(2017, 3, 5), Reason = reasonMeeting, User = userArtemChuhalo });
@@ -335,11 +334,11 @@ namespace ActivityTracking.WebClient.Models
 
             #region Add absences and times for AlexandraMorozova
 
-            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 5), TimeIn = new DateTime(2017, 3, 5, 8, 0, 0), TimeOut = new DateTime(2017, 3, 5, 16, 20, 0), User = userAlexandraMorozova });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 6), TimeIn = new DateTime(2017, 3, 6, 9, 0, 0), TimeOut = new DateTime(2017, 3, 6, 17, 20, 0), User = userAlexandraMorozova });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 7), TimeIn = new DateTime(2017, 3, 7, 8, 30, 0), TimeOut = new DateTime(2017, 3, 7, 16, 0, 0), User = userAlexandraMorozova });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 8), TimeIn = new DateTime(2017, 3, 8, 8, 50, 0), TimeOut = new DateTime(2017, 3, 8, 16, 40, 0), User = userAlexandraMorozova });
-            timeRepository.Create(new Time { Date = new DateTime(2017, 3, 9), TimeIn = new DateTime(2017, 3, 9, 9, 5, 0), TimeOut = new DateTime(2017, 3, 9, 18, 20, 0), User = userAlexandraMorozova });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 3, 5), TimeIn = new DateTime(2017, 3, 5, 8, 0, 0), TimeOut = new DateTime(2017, 3, 5, 16, 20, 0), User = userAlexandraMorozova });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 3, 6), TimeIn = new DateTime(2017, 3, 6, 9, 0, 0), TimeOut = new DateTime(2017, 3, 6, 17, 20, 0), User = userAlexandraMorozova });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 3, 7), TimeIn = new DateTime(2017, 3, 7, 8, 30, 0), TimeOut = new DateTime(2017, 3, 7, 16, 0, 0), User = userAlexandraMorozova });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 3, 8), TimeIn = new DateTime(2017, 3, 8, 8, 50, 0), TimeOut = new DateTime(2017, 3, 8, 16, 40, 0), User = userAlexandraMorozova });
+            timeRepository.Create(new GetUserInfo.UserInfoModel { Date = new DateTime(2017, 3, 9), TimeIn = new DateTime(2017, 3, 9, 9, 5, 0), TimeOut = new DateTime(2017, 3, 9, 18, 20, 0), User = userAlexandraMorozova });
 
             // for 5 march
             absenceRepository.Create(new Absence { StartAbsence = new DateTime(2017, 3, 5, 9, 50, 0), EndAbsence = new DateTime(2017, 3, 5, 10, 20, 0), Date = new DateTime(2017, 3, 5), Reason = reasonMeeting, User = userAlexandraMorozova });

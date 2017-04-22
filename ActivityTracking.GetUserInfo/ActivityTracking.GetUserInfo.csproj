@@ -45,6 +45,12 @@
     <Compile Include="UserInfo.cs" />
     <Compile Include="UserInfoModelcs.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ActivityTracking.DomainModel\ActivityTracking.DomainModel.csproj">
+      <Project>{3a6c6b96-2b71-451a-9cf5-8ba07f766598}</Project>
+      <Name>ActivityTracking.DomainModel</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

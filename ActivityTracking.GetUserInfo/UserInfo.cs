@@ -8,7 +8,6 @@ namespace ActivityTracking.GetUserInfo
 {
     public static class UserInfo
     {
-
         public static UserInfoModel GetUserInformation()
         {
             UserInfoModel userinfo = new UserInfoModel
@@ -16,6 +15,7 @@ namespace ActivityTracking.GetUserInfo
                 Company = "ISD",
                 CommercialExperiance = "5",
                 Department = "IndDep",
+                Division = "Division",
                 FirstName = "Alexandr",
                 HireDate = "1.05.2017",
                 ISDExperiance = "0.5 year",
@@ -27,7 +27,11 @@ namespace ActivityTracking.GetUserInfo
                 Profession = "professor",
                 Role = "manager",
                 Sector = "sector",
-                Title = "title"
+                Title = "title",
+                Times = new List<Time>
+                {
+                   new Time { Date = new DateTime(2017, 3, 5), TimeIn = new DateTime(2017, 3, 5, 8, 0, 0), TimeOut = new DateTime(2017, 3, 5, 16, 20, 0), Login = "Altk" }
+                }
             };
 
             return userinfo;

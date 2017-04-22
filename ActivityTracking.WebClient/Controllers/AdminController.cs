@@ -155,20 +155,23 @@ namespace ActivityTracking.WebClient.Controllers
         [HttpPost]
         public ActionResult ShowUserReport(string Id, DateTime Start, DateTime End)
         {
-            UserInfoModel info = GetUserInfo.UserInfo.GetUserInformation();
+            UserInfoModel info = GetUserInfo.UserInfo.GetUserInformation(login);
 
             ApplicationContext context = new ApplicationContext();
             Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>(context);
             var user = userRepository.GetList().First(u => u.Id == Id);
 
-            Repository<Time> timeRepository = new Repository<Time>(context);
-            var times = timeRepository.GetList().Where(t => t.User.UserName == user.UserName).Where(t => t.Date.Date >= Start && t.Date.Date <= End).GroupBy(t => t.Date).ToArray();
+            Repository<UserInfoModel> timeRepository = new Repository<UserInfoModel>(context);
+
+            var result = info.Times.Where(x => x.Date <= End && Start >= x.Date).ToList();
+
+            //var times = timeRepository.GetList().Where(t => t.Login == user.UserName).Where(t => t.Date.Date >= Start && t.Date.Date <= End).GroupBy(t => t.Date).ToArray();
             Repository<Absence> absenceRepository = new Repository<Absence>(context);
 
             ShowUserReportViewModel model = new ShowUserReportViewModel { Start = Start, End = End, list = new List<ChartViewModel>(), UserInfo = info };
             ArrayList colors = new ArrayList();
 
-            foreach (var timeGroup in times)
+            foreach (var timeGroup in result)
             {
                 var timeGroupToArray = timeGroup.ToArray();
 
