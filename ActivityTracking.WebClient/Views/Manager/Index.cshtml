@@ -12,13 +12,12 @@
 </script>
 
 <h2 class="text-center">Group report</h2>
-<div class=""
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary(true)
 
     <div class="row">       
-        <div class="text-center">
+        <div class="text-center"> 
 
                 @Html.LabelFor(model => model.Start)
 
@@ -103,4 +102,4 @@
            '<b>' + 'Duration: ' + '</b>' + hours + 'hours' + ', ' + minutes + 'minutes' + ', ' + seconds + 'seconds' + '</div>';
     }
 </script>
-<div id="barchart_values"></div>
+<div id="barchart_values" style="height: 400px;"></div>

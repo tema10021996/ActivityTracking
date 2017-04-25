@@ -17,6 +17,8 @@ namespace ActivityTracking.WebClient.Models
 
         [DataType(DataType.Date)]        
         public DateTime End { get; set; }
+
+        public string ChosenGroupName { get; set; }
     }
     public class WorkerInfo
     {

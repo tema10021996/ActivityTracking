@@ -12,7 +12,5 @@ namespace ActivityTracking.GetUserInfo
 
         public DateTime TimeIn { get; set; }
         public DateTime TimeOut { get; set; }
-
-        public UserInfoModel Login { get; set; }
     }
 }

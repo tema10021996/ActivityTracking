@@ -143,6 +143,20 @@ namespace ActivityTracking.WebClient.Controllers
             return RedirectToAction("ShowGroups");
         }
 
+        public ActionResult FindUserReport(string ChosenLogin)
+        {
+            Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>();
+            var users = userRepository.GetList().Where(u => u.UserName == ChosenLogin).ToArray() ;
+            if (users.Length == 1)
+            {
+                var user = users[0];
+                return RedirectToAction("ShowUserReport","Admin", new { user.Id });
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
 
 
         public ActionResult ShowUserReport(string Id)
@@ -155,30 +169,29 @@ namespace ActivityTracking.WebClient.Controllers
         [HttpPost]
         public ActionResult ShowUserReport(string Id, DateTime Start, DateTime End)
         {
-            UserInfoModel info = GetUserInfo.UserInfo.GetUserInformation(login);
+
 
             ApplicationContext context = new ApplicationContext();
             Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>(context);
             var user = userRepository.GetList().First(u => u.Id == Id);
+            UserInfoModel info = GetUserInfo.UserInfo.GetUserInformation(null, user.UserName, Start, End).First();
 
-            Repository<UserInfoModel> timeRepository = new Repository<UserInfoModel>(context);
+            var times = info.WorkTimes.GroupBy(t => t.TimeIn.Date);
 
-            var result = info.Times.Where(x => x.Date <= End && Start >= x.Date).ToList();
-
-            //var times = timeRepository.GetList().Where(t => t.Login == user.UserName).Where(t => t.Date.Date >= Start && t.Date.Date <= End).GroupBy(t => t.Date).ToArray();
+            
             Repository<Absence> absenceRepository = new Repository<Absence>(context);
 
             ShowUserReportViewModel model = new ShowUserReportViewModel { Start = Start, End = End, list = new List<ChartViewModel>(), UserInfo = info };
             ArrayList colors = new ArrayList();
 
-            foreach (var timeGroup in result)
+            foreach (var timeGroup in times)
             {
                 var timeGroupToArray = timeGroup.ToArray();
 
                 DateTime FirstIn = timeGroupToArray[0].TimeIn;
                 DateTime LastOut = timeGroupToArray[timeGroupToArray.Length - 1].TimeOut;
 
-                var absences = absenceRepository.GetList().Where(a => a.User.UserName == user.UserName).Where(a => a.Date == timeGroupToArray[0].Date).ToArray();
+                var absences = absenceRepository.GetList().Where(a => a.User.UserName == user.UserName).Where(a => a.Date == timeGroupToArray[0].TimeIn.Date).ToArray();
                 List<Absence> absencesOutOfBuilding = new List<Absence>();
 
                 if (timeGroupToArray.Length > 1)
@@ -187,11 +200,11 @@ namespace ActivityTracking.WebClient.Controllers
                     {
                         absencesOutOfBuilding.Add(new Absence
                         {
-                            StartAbsence = new DateTime(timeGroupToArray[0].Date.Year, timeGroupToArray[0].Date.Month, timeGroupToArray[0].Date.Day,
+                            StartAbsence = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day,
                                 timeGroupToArray[num].TimeOut.Hour, timeGroupToArray[num].TimeOut.Minute, timeGroupToArray[num].TimeOut.Second),
-                            EndAbsence = new DateTime(timeGroupToArray[0].Date.Year, timeGroupToArray[0].Date.Month, timeGroupToArray[0].Date.Day,
+                            EndAbsence = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day,
                                 timeGroupToArray[num + 1].TimeIn.Hour, timeGroupToArray[num + 1].TimeIn.Minute, timeGroupToArray[num + 1].TimeIn.Second),
-                            Date = new DateTime(timeGroupToArray[0].Date.Year, timeGroupToArray[0].Date.Month, timeGroupToArray[0].Date.Day),
+                            Date = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day),
                             Reason = new Reason { Name = "Out of Work", Color = "#FFFFFF" }
                         });
                     }
@@ -210,11 +223,11 @@ namespace ActivityTracking.WebClient.Controllers
                 var AllAbsencesArray = AllAbsences.OrderBy(a => a.EndAbsence).ToArray();
 
 
-                var tempStartBeforeWork = new DateTime(timeGroupToArray[0].Date.Year, timeGroupToArray[0].Date.Month, timeGroupToArray[0].Date.Day, 0, 0, 0);
-                var tempEndBeforeWork = new DateTime(timeGroupToArray[0].Date.Year, timeGroupToArray[0].Date.Month, timeGroupToArray[0].Date.Day, FirstIn.Hour, FirstIn.Minute, FirstIn.Second);
+                var tempStartBeforeWork = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, 0, 0, 0);
+                var tempEndBeforeWork = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, FirstIn.Hour, FirstIn.Minute, FirstIn.Second);
                 ChartViewModel beforeWork = new ChartViewModel
                 {
-                    RowLabel = timeGroupToArray[0].Date.ToShortDateString(),
+                    RowLabel = timeGroupToArray[0].TimeIn.Date.ToShortDateString(),
                     Barlabel = "Out of Work",
                     StartAbsence = tempStartBeforeWork,
                     EndAbsence = tempEndBeforeWork,
@@ -227,12 +240,12 @@ namespace ActivityTracking.WebClient.Controllers
                 }
                 model.list.Add(beforeWork);
 
-                var tempStartWorkTillFirstAbsence = new DateTime(timeGroupToArray[0].Date.Year, timeGroupToArray[0].Date.Month, timeGroupToArray[0].Date.Day, FirstIn.Hour, FirstIn.Minute, FirstIn.Second);
-                var tempEndWorkTillFirstAbsence = new DateTime(timeGroupToArray[0].Date.Year, timeGroupToArray[0].Date.Month, timeGroupToArray[0].Date.Day,
+                var tempStartWorkTillFirstAbsence = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, FirstIn.Hour, FirstIn.Minute, FirstIn.Second);
+                var tempEndWorkTillFirstAbsence = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day,
                     AllAbsencesArray[0].StartAbsence.Hour, AllAbsencesArray[0].StartAbsence.Minute, AllAbsencesArray[0].StartAbsence.Second);
                 ChartViewModel beginWorkTillFirstAbsence = new ChartViewModel
                 {
-                    RowLabel = timeGroupToArray[0].Date.ToShortDateString(),
+                    RowLabel = timeGroupToArray[0].TimeIn.Date.ToShortDateString(),
                     Barlabel = "Work",
                     StartAbsence = tempStartWorkTillFirstAbsence,
                     EndAbsence = tempEndWorkTillFirstAbsence,
@@ -300,13 +313,13 @@ namespace ActivityTracking.WebClient.Controllers
                     }
 
                 }
-                //DateTime LastAbsenceEndTime = (DateTime)absences[absences.Length - 1].EndAbsence;
+                
 
-                var tempStart = new DateTime(timeGroupToArray[0].Date.Year, timeGroupToArray[0].Date.Month, timeGroupToArray[0].Date.Day, LastOut.Hour, LastOut.Minute, LastOut.Second);
-                var tempEnd = new DateTime(timeGroupToArray[0].Date.Year, timeGroupToArray[0].Date.Month, timeGroupToArray[0].Date.Day, 23, 59, 59);
+                var tempStart = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, LastOut.Hour, LastOut.Minute, LastOut.Second);
+                var tempEnd = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, 23, 59, 59);
                 ChartViewModel afterWork = new ChartViewModel
                 {
-                    RowLabel = timeGroupToArray[0].Date.ToShortDateString(),
+                    RowLabel = timeGroupToArray[0].TimeIn.Date.ToShortDateString(),
                     Barlabel = "Out of Work",
                     StartAbsence = tempStart,
                     EndAbsence = tempEnd,

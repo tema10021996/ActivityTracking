@@ -40,7 +40,7 @@
     </div>
     <div class="col-md-3">
         <p>
-            <b>Manager:</b> @Model.UserInfo.Manage<br>
+            <b>Manager:</b> @Model.UserInfo.Manager<br>
             <b>Hire Date:</b> @Model.UserInfo.HireDate<br>
             <b>ISD Experiance</b>: @Model.UserInfo.ISDExperiance<br>
             <b>Commercial Experiance:</b> @Model.UserInfo.CommercialExperiance
@@ -111,7 +111,7 @@
                 timeline: { groupByRowLabel: true},
                 focusTarget: 'category',
                 colors: colorArray,
-                backgroundColor: '#00FFFF'
+                backgroundColor: '#adbfa6'
             };
             chart.draw(dataTable, options);
         }
@@ -124,7 +124,7 @@
         function createCustomHTMLContentWithComment(userName, reasonName, startHour, startMinute, startSecond, endHour, endMinute, endSecond, durationHours, durationMinutes, durationSeconds, comment){
             return '<div style="padding:20px; width:275px;">'+ '<b>'+userName+'</b>' +'<hr>'+ '<b>'+'Reason: ' +'</b>'+ reasonName + '<br>' +
                 '<b>' + 'Range: '+'</b>' + startHour + 'h, ' + startMinute + 'm, ' + startSecond + 's - ' +  endHour + 'h, ' + endMinute + 'm, ' + endSecond + 's' + '<br>' +
-               '<b>' + 'Duration: '+'</b>'+ durationHours +'hours'+ ', ' + durationMinutes + 'minutes' + ', ' + durationSeconds + 'seconds' + '<br>' +'<b>' + 'Comment: ' +'</b>' +comment +'</div>';
+               '<b>' + 'Duration: '+'</b>'+ durationHours +'hours'+ ', ' + durationMinutes + 'minutes' + ', ' + durationSeconds + 'seconds' + '<br>' +'<b style = "color:red">' + 'Comment: ' +'</b>' +comment +'</div>';
         }
 
 </script>

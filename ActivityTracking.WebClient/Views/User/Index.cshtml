@@ -1,67 +1,96 @@
-﻿@model  IEnumerable <ActivityTracking.WebClient.Models.ChartViewModel>
+﻿@model  ActivityTracking.WebClient.Models.ShowUserReportViewModel
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
-<h2>User report</h2>
+<script>
+    var colorArray = JSON.parse('@ViewBag.Colors');
+</script>
+<h2 class="text-center">User report</h2>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div class="row">
+        <div class="text-center">
+
+            @Html.LabelFor(model => model.Start)
+
+            @Html.EditorFor(model => model.Start)
+
+            @Html.LabelFor(model => model.End)
+
+            @Html.EditorFor(model => model.End)
+
+            <button type="submit" class="btn btn-primary btn-sm">Apply</button>
+        </div>
+    </div>
+
+}
+<br>
+
 <script type="text/javascript">
-    google.charts.load("current", { packages: ["timeline"] });
-    google.charts.setOnLoadCallback(drawChart);
-    function drawChart() {
-        var container = document.getElementById('container');
-        var chart = new google.visualization.Timeline(container);
-        var dataTable = new google.visualization.DataTable();
+        google.charts.load("current", { packages: ["timeline"] });
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var container = document.getElementById('container');
+            var chart = new google.visualization.Timeline(container);
+            var dataTable = new google.visualization.DataTable();
 
-        dataTable.addColumn({ type: 'string', id: 'Row label' });
-        dataTable.addColumn({ type: 'string', id: 'Bar label ' });
-        dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
-        dataTable.addColumn({ type: 'date', id: 'Start' });
-        dataTable.addColumn({ type: 'date', id: 'End' });
+            dataTable.addColumn({ type: 'string', id: 'Row label' });
+            dataTable.addColumn({ type: 'string', id: 'Bar label ' });
+            dataTable.addColumn({ type: 'string', role: 'tooltip', p: {'html': true}});
+            dataTable.addColumn({ type: 'date', id: 'Start' });
+            dataTable.addColumn({ type: 'date', id: 'End' });
 
 
 
-        @foreach (var t in Model)
+            @foreach (var t in Model.list)
         {
             if (t.Comment == null)
             {
                 <text>
-        dataTable.addRow(['@t.RowLabel', '@t.Barlabel', createCustomHTMLContentWithoutComment('@t.RowLabel', '@t.Barlabel', '@t.StartAbsence.Hour', '@t.StartAbsence.Minute','@t.StartAbsence.Second',
-            '@t.EndAbsence.Hour', '@t.EndAbsence.Minute', '@t.EndAbsence.Second', @t.Duration.Hours, @t.Duration.Minutes, @t.Duration.Seconds),
-                new Date(0, 0, 0, @t.StartAbsence.Hour, @t.StartAbsence.Minute, @t.StartAbsence.Second), new Date(0, 0, 0, @t.EndAbsence.Hour, @t.EndAbsence.Minute, @t.EndAbsence.Second)]);
-                </text>
+            dataTable.addRow(['@t.RowLabel', '@t.Barlabel', createCustomHTMLContentWithoutComment('@t.RowLabel', '@t.Barlabel', '@t.StartAbsence.Hour', '@t.StartAbsence.Minute','@t.StartAbsence.Second',
+                '@t.EndAbsence.Hour', '@t.EndAbsence.Minute', '@t.EndAbsence.Second', @t.Duration.Hours, @t.Duration.Minutes, @t.Duration.Seconds),
+                    new Date(0, 0, 0, @t.StartAbsence.Hour, @t.StartAbsence.Minute, @t.StartAbsence.Second), new Date(0, 0, 0, @t.EndAbsence.Hour, @t.EndAbsence.Minute, @t.EndAbsence.Second)]);
+            </text>
             }
             else
             {
                 <text>
-        dataTable.addRow(['@t.RowLabel', '@t.Barlabel', createCustomHTMLContentWithComment('@t.RowLabel', '@t.Barlabel', '@t.StartAbsence.Hour', '@t.StartAbsence.Minute','@t.StartAbsence.Second',
-    '@t.EndAbsence.Hour', '@t.EndAbsence.Minute', '@t.EndAbsence.Second', '@t.Duration.Hours', '@t.Duration.Minutes', '@t.Duration.Seconds', '@t.Comment'),
-                new Date(0, 0, 0, @t.StartAbsence.Hour, @t.StartAbsence.Minute, @t.StartAbsence.Second), new Date(0, 0, 0, @t.EndAbsence.Hour, @t.EndAbsence.Minute, @t.EndAbsence.Second)]);
-                </text>
+            dataTable.addRow(['@t.RowLabel', '@t.Barlabel', createCustomHTMLContentWithComment('@t.RowLabel', '@t.Barlabel', '@t.StartAbsence.Hour', '@t.StartAbsence.Minute','@t.StartAbsence.Second',
+        '@t.EndAbsence.Hour', '@t.EndAbsence.Minute', '@t.EndAbsence.Second', '@t.Duration.Hours', '@t.Duration.Minutes', '@t.Duration.Seconds', '@t.Comment'),
+                    new Date(0, 0, 0, @t.StartAbsence.Hour, @t.StartAbsence.Minute, @t.StartAbsence.Second), new Date(0, 0, 0, @t.EndAbsence.Hour, @t.EndAbsence.Minute, @t.EndAbsence.Second)]);
+            </text>
             }
         }
 
-        var options = {
-            tooltip: {isHtml: true},
-            timeline: { groupByRowLabel: true},
-            focusTarget: 'category'
-        };
-        chart.draw(dataTable, options);
-    }
-    function createCustomHTMLContentWithoutComment(userName, reasonName, startHour, startMinute, startSecond, endHour, endMinute, endSecond, durationHours, durationMinutes, durationSeconds){
-        return '<div style="padding:20px; width:375px;">'+ '<b>'+userName+'</b>' +'<hr>'+ '<b>'+'Reason: ' +'</b>'+ reasonName + '<br>' +
-           '<b>' + 'Range: '+'</b>' + startHour + 'h, ' + startMinute + 'm, ' + startSecond + 's - ' +  endHour + 'h, ' + endMinute + 'm, ' + endSecond + 's' + '<br>' + 
-           '<b>' + 'Duration: '+'</b>'+ durationHours +'hours'+ ', ' + durationMinutes + 'minutes' + ', ' + durationSeconds + 'seconds' + '</div>';
-    }
+            var options = {
+                tooltip: {isHtml: true},
+                timeline: { groupByRowLabel: true},
+                focusTarget: 'category',
+                colors: colorArray,
+                backgroundColor: '#adbfa6'
+            };
+            chart.draw(dataTable, options);
+        }
+        function createCustomHTMLContentWithoutComment(userName, reasonName, startHour, startMinute, startSecond, endHour, endMinute, endSecond, durationHours, durationMinutes, durationSeconds){
+            return '<div style="padding:20px; width:375px;">'+ '<b>'+userName+'</b>' +'<hr>'+ '<b>'+'Reason: ' +'</b>'+ reasonName + '<br>' +
+               '<b>' + 'Range: '+'</b>' + startHour + 'h, ' + startMinute + 'm, ' + startSecond + 's - ' +  endHour + 'h, ' + endMinute + 'm, ' + endSecond + 's' + '<br>' +
+               '<b>' + 'Duration: '+'</b>'+ durationHours +'hours'+ ', ' + durationMinutes + 'minutes' + ', ' + durationSeconds + 'seconds' + '</div>';
+        }
 
-    function createCustomHTMLContentWithComment(userName, reasonName, startHour, startMinute, startSecond, endHour, endMinute, endSecond, durationHours, durationMinutes, durationSeconds, comment){
-        return '<div style="padding:20px; width:275px;">'+ '<b>'+userName+'</b>' +'<hr>'+ '<b>'+'Reason: ' +'</b>'+ reasonName + '<br>' +
-            '<b>' + 'Range: '+'</b>' + startHour + 'h, ' + startMinute + 'm, ' + startSecond + 's - ' +  endHour + 'h, ' + endMinute + 'm, ' + endSecond + 's' + '<br>' +
-           '<b>' + 'Duration: '+'</b>'+ durationHours +'hours'+ ', ' + durationMinutes + 'minutes' + ', ' + durationSeconds + 'seconds' + '<br>' +'<b>' + 'Comment: ' +'</b>' +comment +'</div>';
-    }
+        function createCustomHTMLContentWithComment(userName, reasonName, startHour, startMinute, startSecond, endHour, endMinute, endSecond, durationHours, durationMinutes, durationSeconds, comment){
+            return '<div style="padding:20px; width:275px;">'+ '<b>'+userName+'</b>' +'<hr>'+ '<b>'+'Reason: ' +'</b>'+ reasonName + '<br>' +
+                '<b>' + 'Range: '+'</b>' + startHour + 'h, ' + startMinute + 'm, ' + startSecond + 's - ' +  endHour + 'h, ' + endMinute + 'm, ' + endSecond + 's' + '<br>' +
+               '<b>' + 'Duration: '+'</b>'+ durationHours +'hours'+ ', ' + durationMinutes + 'minutes' + ', ' + durationSeconds + 'seconds' + '<br>' +'<b style = "color:red">' + 'Comment: ' +'</b>' +comment +'</div>';
+        }
 
 </script>
 
 <div id="container" style="height: 400px;"></div>
+
+
 

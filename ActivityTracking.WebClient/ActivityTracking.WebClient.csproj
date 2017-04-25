@@ -414,10 +414,6 @@
       <Project>{0b0ece86-ca90-495d-934e-68e9a416f792}</Project>
       <Name>ActivityTracking.GetUserInfo</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ActivityTracking.Models\ActivityTracking.Models.csproj">
-      <Project>{f55eb3f1-e35e-460e-be25-a395c72ad473}</Project>
-      <Name>ActivityTracking.Models</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

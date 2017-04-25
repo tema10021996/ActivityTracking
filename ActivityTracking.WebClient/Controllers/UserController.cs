@@ -6,85 +6,191 @@ using System.Web.Mvc;
 using ActivityTracking.WebClient.Models;
 using ActivityTracking.DAL.EntityFramework;
 using ActivityTracking.DomainModel;
+using ActivityTracking.GetUserInfo;
+using System.Collections;
 
 namespace ActivityTracking.WebClient.Controllers
 {
     public class UserController : Controller
     {
-        
+
         public ActionResult Index()
         {
+            DateTime End = DateTime.Now.AddDays(-1).Date;
+            DateTime Start = DateTime.Now.AddDays(-8).Date;
+            return Index(Start, End);
+        }
+
+        [HttpPost]
+        public ActionResult Index(DateTime Start, DateTime End)
+        {
+
+
             ApplicationContext context = new ApplicationContext();
-            Repository<Time> timeRepository = new Repository<Time>(context);
-            var times = timeRepository.GetList().Where(t => t.User.UserName == HttpContext.User.Identity.Name).ToArray();
+            Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>(context);
+            var user = userRepository.GetList().First(u => u.UserName == HttpContext.User.Identity.Name);
+
+            UserInfoModel info = GetUserInfo.UserInfo.GetUserInformation(null, user.UserName, Start, End).First();
+            var times = info.WorkTimes.GroupBy(t => t.TimeIn.Date);
+
+
             Repository<Absence> absenceRepository = new Repository<Absence>(context);
-            
-            List<ChartViewModel> list = new List<ChartViewModel>();
 
-            for (int i = 0; i < times.Length; i++)
+            ShowUserReportViewModel model = new ShowUserReportViewModel { Start = Start, End = End, list = new List<ChartViewModel>(), UserInfo = info };
+            ArrayList colors = new ArrayList();
+
+            foreach (var timeGroup in times)
             {
-                var absences = absenceRepository.GetList().Where(a => a.User.UserName == HttpContext.User.Identity.Name).Where(a=>a.Date == times[i].Date).ToArray();
+                var timeGroupToArray = timeGroup.ToArray();
 
-                var tempStartAbsence = new DateTime(times[i].Date.Year, times[i].Date.Month, times[i].Date.Day, 0, 0, 0);
-                var tempEndAbsence = new DateTime(times[i].Date.Year, times[i].Date.Month, times[i].Date.Day, absences[0].StartAbsence.Hour, absences[0].StartAbsence.Minute, absences[0].StartAbsence.Second);
-                ChartViewModel beginTv = new ChartViewModel
-                { RowLabel = HttpContext.User.Identity.Name + " " + times[i].Date.ToShortDateString(),
+                DateTime FirstIn = timeGroupToArray[0].TimeIn;
+                DateTime LastOut = timeGroupToArray[timeGroupToArray.Length - 1].TimeOut;
+
+                var absences = absenceRepository.GetList().Where(a => a.User.UserName == user.UserName).Where(a => a.Date == timeGroupToArray[0].TimeIn.Date).ToArray();
+                List<Absence> absencesOutOfBuilding = new List<Absence>();
+
+                if (timeGroupToArray.Length > 1)
+                {
+                    for (int num = 0; num < timeGroupToArray.Length - 1; num++)
+                    {
+                        absencesOutOfBuilding.Add(new Absence
+                        {
+                            StartAbsence = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day,
+                                timeGroupToArray[num].TimeOut.Hour, timeGroupToArray[num].TimeOut.Minute, timeGroupToArray[num].TimeOut.Second),
+                            EndAbsence = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day,
+                                timeGroupToArray[num + 1].TimeIn.Hour, timeGroupToArray[num + 1].TimeIn.Minute, timeGroupToArray[num + 1].TimeIn.Second),
+                            Date = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day),
+                            Reason = new Reason { Name = "Out of Work", Color = "#FFFFFF" }
+                        });
+                    }
+                }
+
+                List<Absence> AllAbsences = new List<Absence>();
+                foreach (var abs in absences)
+                {
+                    AllAbsences.Add(abs);
+                }
+                foreach (var abs in absencesOutOfBuilding)
+                {
+                    AllAbsences.Add(abs);
+                }
+
+                var AllAbsencesArray = AllAbsences.OrderBy(a => a.EndAbsence).ToArray();
+
+
+                var tempStartBeforeWork = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, 0, 0, 0);
+                var tempEndBeforeWork = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, FirstIn.Hour, FirstIn.Minute, FirstIn.Second);
+                ChartViewModel beforeWork = new ChartViewModel
+                {
+                    RowLabel = timeGroupToArray[0].TimeIn.Date.ToShortDateString(),
                     Barlabel = "Out of Work",
-                    StartAbsence = tempStartAbsence,
-                    EndAbsence = tempEndAbsence,
-                    Duration = tempEndAbsence - tempStartAbsence,
+                    StartAbsence = tempStartBeforeWork,
+                    EndAbsence = tempEndBeforeWork,
+                    Duration = tempEndBeforeWork - tempStartBeforeWork,
                     Comment = null
                 };
-                list.Add(beginTv);
-
-                for (int j = 0; j < absences.Length; j++)
+                if (!colors.Contains("#FFFFFF"))
                 {
-                    DateTime endAbsence = (DateTime)absences[j].EndAbsence;
+                    colors.Add("#FFFFFF");
+                }
+                model.list.Add(beforeWork);
+
+                var tempStartWorkTillFirstAbsence = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, FirstIn.Hour, FirstIn.Minute, FirstIn.Second);
+                var tempEndWorkTillFirstAbsence = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day,
+                    AllAbsencesArray[0].StartAbsence.Hour, AllAbsencesArray[0].StartAbsence.Minute, AllAbsencesArray[0].StartAbsence.Second);
+                ChartViewModel beginWorkTillFirstAbsence = new ChartViewModel
+                {
+                    RowLabel = timeGroupToArray[0].TimeIn.Date.ToShortDateString(),
+                    Barlabel = "Work",
+                    StartAbsence = tempStartWorkTillFirstAbsence,
+                    EndAbsence = tempEndWorkTillFirstAbsence,
+                    Duration = tempEndWorkTillFirstAbsence - tempStartWorkTillFirstAbsence,
+                    Comment = null
+                };
+                if (!colors.Contains("#0000FF"))
+                {
+                    colors.Add("#0000FF");
+                }
+                model.list.Add(beginWorkTillFirstAbsence);
+
+                for (int j = 0; j < AllAbsencesArray.Length; j++)
+                {
+                    DateTime endAbsence = (DateTime)AllAbsencesArray[j].EndAbsence;
                     ChartViewModel tv = new ChartViewModel
                     {
-                        RowLabel = HttpContext.User.Identity.Name + " " + absences[j].Date.ToShortDateString(),
-                        Barlabel = absences[j].Reason.Name,
-                        StartAbsence = absences[j].StartAbsence,
+                        RowLabel = AllAbsencesArray[j].Date.ToShortDateString(),
+                        Barlabel = AllAbsencesArray[j].Reason.Name,
+                        StartAbsence = AllAbsencesArray[j].StartAbsence,
                         EndAbsence = endAbsence,
-                        Duration = endAbsence - absences[j].StartAbsence,
-                        Comment = absences[j].Comment
+                        Duration = endAbsence - AllAbsencesArray[j].StartAbsence,
+                        Comment = AllAbsencesArray[j].Comment
                     };
-                    list.Add(tv);
-                    if (j != absences.Length - 1)
+                    if (!colors.Contains(AllAbsencesArray[j].Reason.Color))
+                    {
+                        colors.Add(AllAbsencesArray[j].Reason.Color);
+                    }
+                    model.list.Add(tv);
+                    if (j != AllAbsencesArray.Length - 1)
                     {
                         ChartViewModel gapTv = new ChartViewModel
                         {
 
-                            RowLabel = HttpContext.User.Identity.Name + " " + absences[j].Date.ToShortDateString(),
+                            RowLabel = AllAbsencesArray[j].Date.ToShortDateString(),
                             Barlabel = "Work",
                             StartAbsence = endAbsence,
-                            EndAbsence = absences[j + 1].StartAbsence,
-                            Duration = absences[j + 1].StartAbsence - endAbsence,
+                            EndAbsence = AllAbsencesArray[j + 1].StartAbsence,
+                            Duration = AllAbsencesArray[j + 1].StartAbsence - endAbsence,
                             Comment = null
                         };
-                        list.Add(gapTv);
+                        if (!colors.Contains("#0000FF"))
+                        {
+                            colors.Add("#0000FF");
+                        }
+                        model.list.Add(gapTv);
+                    }
+                    else
+                    {
+                        ChartViewModel gapTv = new ChartViewModel
+                        {
+
+                            RowLabel = AllAbsencesArray[j].Date.ToShortDateString(),
+                            Barlabel = "Work",
+                            StartAbsence = endAbsence,
+                            EndAbsence = LastOut,
+                            Duration = LastOut - endAbsence,
+                            Comment = null
+                        };
+                        if (!colors.Contains("#0000FF"))
+                        {
+                            colors.Add("#0000FF");
+                        }
+                        model.list.Add(gapTv);
                     }
 
                 }
-                DateTime endAbsenceforEndTv = (DateTime)absences[absences.Length - 1].EndAbsence;
 
-                var tempStart = new DateTime(times[i].Date.Year, times[i].Date.Month, times[i].Date.Day, endAbsenceforEndTv.Hour, endAbsenceforEndTv.Minute, endAbsenceforEndTv.Second);
-                var tempEnd = new DateTime(times[i].Date.Year, times[i].Date.Month, times[i].Date.Day, 23, 59, 59);
-                ChartViewModel endTv = new ChartViewModel
+
+                var tempStart = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, LastOut.Hour, LastOut.Minute, LastOut.Second);
+                var tempEnd = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, 23, 59, 59);
+                ChartViewModel afterWork = new ChartViewModel
                 {
-                    RowLabel = HttpContext.User.Identity.Name + " " + times[i].Date.ToShortDateString(),
+                    RowLabel = timeGroupToArray[0].TimeIn.Date.ToShortDateString(),
                     Barlabel = "Out of Work",
                     StartAbsence = tempStart,
                     EndAbsence = tempEnd,
                     Duration = tempEnd - tempStart,
                     Comment = null
                 };
-                list.Add(endTv);
-                
+                if (!colors.Contains("#FFFFFF"))
+                {
+                    colors.Add("#FFFFFF");
+                }
+                model.list.Add(afterWork);
+
             }
-
-
-            return View(list);
+            string dataStr = Newtonsoft.Json.JsonConvert.SerializeObject(colors, Newtonsoft.Json.Formatting.None);
+            ViewBag.Colors = new HtmlString(dataStr);
+            return View(model);
         }
     }
 }

@@ -21,11 +21,21 @@ namespace ActivityTracking.GetUserInfo
         public string Title { get; set; }
         public string Position { get; set; }
         public string Role { get; set; }
-        public string Manage { get; set; }
+        public string Manager { get; set; }
         public string HireDate { get; set; }
         public string ISDExperiance { get; set; }
         public string CommercialExperiance { get; set; }
 
-        public List<Time> Times { get; set; }
-    }        
+        public List<WorkTime> WorkTimes { get; set; }
+    }
+
+    public class WorkTime
+    {
+        public DateTime TimeIn { get; set; }
+        public DateTime TimeOut { get; set; }
+        public string SessionType { get; set; }
+        public int EmpID { get; set; }
+    }
+
+
 }
