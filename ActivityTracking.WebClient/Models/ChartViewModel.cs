@@ -26,5 +26,7 @@ namespace ActivityTracking.WebClient.Models
 
         [DataType(DataType.Date)]
         public DateTime End { get; set; }
+
+        public int DaysCount { get; set; }
     }
 }

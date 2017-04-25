@@ -8,7 +8,6 @@
 <script>
     var colorArray = JSON.parse('@ViewBag.Colors');
 </script>
-<h2 class="text-center">Report for user @ViewBag.User</h2>
 
 <div class="row alert alert-success" style="margin-top:20px; color:black; font-size:medium">
     <div class="col-md-3">
@@ -111,7 +110,8 @@
                 timeline: { groupByRowLabel: true},
                 focusTarget: 'category',
                 colors: colorArray,
-                backgroundColor: '#adbfa6'
+                backgroundColor: '#adbfa6',
+                height: @Model.DaysCount*41+110
             };
             chart.draw(dataTable, options);
         }
@@ -129,7 +129,7 @@
 
 </script>
 
-<div id="container" style="height: 400px;"></div>
+<div id="container"></div>
 
 
 

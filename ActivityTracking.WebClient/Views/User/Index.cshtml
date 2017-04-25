@@ -8,8 +8,7 @@
 <script>
     var colorArray = JSON.parse('@ViewBag.Colors');
 </script>
-<h2 class="text-center">User report</h2>
-@using (Html.BeginForm())
+@using (Html.BeginForm("Index", "User", FormMethod.Post, new { style = "margin: 20px;" }))
 {
     @Html.ValidationSummary(true)
 
@@ -72,7 +71,8 @@
                 timeline: { groupByRowLabel: true},
                 focusTarget: 'category',
                 colors: colorArray,
-                backgroundColor: '#adbfa6'
+                backgroundColor: '#adbfa6',
+                height: @Model.DaysCount*41+110
             };
             chart.draw(dataTable, options);
         }
@@ -90,7 +90,7 @@
 
 </script>
 
-<div id="container" style="height: 400px;"></div>
+<div id="container"></div>
 
 
 

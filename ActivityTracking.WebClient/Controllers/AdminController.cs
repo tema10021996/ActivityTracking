@@ -162,7 +162,7 @@ namespace ActivityTracking.WebClient.Controllers
         public ActionResult ShowUserReport(string Id)
         {
             DateTime End = DateTime.Now.AddDays(-1).Date;
-            DateTime Start = DateTime.Now.AddDays(-8).Date;
+            DateTime Start = DateTime.Now.AddDays(-7).Date;
             return ShowUserReport(Id, Start, End);
         }
 
@@ -181,8 +181,33 @@ namespace ActivityTracking.WebClient.Controllers
             
             Repository<Absence> absenceRepository = new Repository<Absence>(context);
 
-            ShowUserReportViewModel model = new ShowUserReportViewModel { Start = Start, End = End, list = new List<ChartViewModel>(), UserInfo = info };
+            ShowUserReportViewModel model = new ShowUserReportViewModel { Start = Start, End = End, list = new List<ChartViewModel>(), UserInfo = info, DaysCount = (End - Start).Days };
             ArrayList colors = new ArrayList();
+
+            for (DateTime start = Start; start <= End; start = start.AddDays(1))
+            {
+                var tempTimes = info.WorkTimes.Where(t => t.TimeIn.Date == start).ToArray();
+                if (tempTimes.Length == 0)
+                {
+                    ChartViewModel notWorkThisDay = new ChartViewModel
+                    {
+                        RowLabel = start.Date.ToShortDateString(),
+                        Barlabel = "Out of Work",
+                        StartAbsence = new DateTime(start.Year, start.Month, start.Day, 0, 0, 0),
+                        EndAbsence = new DateTime(start.Year, start.Month, start.Day, 23, 59, 59),
+                        Duration = new DateTime(start.Year, start.Month, start.Day, 23, 59, 59) - new DateTime(start.Year, start.Month, start.Day, 0, 0, 0),
+                        Comment = null
+                    };
+                    if (!colors.Contains("#FFFFFF"))
+                    {
+                        colors.Add("#FFFFFF");
+                    }
+                    model.list.Add(notWorkThisDay);
+
+                }
+
+            }
+
 
             foreach (var timeGroup in times)
             {

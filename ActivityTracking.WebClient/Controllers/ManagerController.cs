@@ -214,7 +214,7 @@ namespace ActivityTracking.WebClient.Controllers
         public ActionResult ShowUserReport(string Id)
         {
             DateTime End = DateTime.Now.AddDays(-1).Date;
-            DateTime Start = DateTime.Now.AddDays(-8).Date;
+            DateTime Start = DateTime.Now.AddDays(-7).Date;
             return ShowUserReport(Id, Start, End);
         }
 
@@ -225,15 +225,40 @@ namespace ActivityTracking.WebClient.Controllers
 
             ApplicationContext context = new ApplicationContext();
             Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>(context);
-             var user = userRepository.GetList().First(u => u.Id == Id);
+            var user = userRepository.GetList().First(u => u.Id == Id);
 
             UserInfoModel info = GetUserInfo.UserInfo.GetUserInformation(null, user.UserName, Start, End).First();
             
             var times = info.WorkTimes.GroupBy(t=>t.TimeIn.Date);
             Repository<Absence> absenceRepository = new Repository<Absence>(context);
 
-            ShowUserReportViewModel model = new ShowUserReportViewModel {Start = Start, End = End, list = new List<ChartViewModel>(), UserInfo = info };
+            ShowUserReportViewModel model = new ShowUserReportViewModel {Start = Start, End = End, list = new List<ChartViewModel>(), UserInfo = info, DaysCount = (End-Start).Days };
             ArrayList colors = new ArrayList();
+
+
+            for (DateTime start = Start; start <= End; start=start.AddDays(1))
+            {
+                var tempTimes = info.WorkTimes.Where(t => t.TimeIn.Date == start).ToArray();
+                if (tempTimes.Length == 0)
+                {
+                    ChartViewModel notWorkThisDay = new ChartViewModel
+                    {
+                        RowLabel = start.Date.ToShortDateString(),
+                        Barlabel = "Out of Work",
+                        StartAbsence = new DateTime(start.Year, start.Month, start.Day, 0, 0,0),
+                        EndAbsence = new DateTime(start.Year, start.Month, start.Day, 23,59,59),
+                        Duration = new DateTime(start.Year, start.Month, start.Day, 23, 59, 59) - new DateTime(start.Year, start.Month, start.Day, 0, 0, 0),
+                        Comment = null
+                    };
+                    if (!colors.Contains("#FFFFFF"))
+                    {
+                        colors.Add("#FFFFFF");
+                    }
+                    model.list.Add(notWorkThisDay);
+
+                }
+
+            }
 
             foreach (var timeGroup in times)
             {
@@ -387,7 +412,7 @@ namespace ActivityTracking.WebClient.Controllers
                     }
 
                 }
-                //DateTime LastAbsenceEndTime = (DateTime)absences[absences.Length - 1].EndAbsence;
+                
 
                 var tempStart = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, LastOut.Hour, LastOut.Minute, LastOut.Second);
                 var tempEnd = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, 23, 59, 59);
