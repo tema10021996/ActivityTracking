@@ -10,7 +10,7 @@ namespace ActivityTracking.GetUserInfo
     {
         public static List<UserInfoModel> GetUserInformation(string groupName, string login, DateTime Start, DateTime End)
         {
-            List<UserInfoModel> returnInformaion = new List<UserInfoModel>();
+            List<UserInfoModel> returnUsersInformaion = new List<UserInfoModel>();
 
             List<WorkTime> list = new List<WorkTime>
                 {
@@ -62,7 +62,7 @@ namespace ActivityTracking.GetUserInfo
                     Title = "title",
                     WorkTimes = list.Where(u=>u.TimeIn.Date >= Start && u.TimeIn.Date <= End).ToList()
                 };
-                returnInformaion.Add(userinfo);
+                returnUsersInformaion.Add(userinfo);
             }
 
             else
@@ -87,11 +87,11 @@ namespace ActivityTracking.GetUserInfo
                     Title = "title",
                     WorkTimes = list.Where(u => u.TimeIn.Date >= Start && u.TimeIn.Date <= End).ToList()
                 };
-                returnInformaion.Add(userinfo);
+                returnUsersInformaion.Add(userinfo);
 
             }
             
-            return returnInformaion;
+            return returnUsersInformaion;
             
         }
     }

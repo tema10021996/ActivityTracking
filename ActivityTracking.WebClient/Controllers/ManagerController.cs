@@ -85,6 +85,8 @@ namespace ActivityTracking.WebClient.Controllers
                 viewModel.ReasonsNames.Add(reason.Name);
             }
 
+
+
             foreach (var user in group.Users.OrderBy(u => u.UserName))
             {                
                 

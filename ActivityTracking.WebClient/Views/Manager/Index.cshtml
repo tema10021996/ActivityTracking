@@ -84,13 +84,15 @@
         }
         var options = {
             isStacked: 'percent',
-            legend: { position: 'top' },
+            legend:  {position: 'top', textStyle: {fontSize: 16} },
             hAxis: {
                 minValue: 0,
                 ticks: [0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1]
             },
             colors: colorArray,
             tooltip: { isHtml: true },
+            height: @Model.WorkersInfos.Count*50,
+            chartArea: {top: 50, left:150, width: 900}
         };
 
         var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
@@ -102,4 +104,5 @@
            '<b>' + 'Duration: ' + '</b>' + hours + 'hours' + ', ' + minutes + 'minutes' + ', ' + seconds + 'seconds' + '</div>';
     }
 </script>
-<div id="barchart_values" style="height: 400px;"></div>
+
+    <div id="barchart_values" ></div>
