@@ -24,3 +24,6 @@ C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DesktopClie
 C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DesktopClient\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DesktopClient\bin\Debug\ru\EntityFramework.resources.dll
 C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DesktopClient\bin\Debug\ru\EntityFramework.SqlServer.resources.dll
+D:\Игры\ActivityTracking\ActivityTracking.DesktopClient\bin\Debug\ActivityTracking.DesktopClient.exe.config
+D:\Игры\ActivityTracking\ActivityTracking.DesktopClient\obj\Debug\ActivityTracking.DesktopClient.exe
+D:\Игры\ActivityTracking\ActivityTracking.DesktopClient\obj\Debug\ActivityTracking.DesktopClient.pdb

@@ -47,6 +47,10 @@
     <Compile Include="UserInfoModels.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ActivityTracking.DAL.EntityFramework\ActivityTracking.DAL.EntityFramework.csproj">
+      <Project>{a76f7746-d072-43df-ba3d-e1e771f4afc3}</Project>
+      <Name>ActivityTracking.DAL.EntityFramework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ActivityTracking.DomainModel\ActivityTracking.DomainModel.csproj">
       <Project>{3a6c6b96-2b71-451a-9cf5-8ba07f766598}</Project>
       <Name>ActivityTracking.DomainModel</Name>

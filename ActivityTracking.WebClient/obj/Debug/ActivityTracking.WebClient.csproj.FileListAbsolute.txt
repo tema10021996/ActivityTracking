@@ -435,7 +435,6 @@ D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.Web
 D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.DAL.EntityFramework.dll
 D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.DomainModel.dll
 D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.GetUserInfo.dll
-D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.Models.dll
 D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\Antlr3.Runtime.dll
 D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\EntityFramework.dll
 D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\EntityFramework.SqlServer.dll
@@ -469,7 +468,6 @@ D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\WebGrease.dll
 D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.DAL.EntityFramework.pdb
 D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.DomainModel.pdb
 D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.GetUserInfo.pdb
-D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\ActivityTracking.Models.pdb
 D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\EntityFramework.xml
 D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\EntityFramework.SqlServer.xml
 D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\Microsoft.AI.DependencyCollector.xml

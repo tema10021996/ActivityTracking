@@ -223,8 +223,6 @@ namespace ActivityTracking.WebClient.Controllers
         [HttpPost]
         public ActionResult ShowUserReport(string Id, DateTime Start, DateTime End)
         {
-           
-
             ApplicationContext context = new ApplicationContext();
             Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>(context);
             var user = userRepository.GetList().First(u => u.Id == Id);
