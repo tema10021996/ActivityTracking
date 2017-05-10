@@ -28,5 +28,7 @@ namespace ActivityTracking.WebClient.Models
         public DateTime End { get; set; }
 
         public int DaysCount { get; set; }
+
+        public string ChosenLogin { get; set; }
     }
 }

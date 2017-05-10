@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ActivityTracking.DomainModel;
+using ActivityTracking.DAL.EntityFramework;
 
 namespace ActivityTracking.GetUserInfo
 {
@@ -91,8 +93,27 @@ namespace ActivityTracking.GetUserInfo
 
             }
             
-            return returnUsersInformaion;
-            
+            return returnUsersInformaion;            
+        }
+
+        public static List<UserGroup> GetUserGroup(string login)
+        {
+
+            List<UserGroup> returnusergroups = new List<UserGroup>
+            {
+                new UserGroup {Login = "AlexanderTkachuk" }
+            };
+
+            List<Department> list = new List<Department>
+            {
+                new Department {MayAbsentTime = new TimeSpan(00, 02, 00), Name = "Group1" },
+                new Department {MayAbsentTime = new TimeSpan(00, 02, 00), Name = "Group2" },
+                new Department {MayAbsentTime = new TimeSpan(00, 02, 00), Name = "Group3" }
+            };
+
+            //returnusergroups = returnusergroups.Where(x => x.Login == login);
+
+            return returnusergroups;
         }
     }
 }

@@ -7,6 +7,8 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Data.Entity;
 using ActivityTracking.DAL.EntityFramework;
+using System.Web.Http;
+using System.Web.Routing;
 
 namespace ActivityTracking.WebClient
 {
@@ -14,13 +16,14 @@ namespace ActivityTracking.WebClient
     {
         protected void Application_Start()
         {
+            GlobalConfiguration.Configure(WebApiConfig.Register);
+
             Database.SetInitializer<ApplicationContext>(new Models.DbInitializer());
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
-
+            BundleConfig.RegisterBundles(BundleTable.Bundles);            
         }
     }
 }

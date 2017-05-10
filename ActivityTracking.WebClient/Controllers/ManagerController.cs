@@ -220,11 +220,38 @@ namespace ActivityTracking.WebClient.Controllers
             return ShowUserReport(Id, Start, End);
         }
 
+        public ActionResult ShowUserReportWithLogin(string Login)
+        {
+            DateTime End = DateTime.Now.AddDays(-1).Date;
+            DateTime Start = DateTime.Now.AddDays(-7).Date;
+            Login = HttpContext.User.Identity.Name;
+            return ShowUserReportWithLogin(Login, Start, End);
+        }
+
+        [HttpPost]
+        public ActionResult ShowUserReportWithLogin(string ChosenLogin, DateTime Start , DateTime End)
+        {
+            if(Start == null)
+                Start = DateTime.Now.AddDays(-7).Date;
+            if(End == null)
+                End = DateTime.Now.AddDays(-1).Date;
+            if (ChosenLogin == null || ChosenLogin == "")
+                ChosenLogin = HttpContext.User.Identity.Name;
+            Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>();
+            var user = userRepository.GetList().First(u => u.UserName == HttpContext.User.Identity.Name);
+            Group group = user.Group;
+            string Id = null;
+            foreach (var singleUser in group.Users)
+            {
+                if (singleUser.UserName == ChosenLogin)
+                    Id = singleUser.Id;
+            }
+            return ShowUserReport(Id, Start, End);
+        }
+
         [HttpPost]
         public ActionResult ShowUserReport(string Id, DateTime Start, DateTime End)
         {
-           
-
             ApplicationContext context = new ApplicationContext();
             Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>(context);
             var user = userRepository.GetList().First(u => u.Id == Id);
@@ -437,7 +464,7 @@ namespace ActivityTracking.WebClient.Controllers
             string dataStr = Newtonsoft.Json.JsonConvert.SerializeObject(colors, Newtonsoft.Json.Formatting.None);
             ViewBag.Colors = new HtmlString(dataStr);
             ViewBag.User = user.UserName;
-            return View(model);
+            return View("ShowUserReport", model);
         }
 
     }

@@ -27,6 +27,19 @@ namespace ActivityTracking.GetUserInfo
         public string CommercialExperiance { get; set; }
 
         public List<WorkTime> WorkTimes { get; set; }
+        public List<UserGroup> UserGroups { get; set; }
+    }
+
+    public class Department
+    {
+        public string Name { get; set; }
+        public TimeSpan MayAbsentTime { get; set; }
+    }
+
+    public class UserGroup
+    {
+        public string Login { get; set; }
+        public List<Department> UserGroups { get; set; }
     }
 
     public class WorkTime
@@ -36,6 +49,4 @@ namespace ActivityTracking.GetUserInfo
         public string SessionType { get; set; }
         public int EmpID { get; set; }
     }
-
-
 }

@@ -72,10 +72,6 @@
       <Project>{3a6c6b96-2b71-451a-9cf5-8ba07f766598}</Project>
       <Name>ActivityTracking.DomainModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ActivityTracking.GetUserInfo\ActivityTracking.GetUserInfo.csproj">
-      <Project>{0b0ece86-ca90-495d-934e-68e9a416f792}</Project>
-      <Name>ActivityTracking.GetUserInfo</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
