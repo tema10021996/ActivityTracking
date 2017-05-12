@@ -15,155 +15,254 @@ namespace ActivityTracking.WebClient.Controllers
 {
     public class ManagerController : Controller
     {
-
+        #region Index
         public ActionResult Index()
         {
-            DateTime End = DateTime.Now.AddDays(-1).Date;
-            DateTime Start = DateTime.Now.AddDays(-7).Date;
-            Repository<Group> groupReposotiry = new Repository<Group>();
-            var groups = groupReposotiry.GetList();
-            Group group = null;
-            foreach (var gr in groups)
-            {
-                foreach (var user in gr.Users)
-                {
-                    if (user.UserName == HttpContext.User.Identity.Name)
-                    {
-                        group = user.Group;
-                        break;
-                    }
-                }
-            }
-            if (group == null)
-            {
-                return HttpNotFound();
-            }
+            List<string> managerDepartmentNames = GetUserInfo.UserInfo.GetManagerDepartments(HttpContext.User.Identity.Name);
 
-            return Index(Start, End);
+            return View(managerDepartmentNames);
         }
+        #endregion
 
-
-        [HttpPost]
-        public ActionResult Index(DateTime Start, DateTime End)
+        #region ChooseDepartment
+        public ActionResult ChooseDepartment()
         {
-            ApplicationContext context = new ApplicationContext();
-            Repository<Group> groupReposotiry = new Repository<Group>(context);
-            Repository<Absence> absenceRepository = new Repository<Absence>(context);
-            //Repository<Time> timeRepository = new Repository<Time>(context);
+            ChooseDepartmentViewModel chooseDepartmentViewModel = new ChooseDepartmentViewModel();
+            chooseDepartmentViewModel.DepartmentList = new SelectList(UserInfo.GetManagerDepartments(HttpContext.User.Identity.Name));
+            return View(chooseDepartmentViewModel);
+        }
+        #endregion
+
+        #region ShowDepartmentReport
+        [HttpPost]
+        public ActionResult ShowDepartmentReport(string DepartmentList, DateTime Start, DateTime End)
+        {
             ArrayList colors = new ArrayList();
 
-            var groups = groupReposotiry.GetList();
-            Group group = null;
-            foreach (var gr in groups)
+            var departmentUserInfoModels = UserInfo.GetUserOrDepartmentIformation(DepartmentList, null, Start, End);
+            ManagerShowDepartmentReportViewModel managerShowDepartmentReportViewModel = new ManagerShowDepartmentReportViewModel()
+            { Start = Start, End = End, ReasonsNames = new List<string>(), ReasonInfos = new List<ReasonInfo>(), ChosenDepartmentName = DepartmentList };
+
+            Repository<Absence> absenceRepository = new Repository<Absence>();
+            Repository<Reason> reasonRepository = new Repository<Reason>();
+            var reasons = reasonRepository.GetList();
+            managerShowDepartmentReportViewModel.ReasonsNames.Add("Work");
+            if (!colors.Contains("#0000FF"))
             {
-                foreach (var user in gr.Users)
+                colors.Add("#0000FF");
+            }
+            foreach (var reason in reasons)
+            {
+                managerShowDepartmentReportViewModel.ReasonsNames.Add(reason.Name);
+            }
+
+            TimeSpan workDurationForGivenDays = new TimeSpan(0, 0, 0);
+            foreach (var userInfoModel in departmentUserInfoModels.OrderBy(u => u.userInformarion.Login))
+            {
+               
+                var userAbsences = absenceRepository.GetList().Where(a => a.Date >= Start && a.Date <= End).Where(a => a.User.UserName == userInfoModel.userInformarion.Login);
+
+                
+
+                if (userInfoModel.WorkTimes != null)
                 {
-                    if (user.UserName == HttpContext.User.Identity.Name)
+                    foreach (var userTimesForOneDay in userInfoModel.WorkTimes.GroupBy(t => t.TimeIn.Date))
                     {
-                        group = user.Group;
-                        break;
+
+                        var userTimesForOneDayToArray = userTimesForOneDay.ToArray();
+                        var userAbsencesforOneDayToArray = userAbsences.Where(a => a.Date.Date == userTimesForOneDayToArray[0].TimeIn.Date).ToArray();
+
+
+                        workDurationForGivenDays += CalculateWorkDuartionForOneUserForOneDay(userTimesForOneDayToArray, userAbsencesforOneDayToArray);
+                    }
+                }             
+            }
+            string Workhours = workDurationForGivenDays.TotalHours.ToString();
+            int Workindex = Workhours.IndexOf(',');
+            int WorkresultHours = workDurationForGivenDays.Hours;
+            if (Workindex == -1)
+            {
+                WorkresultHours = Convert.ToInt32(workDurationForGivenDays.TotalHours);
+            }
+            else
+            {
+                WorkresultHours = Convert.ToInt32(Workhours.Remove(Workindex));
+            }
+            managerShowDepartmentReportViewModel.ReasonInfos.Add(new ReasonInfo
+            {
+                ReasonName = "Work",
+                DurationInHours = workDurationForGivenDays.TotalHours,
+                Hours = WorkresultHours,
+                Minutes = workDurationForGivenDays.Minutes,
+                Seconds = workDurationForGivenDays.Seconds
+            });
+            foreach (var reason in reasonRepository.GetList())
+            {
+                TimeSpan reasonDuration = new TimeSpan(0, 0, 0);
+                foreach (var userInfoModel in departmentUserInfoModels)
+                {
+                    var userAbsences = absenceRepository.GetList().Where(a => a.Date >= Start && a.Date <= End).Where(a => a.User.UserName == userInfoModel.userInformarion.Login).Where(a=>a.Reason.Name == reason.Name);
+                    foreach (var absence in userAbsences)
+                    {
+                        reasonDuration += ((DateTime)absence.EndAbsence - absence.StartAbsence);
                     }
                 }
+
+               
+                string hours = reasonDuration.TotalHours.ToString();
+                int index = hours.IndexOf(',');
+                int resultHours = reasonDuration.Hours;
+                if ( index == -1)
+                {
+                    resultHours = Convert.ToInt32(reasonDuration.TotalHours);
+                }
+                else
+                {
+                    resultHours = Convert.ToInt32(hours.Remove(index));
+                }
+                managerShowDepartmentReportViewModel.ReasonInfos.Add(new ReasonInfo
+                {
+                    ReasonName = reason.Name,
+                    DurationInHours = reasonDuration.TotalHours,
+                    Hours = resultHours,
+                    Minutes = reasonDuration.Minutes,
+                    Seconds = reasonDuration.Seconds
+                });
+                if (!colors.Contains(reason.Color))
+                {
+                    colors.Add(reason.Color);
+                }
+
             }
-            if (group == null)
+            string dataStr = Newtonsoft.Json.JsonConvert.SerializeObject(colors, Newtonsoft.Json.Formatting.None);
+            ViewBag.Colors = new HtmlString(dataStr);
+            return View(managerShowDepartmentReportViewModel);
+        }
+        #endregion
+
+        #region CalculateWorkDuartionForOneUserForOneDay
+        private TimeSpan CalculateWorkDuartionForOneUserForOneDay(WorkTime[] userTimesForOneDayToArray, Absence[] userAbsencesforOneDayToArray)
+        {
+            DateTime FirstIn = userTimesForOneDayToArray[0].TimeIn;
+            DateTime LastOut = userTimesForOneDayToArray[userTimesForOneDayToArray.Length - 1].TimeOut;
+
+
+            //--------------------------
+            List<Absence> absencesOutOfBuildingForOneDay = new List<Absence>();
+
+            if (userTimesForOneDayToArray.Length > 1)
             {
-                return HttpNotFound();
+
+                for (int num = 0; num < userTimesForOneDayToArray.Length - 1; num++)
+                {
+                    absencesOutOfBuildingForOneDay.Add(new Absence
+                    {
+                        StartAbsence = new DateTime(userTimesForOneDayToArray[0].TimeIn.Year, userTimesForOneDayToArray[0].TimeIn.Month, userTimesForOneDayToArray[0].TimeIn.Day,
+                            userTimesForOneDayToArray[num].TimeOut.Hour, userTimesForOneDayToArray[num].TimeOut.Minute, userTimesForOneDayToArray[num].TimeOut.Second),
+                        EndAbsence = new DateTime(userTimesForOneDayToArray[0].TimeIn.Year, userTimesForOneDayToArray[0].TimeIn.Month, userTimesForOneDayToArray[0].TimeIn.Day,
+                            userTimesForOneDayToArray[num + 1].TimeIn.Hour, userTimesForOneDayToArray[num + 1].TimeIn.Minute, userTimesForOneDayToArray[num + 1].TimeIn.Second),
+                        Date = new DateTime(userTimesForOneDayToArray[0].TimeIn.Year, userTimesForOneDayToArray[0].TimeIn.Month, userTimesForOneDayToArray[0].TimeIn.Day)
+                    });
+                }
+
             }
 
-            List<UserInfoModel> usersInfo = GetUserInfo.UserInfo.GetUserInformation(group.Name, null, Start, End);
+            List<Absence> AllAbsencesForOneDay = new List<Absence>();
+            foreach (var abs in userAbsencesforOneDayToArray)
+            {
+                AllAbsencesForOneDay.Add(abs);
+            }
+            foreach (var abs in absencesOutOfBuildingForOneDay)
+            {
+                AllAbsencesForOneDay.Add(abs);
+            }
 
-            ManagerPostIndexViewModel viewModel = new ManagerPostIndexViewModel { Start = Start, End = End, ReasonsNames = new List<string>(),  WorkersInfos = new List<WorkerInfo>() {} };
+            var AllAbsencesForOneDaySorted = AllAbsencesForOneDay.OrderBy(a => a.StartAbsence);
+            //-----------------------
 
-            var groupReasons = group.Reasons;
+            TimeSpan TimeInBuildingForOneDay = LastOut - FirstIn;
+            TimeSpan AllAbsencesDurationForOneDay = new TimeSpan(0, 0, 0);
+            foreach (Absence absence in AllAbsencesForOneDay)
+            {
+                AllAbsencesDurationForOneDay += ((DateTime)absence.EndAbsence - absence.StartAbsence);
+            }
+            TimeSpan WorkDurationForOneDay = TimeInBuildingForOneDay - AllAbsencesDurationForOneDay;
+
+            return WorkDurationForOneDay;
+        }
+        #endregion
+
+
+        #region ShowGroupReportByUsers
+        [HttpPost]
+        public ActionResult ShowGroupReportByUsers(string departmentName, DateTime start, DateTime end)
+        {
+            Repository<Absence> absenceRepository = new Repository<Absence>();
+            Repository<ApplicationUser> applicationUserRepository = new Repository<ApplicationUser>();
+            ArrayList colors = new ArrayList();
+
+            List<UserInfoModel> usersInDepartmentInfoModels = GetUserInfo.UserInfo.GetUserOrDepartmentIformation(departmentName, null, start, end);
+
+            ManagerShowGroupReportByUsersViewModel viewModel = new ManagerShowGroupReportByUsersViewModel { Start = start, End = end, ReasonsNames = new List<string>(), WorkersInfos = new List<WorkerInfo>() { } , ChosenDepartmentName = departmentName};
+
+            Repository<Reason> reasonRepository = new Repository<Reason>();
+            var reasons = reasonRepository.GetList();
             viewModel.ReasonsNames.Add("Work");
             if (!colors.Contains("#0000FF"))
             {
                 colors.Add("#0000FF");
             }
-            foreach (var reason in groupReasons)
-            {               
+            foreach (var reason in reasons)
+            {
                 viewModel.ReasonsNames.Add(reason.Name);
             }
 
 
 
-            foreach (var user in group.Users.OrderBy(u => u.UserName))
-            {                
-                
+            foreach (var userInfoModel in usersInDepartmentInfoModels.OrderBy(u=>u.userInformarion.Login))
+            {
+
+                var user = applicationUserRepository.GetList().First(u => u.UserName == userInfoModel.userInformarion.Login);
+
                 WorkerInfo workerInfo = new WorkerInfo { Name = user.UserName, ReasonInfos = new List<ReasonInfo>() };
-                var userAbsences = absenceRepository.GetList().Where(a => a.User.Id == user.Id).Where(ab => ab.Date.Date >= Start.Date && ab.Date <= End.Date);
+                var userAbsences = absenceRepository.GetList().Where(a => a.User.Id == user.Id).Where(ab => ab.Date.Date >= start.Date && ab.Date <= end.Date);
 
                 TimeSpan workDurationForGivenDays = new TimeSpan(0, 0, 0);
-
-                //var userTimesByDays = UsersInfo.Where(t => t.Date.Date >= Start.Date && t.Date <= End.Date).Where(t=>t.User.Id == user.Id).GroupBy(t => t.Date);
-                var userInfo = usersInfo.First();
-                var userTimesByDays = userInfo.WorkTimes.GroupBy(t => t.TimeIn.Date);
-
-                foreach (var userTimesForOneDay in userTimesByDays)
+                
+                if (userInfoModel.WorkTimes != null)
                 {
-                    var userTimesForOneDayToArray = userTimesForOneDay.ToArray();
-                    var userAbsencesforOneDayToArray = userAbsences.Where(a => a.Date.Date == userTimesForOneDayToArray[0].TimeIn.Date).ToArray();
-
-                    DateTime FirstIn = userTimesForOneDayToArray[0].TimeIn;
-                    DateTime LastOut = userTimesForOneDayToArray[userTimesForOneDayToArray.Length - 1].TimeOut;
-
-
-                        //--------------------------
-                        List<Absence> absencesOutOfBuildingForOneDay = new List<Absence>();
-
-                        if (userTimesForOneDayToArray.Length > 1)
-                        {
-
-                            for (int num = 0; num < userTimesForOneDayToArray.Length - 1; num++)
-                            {
-                                absencesOutOfBuildingForOneDay.Add(new Absence
-                                {
-                                    StartAbsence = new DateTime(userTimesForOneDayToArray[0].TimeIn.Year, userTimesForOneDayToArray[0].TimeIn.Month, userTimesForOneDayToArray[0].TimeIn.Day,
-                                        userTimesForOneDayToArray[num].TimeOut.Hour, userTimesForOneDayToArray[num].TimeOut.Minute, userTimesForOneDayToArray[num].TimeOut.Second),
-                                    EndAbsence = new DateTime(userTimesForOneDayToArray[0].TimeIn.Year, userTimesForOneDayToArray[0].TimeIn.Month, userTimesForOneDayToArray[0].TimeIn.Day,
-                                        userTimesForOneDayToArray[num + 1].TimeIn.Hour, userTimesForOneDayToArray[num + 1].TimeIn.Minute, userTimesForOneDayToArray[num + 1].TimeIn.Second),
-                                    Date = new DateTime(userTimesForOneDayToArray[0].TimeIn.Year, userTimesForOneDayToArray[0].TimeIn.Month, userTimesForOneDayToArray[0].TimeIn.Day)
-                                });
-                            }
-
-                        }
-
-                        List<Absence> AllAbsencesForOneDay = new List<Absence>();
-                    foreach (var abs in userAbsencesforOneDayToArray)
+                    foreach (var userTimesForOneDay in userInfoModel.WorkTimes.GroupBy(t => t.TimeIn.Date))
                     {
-                        AllAbsencesForOneDay.Add(abs);
+
+                        var userTimesForOneDayToArray = userTimesForOneDay.ToArray();
+                        var userAbsencesforOneDayToArray = userAbsences.Where(a => a.Date.Date == userTimesForOneDayToArray[0].TimeIn.Date).ToArray();
+ 
+
+                        workDurationForGivenDays += CalculateWorkDuartionForOneUserForOneDay(userTimesForOneDayToArray, userAbsencesforOneDayToArray);
                     }
-                        foreach (var abs in absencesOutOfBuildingForOneDay)
-                        {
-                            AllAbsencesForOneDay.Add(abs);
-                        }
-
-                        var AllAbsencesForOneDaySorted = AllAbsencesForOneDay.OrderBy(a => a.StartAbsence);
-                        //-----------------------
-
-                        TimeSpan TimeInBuildingForOneDay = LastOut - FirstIn;
-                    TimeSpan AllAbsencesDurationForOneDay = new TimeSpan(0, 0, 0);
-                    foreach (Absence absence in AllAbsencesForOneDay)
-                    {
-                        AllAbsencesDurationForOneDay += ((DateTime)absence.EndAbsence - absence.StartAbsence);
-                    }
-                    TimeSpan WorkDurationForOneDay = TimeInBuildingForOneDay - AllAbsencesDurationForOneDay;
-
-                    workDurationForGivenDays += WorkDurationForOneDay;
                 }
+                string Workhours = workDurationForGivenDays.TotalHours.ToString();
+                int Workindex = Workhours.IndexOf(',');
+                int WorkresultHours = workDurationForGivenDays.Hours;              
+                if (Workindex == -1)
+                {
+                    WorkresultHours = Convert.ToInt32(workDurationForGivenDays.TotalHours);
+                }
+                else
+                {
+                    WorkresultHours = Convert.ToInt32(Workhours.Remove(Workindex));
+                }
+                workerInfo.ReasonInfos.Add(new ReasonInfo
+                {
+                    ReasonName = "Work",
+                    DurationInHours = workDurationForGivenDays.TotalHours,
+                    Hours = WorkresultHours,
+                    Minutes = workDurationForGivenDays.Minutes,
+                    Seconds = workDurationForGivenDays.Seconds
+                });
 
-               
-                    workerInfo.ReasonInfos.Add(new ReasonInfo
-                    {
-                        ReasonName = "Work",
-                        DurationInHours = workDurationForGivenDays.TotalHours,
-                        Hours = workDurationForGivenDays.Hours,
-                        Minutes = workDurationForGivenDays.Minutes,
-                        Seconds = workDurationForGivenDays.Seconds
-                    });
-                
-                
-                foreach (var reason in group.Reasons)
+
+                foreach (var reason in reasonRepository.GetList())
                 {
                     TimeSpan reasonTotalTime = new TimeSpan(0, 0, 0);
                     var reasonAbsences = userAbsences.Where(a => a.Reason.Id == reason.Id);
@@ -171,12 +270,22 @@ namespace ActivityTracking.WebClient.Controllers
                     {
                         reasonTotalTime += ((DateTime)absence.EndAbsence - absence.StartAbsence);
                     }
-
+                    string hours = reasonTotalTime.TotalHours.ToString();
+                    int index = hours.IndexOf(',');
+                    int resultHours = reasonTotalTime.Hours;
+                    if (index == -1)
+                    {
+                        resultHours = Convert.ToInt32(reasonTotalTime.TotalHours);
+                    }
+                    else
+                    {
+                        resultHours = Convert.ToInt32(hours.Remove(index));
+                    }
                     workerInfo.ReasonInfos.Add(new ReasonInfo
                     {
                         ReasonName = reason.Name,
                         DurationInHours = reasonTotalTime.TotalHours,
-                        Hours = reasonTotalTime.Hours,
+                        Hours = resultHours,
                         Minutes = reasonTotalTime.Minutes,
                         Seconds = reasonTotalTime.Seconds
                     });
@@ -187,23 +296,35 @@ namespace ActivityTracking.WebClient.Controllers
                 }
 
                 viewModel.WorkersInfos.Add(workerInfo);
-            
 
-             }
+
+            }
 
             string dataStr = Newtonsoft.Json.JsonConvert.SerializeObject(colors, Newtonsoft.Json.Formatting.None);
             ViewBag.Colors = new HtmlString(dataStr);
 
             return View(viewModel);
         }
+        #endregion
 
-        public ActionResult ShowUsers()
+        #region ShowUsers
+        public ActionResult ShowUsers(string departmentName)
         {
-            Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>();
-            var user = userRepository.GetList().First(u => u.UserName == HttpContext.User.Identity.Name);
-            Group group = user.Group;
-            return View(group);
+            ManagerShowUsersViewModel managerShowUsersViewModel = new ManagerShowUsersViewModel();
+
+            var userInfoModels = GetUserInfo.UserInfo.GetUserOrDepartmentIformation(departmentName, null, DateTime.Today, DateTime.Today);
+            List<string> userNames = new List<string>();
+            foreach (var userInfoModel in userInfoModels)
+            {
+                userNames.Add(userInfoModel.userInformarion.Login);
+            }
+            managerShowUsersViewModel.UsersNames = userNames;
+            managerShowUsersViewModel.DepartmentName = departmentName;
+            return View(managerShowUsersViewModel);
         }
+        #endregion
+
+        #region ChangeGroupMayAbsentTime
         public ActionResult ChangeGroupMayAbsentTime(int Id, string Minutes)
         {
             Repository<Group> groupRepository = new Repository<Group>();
@@ -212,260 +333,289 @@ namespace ActivityTracking.WebClient.Controllers
             groupRepository.Update(group);
             return RedirectToAction("ShowUsers");
         }
+        #endregion
 
-        public ActionResult ShowUserReport(string Id)
+        #region ShowUserReport
+        public ActionResult ShowUserReport(string userName)
         {
             DateTime End = DateTime.Now.AddDays(-1).Date;
             DateTime Start = DateTime.Now.AddDays(-7).Date;
-            return ShowUserReport(Id, Start, End);
+            return ShowUserReport(userName, Start, End);
         }
+        #endregion
 
-        public ActionResult ShowUserReportWithLogin(string Login)
-        {
-            DateTime End = DateTime.Now.AddDays(-1).Date;
-            DateTime Start = DateTime.Now.AddDays(-7).Date;
-            Login = HttpContext.User.Identity.Name;
-            return ShowUserReportWithLogin(Login, Start, End);
-        }
-
+        #region ShowUserReport [HttpPost]
         [HttpPost]
-        public ActionResult ShowUserReportWithLogin(string ChosenLogin, DateTime Start , DateTime End)
+        public ActionResult ShowUserReport(string userName, DateTime Start, DateTime End)
         {
-            if(Start == null)
-                Start = DateTime.Now.AddDays(-7).Date;
-            if(End == null)
-                End = DateTime.Now.AddDays(-1).Date;
-            if (ChosenLogin == null || ChosenLogin == "")
-                ChosenLogin = HttpContext.User.Identity.Name;
-            Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>();
-            var user = userRepository.GetList().First(u => u.UserName == HttpContext.User.Identity.Name);
-            Group group = user.Group;
-            string Id = null;
-            foreach (var singleUser in group.Users)
-            {
-                if (singleUser.UserName == ChosenLogin)
-                    Id = singleUser.Id;
-            }
-            return ShowUserReport(Id, Start, End);
-        }
 
-        [HttpPost]
-        public ActionResult ShowUserReport(string Id, DateTime Start, DateTime End)
-        {
             ApplicationContext context = new ApplicationContext();
             Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>(context);
-            var user = userRepository.GetList().First(u => u.Id == Id);
+            var user = userRepository.GetList().First(u => u.UserName == userName);
 
-            UserInfoModel info = GetUserInfo.UserInfo.GetUserInformation(null, user.UserName, Start, End).First();
-            
-            var times = info.WorkTimes.GroupBy(t=>t.TimeIn.Date);
+            UserInfoModel info = GetUserInfo.UserInfo.GetUserOrDepartmentIformation(null, user.UserName, Start, End).First();
+
+
             Repository<Absence> absenceRepository = new Repository<Absence>(context);
 
-            ShowUserReportViewModel model = new ShowUserReportViewModel {Start = Start, End = End, list = new List<ChartViewModel>(), UserInfo = info, DaysCount = (End-Start).Days };
+            ShowUserReportViewModel model = new ShowUserReportViewModel { Start = Start, End = End, listOfWorkAndAbesnceTimeForChart = new List<ChartViewModel>(), UserInfo = info, DaysCount = (End - Start).Days };
             ArrayList colors = new ArrayList();
 
-
-            for (DateTime start = Start; start <= End; start=start.AddDays(1))
+            if (info.WorkTimes == null)
             {
-                var tempTimes = info.WorkTimes.Where(t => t.TimeIn.Date == start).ToArray();
-                if (tempTimes.Length == 0)
+                for (DateTime start = Start; start <= End; start = start.AddDays(1))
                 {
-                    ChartViewModel notWorkThisDay = new ChartViewModel
                     {
-                        RowLabel = start.Date.ToShortDateString(),
+                        ChartViewModel notWorkThisDay = new ChartViewModel
+                        {
+                            RowLabel = start.Date.ToShortDateString(),
+                            Barlabel = "Out of Work",
+                            StartAbsence = new DateTime(start.Year, start.Month, start.Day, 0, 0, 0),
+                            EndAbsence = new DateTime(start.Year, start.Month, start.Day, 23, 59, 59),
+                            Duration = new DateTime(start.Year, start.Month, start.Day, 23, 59, 59) - new DateTime(start.Year, start.Month, start.Day, 0, 0, 0),
+                            Comment = null
+                        };
+                        if (!colors.Contains("#FFFFFF"))
+                        {
+                            colors.Add("#FFFFFF");
+                        }
+                        model.listOfWorkAndAbesnceTimeForChart.Add(notWorkThisDay);
+
+                    }
+
+                }
+
+            }
+            else
+            {
+                for (DateTime start = Start; start <= End; start = start.AddDays(1))
+                {
+                    var tempTimes = info.WorkTimes.Where(t => t.TimeIn.Date == start).ToArray();
+                    if (tempTimes.Length == 0)
+                    {
+                        ChartViewModel notWorkThisDay = new ChartViewModel
+                        {
+                            RowLabel = start.Date.ToShortDateString(),
+                            Barlabel = "Out of Work",
+                            StartAbsence = new DateTime(start.Year, start.Month, start.Day, 0, 0, 0),
+                            EndAbsence = new DateTime(start.Year, start.Month, start.Day, 23, 59, 59),
+                            Duration = new DateTime(start.Year, start.Month, start.Day, 23, 59, 59) - new DateTime(start.Year, start.Month, start.Day, 0, 0, 0),
+                            Comment = null
+                        };
+                        if (!colors.Contains("#FFFFFF"))
+                        {
+                            colors.Add("#FFFFFF");
+                        }
+                        model.listOfWorkAndAbesnceTimeForChart.Add(notWorkThisDay);
+
+                    }
+
+                }
+            }
+            if (info.WorkTimes != null)
+            {
+
+                var times = info.WorkTimes.GroupBy(t => t.TimeIn.Date);
+                foreach (var timeGroup in times)
+                {
+                    var timeGroupToArray = timeGroup.ToArray();
+
+                    DateTime FirstIn = timeGroupToArray[0].TimeIn;
+                    DateTime LastOut = timeGroupToArray[timeGroupToArray.Length - 1].TimeOut;
+
+                    var absences = absenceRepository.GetList().Where(a => a.User.UserName == user.UserName).Where(a => a.Date == timeGroupToArray[0].TimeIn.Date).ToArray();
+                    List<Absence> absencesOutOfBuilding = new List<Absence>();
+
+                    if (timeGroupToArray.Length > 1)
+                    {
+                        for (int num = 0; num < timeGroupToArray.Length - 1; num++)
+                        {
+                            absencesOutOfBuilding.Add(new Absence
+                            {
+                                StartAbsence = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day,
+                                    timeGroupToArray[num].TimeOut.Hour, timeGroupToArray[num].TimeOut.Minute, timeGroupToArray[num].TimeOut.Second),
+                                EndAbsence = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day,
+                                    timeGroupToArray[num + 1].TimeIn.Hour, timeGroupToArray[num + 1].TimeIn.Minute, timeGroupToArray[num + 1].TimeIn.Second),
+                                Date = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day),
+                                Reason = new Reason { Name = "Out of Work", Color = "#FFFFFF" }
+                            });
+                        }
+                    }
+
+                    List<Absence> AllAbsences = new List<Absence>();
+                    foreach (var abs in absences)
+                    {
+                        AllAbsences.Add(abs);
+                    }
+                    foreach (var abs in absencesOutOfBuilding)
+                    {
+                        AllAbsences.Add(abs);
+                    }
+
+                    var AllAbsencesArray = AllAbsences.OrderBy(a => a.EndAbsence).ToArray();
+
+
+                    var tempStartBeforeWork = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, 0, 0, 0);
+                    var tempEndBeforeWork = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, FirstIn.Hour, FirstIn.Minute, FirstIn.Second);
+                    ChartViewModel beforeWork = new ChartViewModel
+                    {
+                        RowLabel = timeGroupToArray[0].TimeIn.Date.ToShortDateString(),
                         Barlabel = "Out of Work",
-                        StartAbsence = new DateTime(start.Year, start.Month, start.Day, 0, 0,0),
-                        EndAbsence = new DateTime(start.Year, start.Month, start.Day, 23,59,59),
-                        Duration = new DateTime(start.Year, start.Month, start.Day, 23, 59, 59) - new DateTime(start.Year, start.Month, start.Day, 0, 0, 0),
+                        StartAbsence = tempStartBeforeWork,
+                        EndAbsence = tempEndBeforeWork,
+                        Duration = tempEndBeforeWork - tempStartBeforeWork,
                         Comment = null
                     };
                     if (!colors.Contains("#FFFFFF"))
                     {
                         colors.Add("#FFFFFF");
                     }
-                    model.list.Add(notWorkThisDay);
+                    model.listOfWorkAndAbesnceTimeForChart.Add(beforeWork);
 
-                }
-
-            }
-
-            foreach (var timeGroup in times)
-            {
-                var timeGroupToArray = timeGroup.ToArray();
-
-                DateTime FirstIn = timeGroupToArray[0].TimeIn;
-                DateTime LastOut = timeGroupToArray[timeGroupToArray.Length - 1].TimeOut;
-
-                var absences = absenceRepository.GetList().Where(a => a.User.UserName == user.UserName).Where(a => a.Date == timeGroupToArray[0].TimeIn.Date).ToArray();
-                List<Absence> absencesOutOfBuilding = new List<Absence>();
-
-                if (timeGroupToArray.Length > 1)
-                {
-                    for (int num = 0; num < timeGroupToArray.Length - 1; num++)
+                    var tempStartWorkTillFirstAbsence = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, FirstIn.Hour, FirstIn.Minute, FirstIn.Second);
+                    if (AllAbsencesArray.Length > 0)
                     {
-                        absencesOutOfBuilding.Add(new Absence
+                        var tempEndWorkTillFirstAbsence = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day,
+                            AllAbsencesArray[0].StartAbsence.Hour, AllAbsencesArray[0].StartAbsence.Minute, AllAbsencesArray[0].StartAbsence.Second);
+                        ChartViewModel beginWorkTillFirstAbsence = new ChartViewModel
                         {
-                            StartAbsence = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day,
-                                timeGroupToArray[num].TimeOut.Hour, timeGroupToArray[num].TimeOut.Minute, timeGroupToArray[num].TimeOut.Second),
-                            EndAbsence = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day,
-                                timeGroupToArray[num + 1].TimeIn.Hour, timeGroupToArray[num + 1].TimeIn.Minute, timeGroupToArray[num + 1].TimeIn.Second),
-                            Date = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day),
-                            Reason = new Reason { Name = "Out of Work", Color = "#FFFFFF" }
-                        });
-                    }
-                }               
-
-                List<Absence> AllAbsences = new List<Absence>();
-                foreach (var abs in absences)
-                {
-                    AllAbsences.Add(abs);
-                }
-                foreach (var abs in absencesOutOfBuilding)
-                {
-                    AllAbsences.Add(abs);
-                }
-
-                var  AllAbsencesArray = AllAbsences.OrderBy(a=>a.EndAbsence).ToArray();
-
-
-                var tempStartBeforeWork = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, 0, 0, 0);
-                var tempEndBeforeWork = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, FirstIn.Hour, FirstIn.Minute, FirstIn.Second);
-                ChartViewModel beforeWork = new ChartViewModel
-                {
-                    RowLabel = timeGroupToArray[0].TimeIn.Date.ToShortDateString(),
-                    Barlabel = "Out of Work",
-                    StartAbsence = tempStartBeforeWork,
-                    EndAbsence = tempEndBeforeWork,
-                    Duration = tempEndBeforeWork - tempStartBeforeWork,
-                    Comment = null
-                };
-                if (!colors.Contains("#FFFFFF"))
-                {
-                    colors.Add("#FFFFFF");
-                }
-                model.list.Add(beforeWork);
-
-                var tempStartWorkTillFirstAbsence = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, FirstIn.Hour, FirstIn.Minute, FirstIn.Second);
-                if (AllAbsencesArray.Length > 0)
-                {
-                    var tempEndWorkTillFirstAbsence = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day,
-                        AllAbsencesArray[0].StartAbsence.Hour, AllAbsencesArray[0].StartAbsence.Minute, AllAbsencesArray[0].StartAbsence.Second);
-                    ChartViewModel beginWorkTillFirstAbsence = new ChartViewModel
-                    {
-                        RowLabel = timeGroupToArray[0].TimeIn.Date.ToShortDateString(),
-                        Barlabel = "Work",
-                        StartAbsence = tempStartWorkTillFirstAbsence,
-                        EndAbsence = tempEndWorkTillFirstAbsence,
-                        Duration = tempEndWorkTillFirstAbsence - tempStartWorkTillFirstAbsence,
-                        Comment = null
-                    };
-                    if (!colors.Contains("#0000FF"))
-                    {
-                        colors.Add("#0000FF");
-                    }
-                    model.list.Add(beginWorkTillFirstAbsence);
-                }
-                else
-                {
-                    var tempEndWork = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day,
-                        timeGroupToArray[0].TimeOut.Hour, timeGroupToArray[0].TimeOut.Minute, timeGroupToArray[0].TimeOut.Second);
-                    ChartViewModel beginWorkTillFirstAbsence = new ChartViewModel
-                    {
-                        RowLabel = timeGroupToArray[0].TimeIn.Date.ToShortDateString(),
-                        Barlabel = "Work",
-                        StartAbsence = tempStartWorkTillFirstAbsence,
-                        EndAbsence = tempEndWork,
-                        Duration = tempEndWork - tempStartWorkTillFirstAbsence,
-                        Comment = null
-                    };
-                    if (!colors.Contains("#0000FF"))
-                    {
-                        colors.Add("#0000FF");
-                    }
-                    model.list.Add(beginWorkTillFirstAbsence);
-                }
-               
-
-                for (int j = 0; j < AllAbsencesArray.Length; j++)
-                {
-                    DateTime endAbsence = (DateTime)AllAbsencesArray[j].EndAbsence;
-                    ChartViewModel tv = new ChartViewModel
-                    {
-                        RowLabel = AllAbsencesArray[j].Date.ToShortDateString(),
-                        Barlabel = AllAbsencesArray[j].Reason.Name,
-                        StartAbsence = AllAbsencesArray[j].StartAbsence,
-                        EndAbsence = endAbsence,
-                        Duration = endAbsence - AllAbsencesArray[j].StartAbsence,
-                        Comment = AllAbsencesArray[j].Comment
-                    };
-                    if (!colors.Contains(AllAbsencesArray[j].Reason.Color))
-                    {
-                        colors.Add(AllAbsencesArray[j].Reason.Color);
-                    }
-                    model.list.Add(tv);
-                    if (j != AllAbsencesArray.Length - 1)
-                    {
-                        ChartViewModel gapTv = new ChartViewModel
-                        {
-
-                            RowLabel = AllAbsencesArray[j].Date.ToShortDateString(),
+                            RowLabel = timeGroupToArray[0].TimeIn.Date.ToShortDateString(),
                             Barlabel = "Work",
-                            StartAbsence = endAbsence,
-                            EndAbsence = AllAbsencesArray[j + 1].StartAbsence,
-                            Duration = AllAbsencesArray[j + 1].StartAbsence - endAbsence,
+                            StartAbsence = tempStartWorkTillFirstAbsence,
+                            EndAbsence = tempEndWorkTillFirstAbsence,
+                            Duration = tempEndWorkTillFirstAbsence - tempStartWorkTillFirstAbsence,
                             Comment = null
                         };
                         if (!colors.Contains("#0000FF"))
                         {
                             colors.Add("#0000FF");
                         }
-                        model.list.Add(gapTv);
+                        model.listOfWorkAndAbesnceTimeForChart.Add(beginWorkTillFirstAbsence);
                     }
                     else
                     {
-                        ChartViewModel gapTv = new ChartViewModel
+                        var tempEndWork = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day,
+                            timeGroupToArray[0].TimeOut.Hour, timeGroupToArray[0].TimeOut.Minute, timeGroupToArray[0].TimeOut.Second);
+                        ChartViewModel beginWorkTillFirstAbsence = new ChartViewModel
                         {
-
-                            RowLabel =  AllAbsencesArray[j].Date.ToShortDateString(),
+                            RowLabel = timeGroupToArray[0].TimeIn.Date.ToShortDateString(),
                             Barlabel = "Work",
-                            StartAbsence = endAbsence,
-                            EndAbsence = LastOut,
-                            Duration = LastOut - endAbsence,
+                            StartAbsence = tempStartWorkTillFirstAbsence,
+                            EndAbsence = tempEndWork,
+                            Duration = tempEndWork - tempStartWorkTillFirstAbsence,
                             Comment = null
                         };
                         if (!colors.Contains("#0000FF"))
                         {
                             colors.Add("#0000FF");
                         }
-                        model.list.Add(gapTv);
+                        model.listOfWorkAndAbesnceTimeForChart.Add(beginWorkTillFirstAbsence);
                     }
 
-                }
-                
 
-                var tempStart = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, LastOut.Hour, LastOut.Minute, LastOut.Second);
-                var tempEnd = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, 23, 59, 59);
-                ChartViewModel afterWork = new ChartViewModel
-                {
-                    RowLabel = timeGroupToArray[0].TimeIn.Date.ToShortDateString(),
-                    Barlabel = "Out of Work",
-                    StartAbsence = tempStart,
-                    EndAbsence = tempEnd,
-                    Duration = tempEnd - tempStart,
-                    Comment = null
-                };
-                if (!colors.Contains("#FFFFFF"))
-                {
-                    colors.Add("#FFFFFF");
-                }
-                model.list.Add(afterWork);
+                    for (int j = 0; j < AllAbsencesArray.Length; j++)
+                    {
+                        DateTime endAbsence = (DateTime)AllAbsencesArray[j].EndAbsence;
+                        ChartViewModel tv = new ChartViewModel
+                        {
+                            RowLabel = AllAbsencesArray[j].Date.ToShortDateString(),
+                            Barlabel = AllAbsencesArray[j].Reason.Name,
+                            StartAbsence = AllAbsencesArray[j].StartAbsence,
+                            EndAbsence = endAbsence,
+                            Duration = endAbsence - AllAbsencesArray[j].StartAbsence,
+                            Comment = AllAbsencesArray[j].Comment
+                        };
+                        if (!colors.Contains(AllAbsencesArray[j].Reason.Color))
+                        {
+                            colors.Add(AllAbsencesArray[j].Reason.Color);
+                        }
+                        model.listOfWorkAndAbesnceTimeForChart.Add(tv);
+                        if (j != AllAbsencesArray.Length - 1)
+                        {
+                            ChartViewModel gapTv = new ChartViewModel
+                            {
 
+                                RowLabel = AllAbsencesArray[j].Date.ToShortDateString(),
+                                Barlabel = "Work",
+                                StartAbsence = endAbsence,
+                                EndAbsence = AllAbsencesArray[j + 1].StartAbsence,
+                                Duration = AllAbsencesArray[j + 1].StartAbsence - endAbsence,
+                                Comment = null
+                            };
+                            if (!colors.Contains("#0000FF"))
+                            {
+                                colors.Add("#0000FF");
+                            }
+                            model.listOfWorkAndAbesnceTimeForChart.Add(gapTv);
+                        }
+                        else
+                        {
+                            ChartViewModel gapTv = new ChartViewModel
+                            {
+
+                                RowLabel = AllAbsencesArray[j].Date.ToShortDateString(),
+                                Barlabel = "Work",
+                                StartAbsence = endAbsence,
+                                EndAbsence = LastOut,
+                                Duration = LastOut - endAbsence,
+                                Comment = null
+                            };
+                            if (!colors.Contains("#0000FF"))
+                            {
+                                colors.Add("#0000FF");
+                            }
+                            model.listOfWorkAndAbesnceTimeForChart.Add(gapTv);
+                        }
+
+                    }
+
+
+                    var tempStart = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, LastOut.Hour, LastOut.Minute, LastOut.Second);
+                    var tempEnd = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, 23, 59, 59);
+                    ChartViewModel afterWork = new ChartViewModel
+                    {
+                        RowLabel = timeGroupToArray[0].TimeIn.Date.ToShortDateString(),
+                        Barlabel = "Out of Work",
+                        StartAbsence = tempStart,
+                        EndAbsence = tempEnd,
+                        Duration = tempEnd - tempStart,
+                        Comment = null
+                    };
+                    if (!colors.Contains("#FFFFFF"))
+                    {
+                        colors.Add("#FFFFFF");
+                    }
+                    model.listOfWorkAndAbesnceTimeForChart.Add(afterWork);
+
+                }
             }
+
+            ShowUserReportViewModel resultModel = new ShowUserReportViewModel { Start = Start, End = End, listOfWorkAndAbesnceTimeForChart = model.listOfWorkAndAbesnceTimeForChart.OrderBy(l => l.StartAbsence.Date).ToList(), UserInfo = info, DaysCount = (End - Start).Days };
+            
             string dataStr = Newtonsoft.Json.JsonConvert.SerializeObject(colors, Newtonsoft.Json.Formatting.None);
             ViewBag.Colors = new HtmlString(dataStr);
             ViewBag.User = user.UserName;
-            return View("ShowUserReport", model);
+            return View("ShowUserReport", resultModel);
         }
+        #endregion
 
+        #region FindUserReport
+        public ActionResult FindUserReport(string userName, string returnUrl)
+        {
+            var ManagerDepartments = UserInfo.GetManagerDepartments(HttpContext.User.Identity.Name);
+            foreach (var department in ManagerDepartments)
+            {
+                var userInfos = UserInfo.GetUserOrDepartmentIformation(department, null, DateTime.Today, DateTime.Today);
+                foreach (var user in userInfos)
+                {
+                    if (user.userInformarion.Login == userName)
+                    {
+                        return RedirectToAction("ShowUserReport", "Manager", new { userName });
+                    }
+                }
+            }
+            return Redirect(returnUrl);         
+        }
+        #endregion
     }
 }

@@ -7,7 +7,7 @@ using ActivityTracking.GetUserInfo;
 
 namespace ActivityTracking.GetUserInfo
 {
-    public class UserInfoModel
+    public class UserInformation
     {
         public string Company { get; set; }
         public string OfficeLocation { get; set; }
@@ -24,23 +24,14 @@ namespace ActivityTracking.GetUserInfo
         public string Manager { get; set; }
         public string HireDate { get; set; }
         public string ISDExperiance { get; set; }
-        public string CommercialExperiance { get; set; }
+        public string CommercialExperiance { get; set; }           
+    }
 
+    public class UserInfoModel
+    {
+        public UserInformation userInformarion { get; set; }
         public List<WorkTime> WorkTimes { get; set; }
-        public List<UserGroup> UserGroups { get; set; }
-    }
-
-    public class Department
-    {
-        public string Name { get; set; }
-        public TimeSpan MayAbsentTime { get; set; }
-    }
-
-    public class UserGroup
-    {
-        public string Login { get; set; }
-        public List<Department> UserGroups { get; set; }
-    }
+    }  
 
     public class WorkTime
     {

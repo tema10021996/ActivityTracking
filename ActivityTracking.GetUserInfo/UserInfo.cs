@@ -10,15 +10,189 @@ namespace ActivityTracking.GetUserInfo
 {
     public static class UserInfo
     {
-        public static List<UserInfoModel> GetUserInformation(string groupName, string login, DateTime Start, DateTime End)
+        #region GetUserInformation
+        private static List<UserInformation> GetUserInformation(string login, string departmentName)
         {
-            List<UserInfoModel> returnUsersInformaion = new List<UserInfoModel>();
+            List<UserInformation> AllUserInfoModels = new List<UserInformation>() {
+                new UserInformation
+                {
+                        Company = "ISD",
+                        CommercialExperiance = "5",
+                        Department = "Department1",
+                        Division = "Division",
+                        FirstName = "Alexandr",
+                        HireDate = "1.05.2017",
+                        ISDExperiance = "0.5 year",
+                        LastName = "Tkachuk",
+                        Login = "AlexandrTkachuk",
+                        Manager = "AlexandraMorozova",
+                        OfficeLocation = "Dnepr",
+                        Position = "c# developer",
+                        Profession = "professor",
+                        Role = "user",
+                        Sector = "sector",
+                        Title = "title"
+                },
+                new UserInformation
+                {
+                        Company = "ISD",
+                        CommercialExperiance = "5",
+                        Department = "Department1",
+                        Division = "Division",
+                        FirstName = "Nikita",
+                        HireDate = "1.05.2017",
+                        ISDExperiance = "0.5 year",
+                        LastName = "Maltsev",
+                        Login = "NikitaMaltsev",
+                        Manager = "AlexandraMorozova",
+                        OfficeLocation = "Dnepr",
+                        Position = "c# developer",
+                        Profession = "professor",
+                        Role = "user",
+                        Sector = "sector",
+                        Title = "title"
+                },
+                new UserInformation
+                {
+                        Company = "ISD",
+                        CommercialExperiance = "5",
+                        Department = "Department1",
+                        Division = "Division",
+                        FirstName = "Artem",
+                        HireDate = "1.05.2017",
+                        ISDExperiance = "0.5 year",
+                        LastName = "Chuhalo",
+                        Login = "ArtemChuhalo",
+                        Manager = "AlexandraMorozova",
+                        OfficeLocation = "Dnepr",
+                        Position = "c# developer",
+                        Profession = "professor",
+                        Role = "user",
+                        Sector = "sector",
+                        Title = "title"
+                },
+                new UserInformation
+                {
+                        Company = "ISD",
+                        CommercialExperiance = "5",
+                        Department = "Department1",
+                        Division = "Division",
+                        FirstName = "Ivan",
+                        HireDate = "1.05.2017",
+                        ISDExperiance = "0.5 year",
+                        LastName = "Ivanov",
+                        Login = "IvanIvanov",
+                        Manager = "AlexandraMorozova",
+                        OfficeLocation = "Dnepr",
+                        Position = "c# developer",
+                        Profession = "professor",
+                        Role = "user",
+                        Sector = "sector",
+                        Title = "title"
+                },
+                new UserInformation
+                {
+                        Company = "ISD",
+                        CommercialExperiance = "5",
+                        Department = "Department1",
+                        Division = "Division",
+                        FirstName = "Max",
+                        HireDate = "1.05.2017",
+                        ISDExperiance = "0.5 year",
+                        LastName = "Maximov",
+                        Login = "MaxMaximov",
+                        Manager = "AlexandraMorozova",
+                        OfficeLocation = "Dnepr",
+                        Position = "c# developer",
+                        Profession = "professor",
+                        Role = "user",
+                        Sector = "sector",
+                        Title = "title"
+                },
+                new UserInformation
+                {
+                        Company = "ISD",
+                        CommercialExperiance = "5",
+                        Department = "Department28",
+                        Division = "Division",
+                        FirstName = "Alexandra",
+                        HireDate = "1.05.2017",
+                        ISDExperiance = "0.5 year",
+                        LastName = "Morozova",
+                        Login = "AlexandraMorozova",
+                        Manager = "ValeriyPavlovich",
+                        OfficeLocation = "Dnepr",
+                        Position = "c# developer",
+                        Profession = "professor",
+                        Role = "manager",
+                        Sector = "sector",
+                        Title = "title"
+                }
+            };
+            List<UserInformation> result = new List<UserInformation>();
+            if (departmentName == null)
+            {
+                result.Add(AllUserInfoModels.First(u => u.Login == login));
+                return result;
+            }
+            else
+            {
+                foreach (var userInfoModel in AllUserInfoModels)
+                {
+                    if (userInfoModel.Department == departmentName)
+                    {
+                        result.Add(userInfoModel);
+                    }
+                }
+                return result;
+            }
+        }
+        #endregion
 
-            List<WorkTime> list = new List<WorkTime>
+
+
+        #region  GetUserOrDepartmentIformation
+        public static List<UserInfoModel> GetUserOrDepartmentIformation(string departmentName, string login, DateTime start, DateTime end)
+        {
+            List<UserInfoModel> returnInformation = new List<UserInfoModel>();
+
+            if (departmentName == null)
+            {
+                UserInfoModel userinfo = new UserInfoModel
+                {
+                    userInformarion = GetUserInformation(login, null).First(),
+                    WorkTimes = GetUserWorkTimes(login, start, end)
+                };
+                returnInformation.Add(userinfo);
+            }
+            else
+            {
+                var usersInformationsFromDepartment = GetUserInformation(null, departmentName);
+                foreach (var tempUserInfo in usersInformationsFromDepartment)
+                {
+                    UserInfoModel userinfo = new UserInfoModel
+                    {
+                        userInformarion = tempUserInfo,
+                        WorkTimes = GetUserWorkTimes(tempUserInfo.Login, start, end)
+                    };
+                    returnInformation.Add(userinfo);
+
+                }
+
+            }
+
+            return returnInformation;            
+        }
+        #endregion
+
+        #region GetUserWorkTimes
+        private static List<WorkTime> GetUserWorkTimes(string login, DateTime Start, DateTime End)
+        {
+            List<WorkTime> AllWorkTimeslist = new List<WorkTime>
                 {
                     new WorkTime {TimeIn = new DateTime(2017, 4, 21, 8, 40, 0), TimeOut = new DateTime(2017, 4, 21, 10, 20, 0)} ,
                     new WorkTime {TimeIn = new DateTime(2017, 4, 21, 10, 40, 0), TimeOut = new DateTime(2017, 4, 21, 17, 20, 0)},
-                    
+
                     new WorkTime {TimeIn = new DateTime(2017, 4, 22, 8, 0, 0), TimeOut = new DateTime(2017, 4, 22, 14, 0, 0)},
                     new WorkTime {TimeIn = new DateTime(2017, 4, 22, 15, 0, 0), TimeOut = new DateTime(2017, 4, 22, 16, 50, 0) },
 
@@ -42,79 +216,27 @@ namespace ActivityTracking.GetUserInfo
                     new WorkTime {TimeIn = new DateTime(2017, 4, 28, 13, 0, 0), TimeOut = new DateTime(2017, 4, 28, 16, 50, 0)},
                 };
 
-            if (groupName == null)
+            List<WorkTime> resultWorkTimeList = new List<WorkTime>();
+            resultWorkTimeList = AllWorkTimeslist.Where(u => u.TimeIn.Date >= Start && u.TimeIn.Date <= End).ToList();
+            if (resultWorkTimeList.Count > 0)
             {
-                UserInfoModel userinfo = new UserInfoModel
-                {
-                    Company = "ISD",
-                    CommercialExperiance = "5",
-                    Department = "IndDep",
-                    Division = "Division",
-                    FirstName = "Alexandr",
-                    HireDate = "1.05.2017",
-                    ISDExperiance = "0.5 year",
-                    LastName = "Tkachuk",
-                    Login = "AlexandrTkachuk",
-                    Manager = "AlexandraMorozova",
-                    OfficeLocation = "Dnepr",
-                    Position = "c# developer",
-                    Profession = "professor",
-                    Role = "manager",
-                    Sector = "sector",
-                    Title = "title",
-                    WorkTimes = list.Where(u=>u.TimeIn.Date >= Start && u.TimeIn.Date <= End).ToList()
-                };
-                returnUsersInformaion.Add(userinfo);
+                return resultWorkTimeList;
             }
-
             else
             {
-                UserInfoModel userinfo = new UserInfoModel
-                {
-                    Company = "ISD",
-                    CommercialExperiance = "5",
-                    Department = "IndDep",
-                    Division = "Division",
-                    FirstName = "Alexandr",
-                    HireDate = "1.05.2017",
-                    ISDExperiance = "0.5 year",
-                    LastName = "Tkachuk",
-                    Login = "AlexandrTkachuk",
-                    Manager = "AlexandraMorozova",
-                    OfficeLocation = "Dnepr",
-                    Position = "c# developer",
-                    Profession = "professor",
-                    Role = "manager",
-                    Sector = "sector",
-                    Title = "title",
-                    WorkTimes = list.Where(u => u.TimeIn.Date >= Start && u.TimeIn.Date <= End).ToList()
-                };
-                returnUsersInformaion.Add(userinfo);
-
+                return null; 
             }
-            
-            return returnUsersInformaion;            
-        }
 
-        public static List<UserGroup> GetUserGroup(string login)
+        }
+        #endregion
+
+        #region GetManagerDepartments
+        public static List<string> GetManagerDepartments(string ManagerLogin)
         {
-
-            List<UserGroup> returnusergroups = new List<UserGroup>
-            {
-                new UserGroup {Login = "AlexanderTkachuk" }
-            };
-
-            List<Department> list = new List<Department>
-            {
-                new Department {MayAbsentTime = new TimeSpan(00, 02, 00), Name = "Group1" },
-                new Department {MayAbsentTime = new TimeSpan(00, 02, 00), Name = "Group2" },
-                new Department {MayAbsentTime = new TimeSpan(00, 02, 00), Name = "Group3" }
-            };
-
-            //returnusergroups = returnusergroups.Where(x => x.Login == login);
-
-            return returnusergroups;
+            List<String> departmentsList = new List<string>() { "Department1", "Department2", "Department3", "Department4" };
+            return departmentsList;
         }
+        #endregion
     }
 }
 

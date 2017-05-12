@@ -404,6 +404,9 @@
     <Content Include="Views\Shared\_UserLayout.cshtml" />
     <Content Include="Views\Admin\ShowUserReport.cshtml" />
     <Content Include="Views\Manager\ShowUserReport.cshtml" />
+    <Content Include="Views\Manager\ShowGroupReportByUsers.cshtml" />
+    <Content Include="Views\Manager\ChooseDepartment.cshtml" />
+    <Content Include="Views\Manager\ShowDepartmentReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

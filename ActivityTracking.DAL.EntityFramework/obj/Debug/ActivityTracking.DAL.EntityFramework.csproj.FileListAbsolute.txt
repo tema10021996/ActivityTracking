@@ -102,8 +102,6 @@ D:\Игры\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ru\M
 D:\Игры\ActivityTracking\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.csprojResolveAssemblyReference.cache
 D:\Игры\ActivityTracking\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.dll
 D:\Игры\ActivityTracking\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.pdb
-C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.GetUserInfo.dll
-C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.GetUserInfo.pdb
 D:\ISD\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.dll.config
 D:\ISD\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.dll
 D:\ISD\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.pdb

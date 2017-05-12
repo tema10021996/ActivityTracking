@@ -174,14 +174,14 @@ namespace ActivityTracking.WebClient.Controllers
             ApplicationContext context = new ApplicationContext();
             Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>(context);
             var user = userRepository.GetList().First(u => u.Id == Id);
-            UserInfoModel info = GetUserInfo.UserInfo.GetUserInformation(null, user.UserName, Start, End).First();
+            UserInfoModel info = GetUserInfo.UserInfo.GetUserOrDepartmentIformation(null, user.UserName, Start, End).First();
 
             var times = info.WorkTimes.GroupBy(t => t.TimeIn.Date);
 
             
             Repository<Absence> absenceRepository = new Repository<Absence>(context);
 
-            ShowUserReportViewModel model = new ShowUserReportViewModel { Start = Start, End = End, list = new List<ChartViewModel>(), UserInfo = info, DaysCount = (End - Start).Days };
+            ShowUserReportViewModel model = new ShowUserReportViewModel { Start = Start, End = End, listOfWorkAndAbesnceTimeForChart = new List<ChartViewModel>(), UserInfo = info, DaysCount = (End - Start).Days };
             ArrayList colors = new ArrayList();
 
             for (DateTime start = Start; start <= End; start = start.AddDays(1))
@@ -202,7 +202,7 @@ namespace ActivityTracking.WebClient.Controllers
                     {
                         colors.Add("#FFFFFF");
                     }
-                    model.list.Add(notWorkThisDay);
+                    model.listOfWorkAndAbesnceTimeForChart.Add(notWorkThisDay);
 
                 }
 
@@ -263,7 +263,7 @@ namespace ActivityTracking.WebClient.Controllers
                 {
                     colors.Add("#FFFFFF");
                 }
-                model.list.Add(beforeWork);
+                model.listOfWorkAndAbesnceTimeForChart.Add(beforeWork);
 
                 var tempStartWorkTillFirstAbsence = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day, FirstIn.Hour, FirstIn.Minute, FirstIn.Second);
                 var tempEndWorkTillFirstAbsence = new DateTime(timeGroupToArray[0].TimeIn.Year, timeGroupToArray[0].TimeIn.Month, timeGroupToArray[0].TimeIn.Day,
@@ -281,7 +281,7 @@ namespace ActivityTracking.WebClient.Controllers
                 {
                     colors.Add("#0000FF");
                 }
-                model.list.Add(beginWorkTillFirstAbsence);
+                model.listOfWorkAndAbesnceTimeForChart.Add(beginWorkTillFirstAbsence);
 
                 for (int j = 0; j < AllAbsencesArray.Length; j++)
                 {
@@ -299,7 +299,7 @@ namespace ActivityTracking.WebClient.Controllers
                     {
                         colors.Add(AllAbsencesArray[j].Reason.Color);
                     }
-                    model.list.Add(tv);
+                    model.listOfWorkAndAbesnceTimeForChart.Add(tv);
                     if (j != AllAbsencesArray.Length - 1)
                     {
                         ChartViewModel gapTv = new ChartViewModel
@@ -316,7 +316,7 @@ namespace ActivityTracking.WebClient.Controllers
                         {
                             colors.Add("#0000FF");
                         }
-                        model.list.Add(gapTv);
+                        model.listOfWorkAndAbesnceTimeForChart.Add(gapTv);
                     }
                     else
                     {
@@ -334,7 +334,7 @@ namespace ActivityTracking.WebClient.Controllers
                         {
                             colors.Add("#0000FF");
                         }
-                        model.list.Add(gapTv);
+                        model.listOfWorkAndAbesnceTimeForChart.Add(gapTv);
                     }
 
                 }
@@ -355,7 +355,7 @@ namespace ActivityTracking.WebClient.Controllers
                 {
                     colors.Add("#FFFFFF");
                 }
-                model.list.Add(afterWork);
+                model.listOfWorkAndAbesnceTimeForChart.Add(afterWork);
 
             }
             string dataStr = Newtonsoft.Json.JsonConvert.SerializeObject(colors, Newtonsoft.Json.Formatting.None);

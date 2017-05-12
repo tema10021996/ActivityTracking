@@ -609,3 +609,12 @@ D:\ISD\ActivityTracking\ActivityTracking.WebClient\bin\ru\System.Web.WebPages.Ra
 D:\ISD\ActivityTracking\ActivityTracking.WebClient\obj\Debug\ActivityTracking.WebClient.csprojResolveAssemblyReference.cache
 D:\ISD\ActivityTracking\ActivityTracking.WebClient\obj\Debug\ActivityTracking.WebClient.dll
 D:\ISD\ActivityTracking\ActivityTracking.WebClient\obj\Debug\ActivityTracking.WebClient.pdb
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.WebClient\bin\System.Net.Http.Formatting.dll
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Http.dll
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Http.WebHost.dll
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.WebClient\bin\System.Net.Http.Formatting.xml
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Http.xml
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Http.WebHost.xml
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.WebClient\bin\ru\System.Net.Http.Formatting.resources.dll
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.WebClient\bin\ru\System.Web.Http.resources.dll
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.WebClient\bin\ru\System.Web.Http.WebHost.resources.dll

@@ -1,0 +1,31 @@
+﻿@model ActivityTracking.WebClient.Models.ChooseDepartmentViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ManagerLayout.cshtml";
+
+}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="text-right">
+            @using (Html.BeginForm("FindUserReport", "Manager"))
+            {
+                @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                @Html.Label("Find user by login: ")
+                @Html.TextBox("userName")
+                <input type="submit" class="btn  btn-primary btn-sm" value="Find" />
+            }
+        </div>
+
+        <h4 class="text-center"><b>Choose department</b></h4>
+    </div>
+    <div class="panel-body text-center">
+        @using (Html.BeginForm("ShowDepartmentReport", "Manager"))
+        {
+            @Html.Hidden("Start", DateTime.Now.AddDays(-7).Date)
+            @Html.Hidden("End", DateTime.Now.AddDays(-1).Date)
+            @Html.DropDownList("DepartmentList")
+            <input type="submit" class="btn  btn-primary btn-sm" value="Show department report" />
+
+        }
+    </div>
+</div>

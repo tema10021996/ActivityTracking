@@ -18,7 +18,7 @@ namespace ActivityTracking.WebClient.Models
 
     public class ShowUserReportViewModel
     {
-        public List<ChartViewModel> list { get; set; }
+        public List<ChartViewModel> listOfWorkAndAbesnceTimeForChart { get; set; }
         public ActivityTracking.GetUserInfo.UserInfoModel UserInfo { get; set; }
 
         [DataType(DataType.Date)]
@@ -28,7 +28,5 @@ namespace ActivityTracking.WebClient.Models
         public DateTime End { get; set; }
 
         public int DaysCount { get; set; }
-
-        public string ChosenLogin { get; set; }
     }
 }

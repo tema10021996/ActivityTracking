@@ -1,108 +1,80 @@
-﻿@model ActivityTracking.WebClient.Models.ManagerPostIndexViewModel
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+﻿@model List<string>
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_ManagerLayout.cshtml";
 
 }
-
-
-<script>
-    var colorArray = JSON.parse('@ViewBag.Colors');
-</script>
-
-<h2 class="text-center">Group report</h2>
-@using (Html.BeginForm())
-{
-    @Html.ValidationSummary(true)
-
-    <div class="row">       
-        <div class="text-center"> 
-
-                @Html.LabelFor(model => model.Start)
-
-                @Html.EditorFor(model => model.Start)
-
-                @Html.LabelFor(model => model.End)
-
-                @Html.EditorFor(model => model.End)
-
-            <button type="submit" class="btn btn-primary btn-sm">Apply</button>
-        </div>
-    </div>
-    
-}
-
-<script type="text/javascript">
-    google.charts.load("current", { packages: ["corechart"] });
-    google.charts.setOnLoadCallback(drawChart);
-    function drawChart() {
-        var dataTable = new google.visualization.DataTable();
-
-        dataTable.addColumn({ type: 'string', id: 'UserName' });
-
-        @foreach(var reasonName in Model.ReasonsNames)
-        {
-            <text>
-        dataTable.addColumn({ type: 'number', label: '@reasonName' });
-        dataTable.addColumn({ type: 'string', role: 'tooltip', p: { 'html': true } });
-        </text>
-        }
-
-        @foreach (var WorkerInfo in Model.WorkersInfos)
-        {
-
-            <text>
-        var arr = [];
-        arr.push('@WorkerInfo.Name');
-        </text>
-
-            foreach (var reasonInfo in WorkerInfo.ReasonInfos)
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="text-right">
+            @using (Html.BeginForm("FindUserReport", "Manager"))
             {
-                if (reasonInfo.DurationInHours == 0.0)
-                {
-                    <text>
-                    arr.push(0);
-                    arr.push(createCustomHTMLContent('@WorkerInfo.Name', '@reasonInfo.ReasonName', '0', '0', '0', '0'));
-                     </text>
-                }
-                else
-                {
-                <text>
-                    var d = '@reasonInfo.DurationInHours';
-                    var c = d.replace(',', '.');
-                    var a = Number(c);
-                    arr.push(a);
-                    arr.push(createCustomHTMLContent('@WorkerInfo.Name', '@reasonInfo.ReasonName', '@reasonInfo.DurationInHours', '@reasonInfo.Hours', '@reasonInfo.Minutes', '@reasonInfo.Seconds'));
-                    </text>
-                }
+                @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                @Html.Label("Find user by login: ")
+                @Html.TextBox("userName")
+                <input type="submit" class="btn  btn-primary btn-sm" value="Find" />
             }
-            <text>
-        dataTable.addRow(arr);
-        </text>
+        </div>
 
-        }
-        var options = {
-            isStacked: 'percent',
-            legend:  {position: 'top', textStyle: {fontSize: 16} },
-            hAxis: {
-                minValue: 0,
-                ticks: [0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1]
-            },
-            colors: colorArray,
-            tooltip: { isHtml: true },
-            height: @Model.WorkersInfos.Count*50,
-            chartArea: {top: 50, left:150, width: 900}
-        };
+        <h4 class="text-center"><b>My departments</b></h4>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-condensed table-bordered">
+            <tr>
+                <th class="text-center">Department</th>
+                <th class="text-center">Show users</th>
+                <th class="text-center">Show report</th>
+            </tr>
+            @foreach (var department in Model)
+            {
+                <tr>
+                    <td class="text-left">@department</td>
+                    <td class="text-center">
+                        @using (Html.BeginForm("ShowUsers", "Manager"))
+                        {
+                            @Html.Hidden("departmentName", department)
+                            <input type="submit" class="btn btn-primary btn-sm" value="Show users" />
+                        }
+                    </td>
+                    <td class="text-center">
+                        @using (Html.BeginForm("ShowGroupReportByUsers", "Manager"))
+                        {
+                            @Html.Hidden("departmentName", department)
+                            @Html.Hidden("start", DateTime.Now.AddDays(-7).Date)
+                            @Html.Hidden("end", DateTime.Now.AddDays(-1).Date)
+                            <input type="submit" class="btn btn-primary btn-sm" value="Show report" />
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+@*<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#changeMayAbsentTime">Change MayAbsentTime</button>
+<div id="changeMayAbsentTime" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm("ChangeGroupMayAbsentTime", "Manager"))
+            {
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>                   
+                </div>
+                <div class="modal-body text-left">
+                    <b class="text-center">Change to: </b>
+                    @Html.Hidden("Id", Model.Id)
 
-        var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
-        chart.draw(dataTable, options);
-    }
-    function createCustomHTMLContent(userName, reasonName, durationInHours, hours, minutes, seconds) {
-        return '<div style="padding:20px; width:375px;">' + '<b>' + userName + '</b>' + '<hr>' + '<b>' + 'Reason: ' + '</b>' + reasonName + '<br>' +
-           '<b>' + 'Duration in hours: ' + '</b>' + durationInHours + 'h' + '<br>' +
-           '<b>' + 'Duration: ' + '</b>' + hours + 'hours' + ', ' + minutes + 'minutes' + ', ' + seconds + 'seconds' + '</div>';
-    }
-</script>
+                    @Html.TextBox("Minutes", null, new { style = "width: 50px;" })
+                    @Html.Label("minutes")
+                </div>
+                <div class="modal-footer">
 
-    <div id="barchart_values" ></div>
+                    <input type="submit" class="btn btn-danger btn-sm" value="Change" />
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Close</button>
+
+                </div>
+            }
+        </div>
+
+    </div>
+</div>*@
+</div>

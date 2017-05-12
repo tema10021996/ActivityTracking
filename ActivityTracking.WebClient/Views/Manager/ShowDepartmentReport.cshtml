@@ -1,0 +1,109 @@
+﻿@model ActivityTracking.WebClient.Models.ManagerShowDepartmentReportViewModel
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ManagerLayout.cshtml";
+
+}
+
+
+<script>
+    var colorArray = JSON.parse('@ViewBag.Colors');
+</script>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="text-center"><b>Department:</b> @Model.ChosenDepartmentName</h4>
+
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+
+            <div class="row">
+                <div class="text-center">
+                    @Html.Hidden("DepartmentList", Model.ChosenDepartmentName)
+
+                    @Html.LabelFor(model => model.Start)
+
+                    @Html.EditorFor(model => model.Start)
+
+                    @Html.LabelFor(model => model.End)
+
+                    @Html.EditorFor(model => model.End)
+
+                    <button type="submit" class="btn btn-primary btn-sm">Apply</button>
+                </div>
+            </div>
+
+        }
+    </div>
+
+    <script type="text/javascript">
+        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var dataTable = new google.visualization.DataTable();
+
+            dataTable.addColumn({ type: 'string', id: 'DepartmentName' });
+
+            @foreach(var reasonName in Model.ReasonsNames)
+        {
+            <text>
+            dataTable.addColumn({ type: 'number', label: '@reasonName' });
+            dataTable.addColumn({ type: 'string', role: 'tooltip', p: { 'html': true } });
+            </text>
+        }
+
+
+            var arr = [];
+            arr.push('@Model.ChosenDepartmentName');
+
+            @foreach (var reasonInfo in Model.ReasonInfos)
+            {
+                if (reasonInfo.DurationInHours == 0.0)
+                {
+                    <text>
+            arr.push(0);
+            arr.push(createCustomHTMLContent('@Model.ChosenDepartmentName', '@reasonInfo.ReasonName', '0', '0', '0', '0'));
+            </text>
+                }
+                else
+                {
+                <text>
+            var d = '@reasonInfo.DurationInHours';
+            var c = d.replace(',', '.');
+            var a = Number(c);
+            arr.push(a);
+            arr.push(createCustomHTMLContent('@Model.ChosenDepartmentName', '@reasonInfo.ReasonName', '@reasonInfo.DurationInHours', '@reasonInfo.Hours', '@reasonInfo.Minutes', '@reasonInfo.Seconds'));
+            </text>
+                }
+            }
+
+            dataTable.addRow(arr);
+
+            var options = {
+                isStacked: 'percent',
+                legend:  {position: 'top', textStyle: {fontSize: 16} },
+                hAxis: {
+                    minValue: 0,
+                    ticks: [0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1]
+                },
+                colors: colorArray,
+                tooltip: { isHtml: true },
+                @*height: @Model.WorkersInfos.Count*50,*@
+                chartArea: {top: 50, left:150, width: 900}
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
+            chart.draw(dataTable, options);
+        }
+        function createCustomHTMLContent(departmentName, reasonName, durationInHours, hours, minutes, seconds) {
+            return '<div style="padding:20px; width:375px;">' + '<b>' + departmentName + '</b>' + '<hr>' + '<b>' + 'Reason: ' + '</b>' + reasonName + '<br>' +
+               '<b>' + 'Duration in hours: ' + '</b>' + durationInHours + 'h' + '<br>' +
+               '<b>' + 'Duration: ' + '</b>' + hours + 'hours' + ', ' + minutes + 'minutes' + ', ' + seconds + 'seconds' + '</div>';
+        }
+    </script>
+
+    <div id="barchart_values"></div>
+</div>
+
+
