@@ -192,6 +192,18 @@ namespace ActivityTracking.WebClient.Controllers
         }
         #endregion
 
+        public ActionResult ShowMyReport()
+        {
+            DateTime End = DateTime.Now.AddDays(-1).Date;
+            DateTime Start = DateTime.Now.AddDays(-7).Date;
+            return ShowUserReport( HttpContext.User.Identity.Name,Start, End);
+        }
+
+        [HttpPost]
+        public ActionResult ShowMyReport(string userName, DateTime Start, DateTime End)
+        {
+            return ShowUserReport(HttpContext.User.Identity.Name, Start, End);
+        }
 
         #region ShowGroupReportByUsers
         [HttpPost]
