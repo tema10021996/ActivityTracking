@@ -225,9 +225,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\BarChart.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ColumnChart.png" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\PieChart.png" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -396,17 +399,20 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\Admin\ShowGroups.cshtml" />
-    <Content Include="Views\Admin\ShowGroupInfo.cshtml" />
     <Content Include="Views\Manager\Index.cshtml" />
     <Content Include="Views\Shared\_ManagerLayout.cshtml" />
-    <Content Include="Views\Manager\ShowUsers.cshtml" />
+    <Content Include="Views\Manager\ShowDepartmentUsers.cshtml" />
     <Content Include="Views\Shared\_UserLayout.cshtml" />
-    <Content Include="Views\Admin\ShowUserReport.cshtml" />
     <Content Include="Views\Manager\ShowUserReport.cshtml" />
-    <Content Include="Views\Manager\ShowGroupReportByUsers.cshtml" />
+    <Content Include="Views\Manager\ShowDepartmentReportByUsers.cshtml" />
     <Content Include="Views\Manager\ChooseDepartment.cshtml" />
     <Content Include="Views\Manager\ShowDepartmentReport.cshtml" />
+    <Content Include="Views\Manager\Settings.cshtml" />
+    <Content Include="Views\Admin\ShowDepartmentUsers.cshtml" />
+    <Content Include="Views\Admin\ShowUserReport.cshtml" />
+    <Content Include="Views\Admin\ShowDepartmentReportByUsers.cshtml" />
+    <Content Include="Views\Admin\ShowDepartmentReport.cshtml" />
+    <Content Include="Views\Admin\Settings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

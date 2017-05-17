@@ -8,7 +8,6 @@ using System.Web.Routing;
 using System.Data.Entity;
 using ActivityTracking.DAL.EntityFramework;
 using System.Web.Http;
-using System.Web.Routing;
 
 namespace ActivityTracking.WebClient
 {

@@ -21,7 +21,7 @@
                 </button>
                 @Html.ActionLink("User mode", "Index", "User", new { area = "" }, new { @class = "navbar-brand ", @style = "color:red" })
             </div>
-            <div class="navbar-collapse collapse">              
+            <div class="navbar-collapse collapse">
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -38,3 +38,4 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
+</html>

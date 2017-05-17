@@ -38,12 +38,9 @@ namespace ActivityTracking.WebClient.Controllers
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
-            {
-                Repository<UserLogin> userLoginsRepository = new Repository<UserLogin>();
-                var userLogin = userLoginsRepository.GetList().FirstOrDefault(u => u.Login == model.Login);
-                if (userLogin != null)
+            {              
+                if (GetUserInfo.UserInfo.GetAllUsersLogins().Contains(model.Login))
                 {
-
 
                     ApplicationUser user = new ApplicationUser { UserName = model.Login };
                     IdentityResult result = await UserManager.CreateAsync(user, model.Password);

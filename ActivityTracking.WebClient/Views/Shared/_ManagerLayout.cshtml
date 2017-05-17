@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>ActivityTracking</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/themes/base/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -19,19 +19,29 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Manager mode", "Index", "Manager", new { area = "" }, new { @class = "navbar-brand ", @style = "color:red"})
+                @Html.ActionLink("Manager mode", "Index", "Manager", new { area = "" }, new { @class = "navbar-brand ", @style = "color:red" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("My departments", "Index", "Manager")</li>
-                    <li>@Html.ActionLink("Choose department", "ChooseDepartment", "Manager")</li>  
-                    <li>@Html.ActionLink("My report", "ShowMyReport", "Manager")</li>                                      
+                    <li>@Html.ActionLink("Choose department", "ChooseDepartment", "Manager")</li>                   
+                    @if (ActivityTracking.GetUserInfo.UserInfo.GetAllDivisionManagers().Contains(User.Identity.Name))
+                    {
+                        <li>@Html.ActionLink("Settings", "Settings", "Manager")</li>
+                    }
+                    <li>@Html.ActionLink("My report", "ShowMyReport", "Manager")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
     <div class="container body-content">
+        <div>
+            @if (TempData["message"] != null)
+            {
+                <div class="alert alert-success text-center">@TempData["message"]</div>
+            }
+        </div>
         @RenderBody()
     </div>
 
@@ -51,3 +61,4 @@
         });
     </script>
 </body>
+</html>

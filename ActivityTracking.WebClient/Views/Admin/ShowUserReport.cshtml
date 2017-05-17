@@ -9,43 +9,44 @@
     var colorArray = JSON.parse('@ViewBag.Colors');
 </script>
 
-<div class="row alert alert-success" style="margin-top:20px; color:black; font-size:medium">
+<div class="row alert alert-success" style="margin-top:20px; background-color:#f5f5f5; color:black; font-size:medium">
     <div class="col-md-3">
         <p>
-            <b>Company:</b> @Model.UserInfo.Company<br>
-            <b>Office Location:</b> @Model.UserInfo.OfficeLocation<br>
-            <b>Sector:</b> @Model.UserInfo.Sector<br>
-            <b>Department:</b> @Model.UserInfo.Department
+            <b>Company:</b> @Model.UserInfo.userInformarion.Company<br>
+            <b>Office Location:</b> @Model.UserInfo.userInformarion.OfficeLocation<br>
+            <b>Sector:</b> @Model.UserInfo.userInformarion.Sector<br>
+            <b>Department:</b> @Model.UserInfo.userInformarion.Department
         </p>
 
     </div>
     <div class="col-md-3">
         <p>
-            <b>Login:</b> @Model.UserInfo.Login<br>
-            <b>Last Name:</b> @Model.UserInfo.LastName<br>
-            <b>First Name:</b> @Model.UserInfo.FirstName<br>
-            <b>Profession</b>: @Model.UserInfo.Profession
+            <b>Login:</b> @Model.UserInfo.userInformarion.Login<br>
+            <b>Last Name:</b> @Model.UserInfo.userInformarion.LastName<br>
+            <b>First Name:</b> @Model.UserInfo.userInformarion.FirstName<br>
+            <b>Profession</b>: @Model.UserInfo.userInformarion.Profession
 
         </p>
     </div>
     <div class="col-md-3">
         <p>
-            <b>Title</b>: @Model.UserInfo.Title<br>
-            <b>Position:</b> @Model.UserInfo.Position<br>
-            <b>Division:</b> @Model.UserInfo.Division<br>
-            <b>Role:</b> @Model.UserInfo.Role
+            <b>Title</b>: @Model.UserInfo.userInformarion.Title<br>
+            <b>Position:</b> @Model.UserInfo.userInformarion.Position<br>
+            <b>Division:</b> @Model.UserInfo.userInformarion.Division<br>
+            <b>Role:</b> @Model.UserInfo.userInformarion.Role
 
         </p>
     </div>
     <div class="col-md-3">
         <p>
-            <b>Manager:</b> @Model.UserInfo.Manager<br>
-            <b>Hire Date:</b> @Model.UserInfo.HireDate<br>
-            <b>ISD Experiance</b>: @Model.UserInfo.ISDExperiance<br>
-            <b>Commercial Experiance:</b> @Model.UserInfo.CommercialExperiance
+            <b>Manager:</b> @Model.UserInfo.userInformarion.Manager<br>
+            <b>Hire Date:</b> @Model.UserInfo.userInformarion.HireDate<br>
+            <b>ISD Experiance</b>: @Model.UserInfo.userInformarion.ISDExperiance<br>
+            <b>Commercial Experiance:</b> @Model.UserInfo.userInformarion.CommercialExperiance
         </p>
     </div>
 </div>
+
 
 @using (Html.BeginForm())
 {
@@ -53,6 +54,7 @@
 
     <div class="row">
         <div class="text-center">
+
 
             @Html.LabelFor(model => model.Start)
 
@@ -83,16 +85,18 @@
             dataTable.addColumn({ type: 'date', id: 'Start' });
             dataTable.addColumn({ type: 'date', id: 'End' });
 
+            var countOfRows = 0;
 
 
-            @foreach (var t in Model.list)
-        {
-            if (t.Comment == null)
+            @foreach (var t in Model.listOfWorkAndAbesnceTimeForChart)
             {
+                if (t.Comment == null)
+                {
                 <text>
             dataTable.addRow(['@t.RowLabel', '@t.Barlabel', createCustomHTMLContentWithoutComment('@t.RowLabel', '@t.Barlabel', '@t.StartAbsence.Hour', '@t.StartAbsence.Minute','@t.StartAbsence.Second',
                 '@t.EndAbsence.Hour', '@t.EndAbsence.Minute', '@t.EndAbsence.Second', @t.Duration.Hours, @t.Duration.Minutes, @t.Duration.Seconds),
                     new Date(0, 0, 0, @t.StartAbsence.Hour, @t.StartAbsence.Minute, @t.StartAbsence.Second), new Date(0, 0, 0, @t.EndAbsence.Hour, @t.EndAbsence.Minute, @t.EndAbsence.Second)]);
+            countOfRows++;
             </text>
             }
             else
@@ -101,6 +105,7 @@
             dataTable.addRow(['@t.RowLabel', '@t.Barlabel', createCustomHTMLContentWithComment('@t.RowLabel', '@t.Barlabel', '@t.StartAbsence.Hour', '@t.StartAbsence.Minute','@t.StartAbsence.Second',
         '@t.EndAbsence.Hour', '@t.EndAbsence.Minute', '@t.EndAbsence.Second', '@t.Duration.Hours', '@t.Duration.Minutes', '@t.Duration.Seconds', '@t.Comment'),
                     new Date(0, 0, 0, @t.StartAbsence.Hour, @t.StartAbsence.Minute, @t.StartAbsence.Second), new Date(0, 0, 0, @t.EndAbsence.Hour, @t.EndAbsence.Minute, @t.EndAbsence.Second)]);
+            countOfRows++;
             </text>
             }
         }
@@ -110,7 +115,7 @@
                 timeline: { groupByRowLabel: true},
                 focusTarget: 'category',
                 colors: colorArray,
-                backgroundColor: '#adbfa6',
+                backgroundColor: '#d3d3d3',
                 height: @Model.DaysCount*41+110
             };
             chart.draw(dataTable, options);
@@ -130,6 +135,3 @@
 </script>
 
 <div id="container"></div>
-
-
-

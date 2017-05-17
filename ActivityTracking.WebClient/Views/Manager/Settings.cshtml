@@ -1,0 +1,48 @@
+﻿@model ActivityTracking.WebClient.Models.ManagerSettingsViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ManagerLayout.cshtml";
+
+}
+<div class="panel panel-default">
+    <div class="panel-heading text-center">
+        <div class="text-right">
+            @using (Html.BeginForm("FindUserReport", "Manager"))
+            {
+                <div class="input-group">
+                    @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                    @Html.TextBox("userName", null, new { @class = "form-control", placeholder = "Search user by login", style = "width:200px" })
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+            }
+        </div>
+        <h4>Reason settings</h4>
+    </div>
+    <div class="panel-body">
+        <p>Your reasons</p>
+        @using (Html.BeginForm())
+        {
+            for (int i = 0; i < Model.AllReasonModels.Count; i++)
+            {
+
+                @Html.CheckBoxFor(m=>m.AllReasonModels[i].isChoosen, new { @class = "checkbox-primary" })
+                @Model.AllReasonModels[i].Reason.Name
+                @Html.HiddenFor(m => Model.AllReasonModels[i].Reason.Id)
+                @Html.HiddenFor(m => Model.AllReasonModels[i].Reason.Name)
+                @Html.HiddenFor(m => Model.AllReasonModels[i].Reason.AddingTime)
+                @Html.HiddenFor(m => Model.AllReasonModels[i].Reason.Color)
+                @Html.HiddenFor(m => Model.AllReasonModels[i].Reason.DivisionManagers)
+                <br>
+                <br>
+            }
+            <p>
+                <input type="submit" class="btn btn-primary btn-sm" value="Save" />
+            </p>
+        }
+</div>
+    </div>
+
+
+

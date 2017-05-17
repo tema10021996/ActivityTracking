@@ -33,15 +33,99 @@ namespace ActivityTracking.WebClient.Controllers
         }
         #endregion
 
+        #region Settings
+        public ActionResult Settings()
+        {
+            ManagerSettingsViewModel managerSettingsViewModel = new ManagerSettingsViewModel {AllReasonModels = new List<ReasonModel>() };
+            Repository<DivisionManager> divisionManagerRepository = new Repository<DivisionManager>();
+            Repository<Reason> reasonRepository = new Repository<Reason>();
+            DivisionManager divisionManager = divisionManagerRepository.GetList().First(m => m.Login == User.Identity.Name);
+            var allReasons = reasonRepository.GetList();
+            
+            foreach (var reason in allReasons)
+            {
+                bool divManagerHasThisReason = false;
+                foreach (var divisionManagerReason in divisionManager.Reasons)
+                {
+                    if (divisionManagerReason.Name == reason.Name)
+                    {
+                        divManagerHasThisReason = true;
+                    }
+                }
+                if (divManagerHasThisReason == true)
+                {
+                    managerSettingsViewModel.AllReasonModels.Add(new ReasonModel { Reason = reason, isChoosen = true });
+                }
+                else
+                {
+                    managerSettingsViewModel.AllReasonModels.Add(new ReasonModel { Reason = reason, isChoosen = false });
+                }
+            }
+
+            return View(managerSettingsViewModel);
+        }
+        #endregion
+
+        #region Settings [HttpPost]
+        [HttpPost]
+        public ActionResult Settings(ManagerSettingsViewModel managerSettingsViewModel)
+        {
+            ApplicationContext context = new ApplicationContext();
+            Repository<Reason> reasonRepository = new Repository<Reason>(context);
+            Repository<DivisionManager> divisionManagerRepository = new Repository<DivisionManager>(context);
+            DivisionManager divisionManager = divisionManagerRepository.GetList().First(m => m.Login == User.Identity.Name);
+            divisionManager.Reasons.Clear();
+            foreach (var reasonModel in managerSettingsViewModel.AllReasonModels)
+            {
+                if (reasonModel.isChoosen == true)
+                {
+                    var reason = reasonRepository.GetItem(reasonModel.Reason.Id);
+                    divisionManager.Reasons.Add(reason);
+                }
+            }
+            divisionManagerRepository.Update(divisionManager);
+            return View(managerSettingsViewModel);
+        }
+        #endregion
+
+        #region ShowDepartmentReportWithValidation
+        [HttpPost]
+        public ActionResult ShowDepartmentReportWithValidation(string DepartmentList, DateTime? Start, DateTime? End, bool BarChart, bool PieChart, bool ColumnChart)
+        {
+            if (Start == null || End == null)
+            {
+                TempData["message"] = "You should enter two dates";
+                End = DateTime.Now.AddDays(-1).Date;
+                Start = DateTime.Now.AddDays(-7).Date;
+                
+                return ShowDepartmentReport(DepartmentList, (DateTime)Start, (DateTime)End, BarChart, PieChart, ColumnChart);
+
+            }
+            else if (Start > End)
+            {
+                TempData["message"] = "End date should be bigger then start date";
+                End = DateTime.Now.AddDays(-1).Date;
+                Start = DateTime.Now.AddDays(-7).Date;
+                return ShowDepartmentReport(DepartmentList, (DateTime)Start, (DateTime)End, BarChart, PieChart, ColumnChart);
+            }
+            else
+            {
+                return ShowDepartmentReport(DepartmentList, (DateTime)Start, (DateTime)End, BarChart, PieChart, ColumnChart);
+            }
+ 
+        }
+        #endregion
+
+
         #region ShowDepartmentReport
         [HttpPost]
-        public ActionResult ShowDepartmentReport(string DepartmentList, DateTime Start, DateTime End)
+        public ActionResult ShowDepartmentReport(string DepartmentList, DateTime Start, DateTime End, bool BarChart, bool PieChart, bool ColumnChart)
         {
             ArrayList colors = new ArrayList();
 
-            var departmentUserInfoModels = UserInfo.GetUserOrDepartmentIformation(DepartmentList, null, Start, End);
+            
             ManagerShowDepartmentReportViewModel managerShowDepartmentReportViewModel = new ManagerShowDepartmentReportViewModel()
-            { Start = Start, End = End, ReasonsNames = new List<string>(), ReasonInfos = new List<ReasonInfo>(), ChosenDepartmentName = DepartmentList };
+            { Start = Start, End = End, ReasonsNames = new List<string>(), ReasonInfos = GenerateDataForDepartmentReportInPercentage(DepartmentList, Start, End), ChosenDepartmentName = DepartmentList, BarChart = BarChart, PieChart = PieChart, ColumnChart = ColumnChart };
 
             Repository<Absence> absenceRepository = new Repository<Absence>();
             Repository<Reason> reasonRepository = new Repository<Reason>();
@@ -54,15 +138,35 @@ namespace ActivityTracking.WebClient.Controllers
             foreach (var reason in reasons)
             {
                 managerShowDepartmentReportViewModel.ReasonsNames.Add(reason.Name);
+                if (!colors.Contains(reason.Color))
+                {
+                    colors.Add(reason.Color);
+                }
             }
 
+           
+            string dataStr = Newtonsoft.Json.JsonConvert.SerializeObject(colors, Newtonsoft.Json.Formatting.None);
+            ViewBag.Colors = new HtmlString(dataStr);
+            return View("ShowDepartmentReport", managerShowDepartmentReportViewModel);
+        }
+        #endregion
+
+
+        #region GenerateDataForDepartmentReportInPercentage
+        private List<ReasonInfo> GenerateDataForDepartmentReportInPercentage(string DepartmentList, DateTime Start, DateTime End)
+        {
+            List<ReasonInfo> ReasonInfos = new List<ReasonInfo>();
+            Repository<Absence> absenceRepository = new Repository<Absence>();
+            Repository<Reason> reasonRepository = new Repository<Reason>();
+            var reasons = reasonRepository.GetList();
+            var departmentUserInfoModels = UserInfo.GetUserOrDepartmentIformation(DepartmentList, null, Start, End);
             TimeSpan workDurationForGivenDays = new TimeSpan(0, 0, 0);
             foreach (var userInfoModel in departmentUserInfoModels.OrderBy(u => u.userInformarion.Login))
             {
-               
+
                 var userAbsences = absenceRepository.GetList().Where(a => a.Date >= Start && a.Date <= End).Where(a => a.User.UserName == userInfoModel.userInformarion.Login);
 
-                
+
 
                 if (userInfoModel.WorkTimes != null)
                 {
@@ -75,7 +179,7 @@ namespace ActivityTracking.WebClient.Controllers
 
                         workDurationForGivenDays += CalculateWorkDuartionForOneUserForOneDay(userTimesForOneDayToArray, userAbsencesforOneDayToArray);
                     }
-                }             
+                }
             }
             string Workhours = workDurationForGivenDays.TotalHours.ToString();
             int Workindex = Workhours.IndexOf(',');
@@ -88,31 +192,33 @@ namespace ActivityTracking.WebClient.Controllers
             {
                 WorkresultHours = Convert.ToInt32(Workhours.Remove(Workindex));
             }
-            managerShowDepartmentReportViewModel.ReasonInfos.Add(new ReasonInfo
+            ReasonInfos.Add(new ReasonInfo
             {
                 ReasonName = "Work",
                 DurationInHours = workDurationForGivenDays.TotalHours,
                 Hours = WorkresultHours,
                 Minutes = workDurationForGivenDays.Minutes,
-                Seconds = workDurationForGivenDays.Seconds
+                Seconds = workDurationForGivenDays.Seconds,
+                Color = "#0000FF"
+
             });
             foreach (var reason in reasonRepository.GetList())
             {
                 TimeSpan reasonDuration = new TimeSpan(0, 0, 0);
                 foreach (var userInfoModel in departmentUserInfoModels)
                 {
-                    var userAbsences = absenceRepository.GetList().Where(a => a.Date >= Start && a.Date <= End).Where(a => a.User.UserName == userInfoModel.userInformarion.Login).Where(a=>a.Reason.Name == reason.Name);
+                    var userAbsences = absenceRepository.GetList().Where(a => a.Date >= Start && a.Date <= End).Where(a => a.User.UserName == userInfoModel.userInformarion.Login).Where(a => a.Reason.Name == reason.Name);
                     foreach (var absence in userAbsences)
                     {
                         reasonDuration += ((DateTime)absence.EndAbsence - absence.StartAbsence);
                     }
                 }
 
-               
+
                 string hours = reasonDuration.TotalHours.ToString();
                 int index = hours.IndexOf(',');
                 int resultHours = reasonDuration.Hours;
-                if ( index == -1)
+                if (index == -1)
                 {
                     resultHours = Convert.ToInt32(reasonDuration.TotalHours);
                 }
@@ -120,25 +226,23 @@ namespace ActivityTracking.WebClient.Controllers
                 {
                     resultHours = Convert.ToInt32(hours.Remove(index));
                 }
-                managerShowDepartmentReportViewModel.ReasonInfos.Add(new ReasonInfo
+                ReasonInfos.Add(new ReasonInfo
                 {
                     ReasonName = reason.Name,
                     DurationInHours = reasonDuration.TotalHours,
                     Hours = resultHours,
                     Minutes = reasonDuration.Minutes,
-                    Seconds = reasonDuration.Seconds
+                    Seconds = reasonDuration.Seconds,
+                    Color = reason.Color
                 });
-                if (!colors.Contains(reason.Color))
-                {
-                    colors.Add(reason.Color);
-                }
+                
 
             }
-            string dataStr = Newtonsoft.Json.JsonConvert.SerializeObject(colors, Newtonsoft.Json.Formatting.None);
-            ViewBag.Colors = new HtmlString(dataStr);
-            return View(managerShowDepartmentReportViewModel);
+
+            return ReasonInfos;
         }
         #endregion
+    
 
         #region CalculateWorkDuartionForOneUserForOneDay
         private TimeSpan CalculateWorkDuartionForOneUserForOneDay(WorkTime[] userTimesForOneDayToArray, Absence[] userAbsencesforOneDayToArray)
@@ -192,30 +296,64 @@ namespace ActivityTracking.WebClient.Controllers
         }
         #endregion
 
+        #region ShowMyReport
         public ActionResult ShowMyReport()
         {
             DateTime End = DateTime.Now.AddDays(-1).Date;
             DateTime Start = DateTime.Now.AddDays(-7).Date;
             return ShowUserReport( HttpContext.User.Identity.Name,Start, End);
         }
+        #endregion
 
+        #region ShowMyReport [HttpPost]
         [HttpPost]
         public ActionResult ShowMyReport(string userName, DateTime Start, DateTime End)
         {
             return ShowUserReport(HttpContext.User.Identity.Name, Start, End);
         }
+        #endregion
 
-        #region ShowGroupReportByUsers
+        #region ShowDepartmentReportByUsersWithValidation
+
+        public ActionResult ShowDepartmentReportByUsersWithValidation(string departmentName, DateTime? Start, DateTime? End)
+        {
+            if (Start == null || End == null)
+            {
+                TempData["message"] = "You should enter two dates";
+                End = DateTime.Now.AddDays(-1).Date;
+                Start = DateTime.Now.AddDays(-7).Date;
+
+                return ShowDepartmentReportByUsers(departmentName, (DateTime)Start, (DateTime)End);
+
+            }
+            else if (Start > End)
+            {
+                TempData["message"] = "End date should be bigger then start date";
+                End = DateTime.Now.AddDays(-1).Date;
+                Start = DateTime.Now.AddDays(-7).Date;
+                return ShowDepartmentReportByUsers(departmentName, (DateTime)Start, (DateTime)End);
+            }
+            else
+            {
+                return ShowDepartmentReportByUsers(departmentName, (DateTime)Start, (DateTime)End);
+            }
+
+        }
+        #endregion
+
+        #region ShowDepartmentReportByUsers
         [HttpPost]
-        public ActionResult ShowGroupReportByUsers(string departmentName, DateTime start, DateTime end)
+        public ActionResult ShowDepartmentReportByUsers(string departmentName, DateTime Start, DateTime End)
         {
             Repository<Absence> absenceRepository = new Repository<Absence>();
             Repository<ApplicationUser> applicationUserRepository = new Repository<ApplicationUser>();
             ArrayList colors = new ArrayList();
 
-            List<UserInfoModel> usersInDepartmentInfoModels = GetUserInfo.UserInfo.GetUserOrDepartmentIformation(departmentName, null, start, end);
+            List<UserInfoModel> usersInDepartmentInfoModels = GetUserInfo.UserInfo.GetUserOrDepartmentIformation(departmentName, null, Start, End);
 
-            ManagerShowGroupReportByUsersViewModel viewModel = new ManagerShowGroupReportByUsersViewModel { Start = start, End = end, ReasonsNames = new List<string>(), WorkersInfos = new List<WorkerInfo>() { } , ChosenDepartmentName = departmentName};
+            ManagerShowDepartmentReportByUsersViewModel viewModel = new ManagerShowDepartmentReportByUsersViewModel { Start = Start, End = End, ReasonsNames = new List<string>(),
+                WorkersInfos = new List<WorkerInfo>() { }, ReasonInfosForPercentageReport = GenerateDataForDepartmentReportInPercentage(departmentName, Start, End),
+                ChosenDepartmentName = departmentName};
 
             Repository<Reason> reasonRepository = new Repository<Reason>();
             var reasons = reasonRepository.GetList();
@@ -237,7 +375,7 @@ namespace ActivityTracking.WebClient.Controllers
                 var user = applicationUserRepository.GetList().First(u => u.UserName == userInfoModel.userInformarion.Login);
 
                 WorkerInfo workerInfo = new WorkerInfo { Name = user.UserName, ReasonInfos = new List<ReasonInfo>() };
-                var userAbsences = absenceRepository.GetList().Where(a => a.User.Id == user.Id).Where(ab => ab.Date.Date >= start.Date && ab.Date <= end.Date);
+                var userAbsences = absenceRepository.GetList().Where(a => a.User.Id == user.Id).Where(ab => ab.Date.Date >= Start.Date && ab.Date <= End.Date);
 
                 TimeSpan workDurationForGivenDays = new TimeSpan(0, 0, 0);
                 
@@ -315,12 +453,12 @@ namespace ActivityTracking.WebClient.Controllers
             string dataStr = Newtonsoft.Json.JsonConvert.SerializeObject(colors, Newtonsoft.Json.Formatting.None);
             ViewBag.Colors = new HtmlString(dataStr);
 
-            return View(viewModel);
+            return View("ShowDepartmentReportByUsers",viewModel);
         }
         #endregion
 
-        #region ShowUsers
-        public ActionResult ShowUsers(string departmentName)
+        #region ShowDepartmentUsers
+        public ActionResult ShowDepartmentUsers(string departmentName)
         {
             ManagerShowUsersViewModel managerShowUsersViewModel = new ManagerShowUsersViewModel();
 
@@ -336,23 +474,40 @@ namespace ActivityTracking.WebClient.Controllers
         }
         #endregion
 
-        #region ChangeGroupMayAbsentTime
-        public ActionResult ChangeGroupMayAbsentTime(int Id, string Minutes)
-        {
-            Repository<Group> groupRepository = new Repository<Group>();
-            var group = groupRepository.GetList().First(g=>g.Id == Id);
-            group.MayAbsentTime = new TimeSpan(0, Convert.ToInt32(Minutes), 0);
-            groupRepository.Update(group);
-            return RedirectToAction("ShowUsers");
-        }
-        #endregion
+        //#region ChangeGroupMayAbsentTime
+        //public ActionResult ChangeGroupMayAbsentTime(int Id, string Minutes)
+        //{
+        //    Repository<Group> groupRepository = new Repository<Group>();
+        //    var group = groupRepository.GetList().First(g=>g.Id == Id);
+        //    group.MayAbsentTime = new TimeSpan(0, Convert.ToInt32(Minutes), 0);
+        //    groupRepository.Update(group);
+        //    return RedirectToAction("ShowUsers");
+        //}
+        //#endregion
 
-        #region ShowUserReport
-        public ActionResult ShowUserReport(string userName)
+        #region ShowUserReportWithValidation
+        public ActionResult ShowUserReportWithValidation(string userName, DateTime? Start, DateTime? End)
         {
-            DateTime End = DateTime.Now.AddDays(-1).Date;
-            DateTime Start = DateTime.Now.AddDays(-7).Date;
-            return ShowUserReport(userName, Start, End);
+            if (Start == null || End == null)
+            {
+                TempData["message"] = "You should enter two dates";
+                End = DateTime.Now.AddDays(-1).Date;
+                Start = DateTime.Now.AddDays(-7).Date;
+
+                return ShowUserReport(userName, (DateTime)Start, (DateTime)End);
+
+            }
+            else if (Start > End)
+            {
+                TempData["message"] = "End date should be bigger then start date";
+                End = DateTime.Now.AddDays(-1).Date;
+                Start = DateTime.Now.AddDays(-7).Date;
+                return ShowUserReport(userName, (DateTime)Start, (DateTime)End);
+            }
+            else
+            {
+                return ShowUserReport(userName, (DateTime)Start, (DateTime)End);
+            }
         }
         #endregion
 
@@ -622,7 +777,9 @@ namespace ActivityTracking.WebClient.Controllers
                 {
                     if (user.userInformarion.Login == userName)
                     {
-                        return RedirectToAction("ShowUserReport", "Manager", new { userName });
+                        DateTime End = DateTime.Now.AddDays(-1).Date;
+                        DateTime Start = DateTime.Now.AddDays(-7).Date;
+                        return ShowUserReport(userName, Start, End);
                     }
                 }
             }

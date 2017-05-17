@@ -149,8 +149,6 @@ namespace ActivityTracking.GetUserInfo
         }
         #endregion
 
-
-
         #region  GetUserOrDepartmentIformation
         public static List<UserInfoModel> GetUserOrDepartmentIformation(string departmentName, string login, DateTime start, DateTime end)
         {
@@ -237,6 +235,30 @@ namespace ActivityTracking.GetUserInfo
             return departmentsList;
         }
         #endregion
+
+        #region GetAllDivisionManagers
+        public static List<string> GetAllDivisionManagers()
+        {
+            List<String> divManagersList = new List<string>() { "AlexandraMorozova", "DivManager2", "DivManager3", "DivManager4", "DivManager5", "DivManager6", "DivManager7" };
+            return divManagersList;
+        }
+        #endregion
+
+        #region GetDivisionManagerOfUser
+        public static string GetDivisionManagerOfUser(string userLogin)
+        {
+            string divManager = "AlexandraMorozova";
+            return divManager;
+        }
+        #endregion
+
+        #region GetAllUsersLogins
+        public static List<String> GetAllUsersLogins()
+        {
+            return new List<string>() { "AlexandrTkachuk", "NikitaMaltsev", "ArtemChuhalo", "IvanIvanov", "MaxMaximov", "AlexandraMorozova" };
+        }
+        #endregion
+
     }
 }
 

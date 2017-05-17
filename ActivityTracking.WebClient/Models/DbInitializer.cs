@@ -78,60 +78,9 @@ namespace ActivityTracking.WebClient.Models
             reasonRepository.Create(new Reason { Name = "Consultation", AddingTime = DateTime.Now, Color = "#FFFF00" });
             reasonRepository.Create(new Reason { Name = "English", AddingTime = DateTime.Now, Color = "#008000" });
             reasonRepository.Create(new Reason { Name = "Other", AddingTime = DateTime.Now, Color = "#808080" });
-            #endregion
-
-            #region Add Groups
-            ////Add Groups
-            //Repository<Group> groupRepository = new Repository<Group>(context);
-            //groupRepository.Create(new Group { Name = "Group1", MayAbsentTime = new TimeSpan(00,01,00)});
-            //groupRepository.Create(new Group { Name = "Group2", MayAbsentTime = new TimeSpan(00, 02, 00) });
-            //groupRepository.Create(new Group { Name = "Group3", MayAbsentTime = new TimeSpan(00, 03, 00) });
-            //groupRepository.Create(new Group { Name = "Group4", MayAbsentTime = new TimeSpan(00, 04, 00) });
-            #endregion 
-
-            #region Set reasons to groups
-            //Set reasons to groups
-            //Group group1 = groupRepository.GetList().First(g => g.Name == "Group1");
-            //group1.Reasons.Add(reasonRepository.GetList().First(r => r.Name == "Meeting"));
-            //group1.Reasons.Add(reasonRepository.GetList().First(r => r.Name == "Consultation"));
-            //group1.Reasons.Add(reasonRepository.GetList().First(r => r.Name == "English"));
-            //group1.Reasons.Add(reasonRepository.GetList().First(r => r.Name == "Other"));
-            //groupRepository.Update(group1);
-
-            //Group group2 = groupRepository.GetList().First(g => g.Name == "Group2");
-            //group2.Reasons.Add(reasonRepository.GetList().First(r => r.Name == "Meeting"));
-            //group2.Reasons.Add(reasonRepository.GetList().First(r => r.Name == "Consultation"));
-            //group2.Reasons.Add(reasonRepository.GetList().First(r => r.Name == "English"));
-            //group2.Reasons.Add(reasonRepository.GetList().First(r => r.Name == "Other"));
-            //groupRepository.Update(group2);
-
-            //Group group3 = groupRepository.GetList().First(g => g.Name == "Group3");
-            //group3.Reasons.Add(reasonRepository.GetList().First(r => r.Name == "Meeting"));
-            //group3.Reasons.Add(reasonRepository.GetList().First(r => r.Name == "Consultation"));
-            //group3.Reasons.Add(reasonRepository.GetList().First(r => r.Name == "English"));
-            //group3.Reasons.Add(reasonRepository.GetList().First(r => r.Name == "Other"));
-            //groupRepository.Update(group3);
-
-            //Group group4 = groupRepository.GetList().First(g => g.Name == "Group4");
-            //group4.Reasons.Add(reasonRepository.GetList().First(r => r.Name == "Meeting"));
-            //group4.Reasons.Add(reasonRepository.GetList().First(r => r.Name == "Consultation"));
-            //group4.Reasons.Add(reasonRepository.GetList().First(r => r.Name == "English"));
-            //group4.Reasons.Add(reasonRepository.GetList().First(r => r.Name == "Other"));
-            //groupRepository.Update(group4);
-
-            #endregion
-
-            #region Add users to Group1
-
-            //Repository<ApplicationUser> applicationUserRepository = new Repository<ApplicationUser>(context);
-            //var ggroup1 = groupRepository.GetList().First(g => g.Name == "Group1");
-            //ggroup1.Users.Add(applicationUserRepository.GetList().First(u=>u.UserName == "NikitaMaltsev"));
-            //ggroup1.Users.Add(applicationUserRepository.GetList().First(u => u.UserName == "AlexandrTkachuk"));
-            //ggroup1.Users.Add(applicationUserRepository.GetList().First(u => u.UserName == "ArtemChuhalo"));
-            //ggroup1.Users.Add(applicationUserRepository.GetList().First(u => u.UserName == "AlexandraMorozova"));
-            //ggroup1.Users.Add(applicationUserRepository.GetList().First(u => u.UserName == "IvanIvanov"));
-            //ggroup1.Users.Add(applicationUserRepository.GetList().First(u => u.UserName == "MaxMaximov"));
-            //groupRepository.Update(ggroup1);
+            reasonRepository.Create(new Reason { Name = "Reason1", AddingTime = DateTime.Now, Color = "#9400D3" });
+            reasonRepository.Create(new Reason { Name = "Reason2", AddingTime = DateTime.Now, Color = "#F0E68C" });
+            reasonRepository.Create(new Reason { Name = "Reason3", AddingTime = DateTime.Now, Color = "#ADFF2F" });
             #endregion
 
             #region Add Absences
@@ -147,10 +96,9 @@ namespace ActivityTracking.WebClient.Models
             var userArtemChuhalo = applicationUserRepository.GetList().First(u => u.UserName == "ArtemChuhalo");
             var userAlexandraMorozova = applicationUserRepository.GetList().First(u => u.UserName == "AlexandraMorozova");
             var userIvanIvanov = applicationUserRepository.GetList().First(u => u.UserName == "IvanIvanov");
-            var userMaxMaximov = applicationUserRepository.GetList().First(u => u.UserName == "MaxMaximov");
+            var userMaxMaximov = applicationUserRepository.GetList().First(u => u.UserName == "MaxMaximov");          
 
             #region Add Absences and to user Alexandr
-
 
             //Add Absences for AlexandrTkachuk
             Repository<Absence> absenceRepository = new Repository<Absence>(context);
@@ -205,7 +153,7 @@ namespace ActivityTracking.WebClient.Models
             #endregion
 
 
-            #region Add Absences and for Nikita
+            #region Add Absences for Nikita
 
             //Add Absences for Nikita
 
@@ -458,10 +406,17 @@ namespace ActivityTracking.WebClient.Models
 
 
             #endregion
+
             #endregion
-            //Repository<UserLogin> UserLoginRepository = new Repository<UserLogin>(appContext);
-            //UserLoginRepository.Create(new UserLogin { Login = "svezho" });
-            //UserLoginRepository.Create(new UserLogin { Login = "Alexandr" });
+
+            Repository<DivisionManager> divManRep = new Repository<DivisionManager>(context);
+            DivisionManager divManAlexandraMorozova = new DivisionManager { Login = "AlexandraMorozova" };
+            divManRep.Create(divManAlexandraMorozova);
+            divManAlexandraMorozova.Reasons.Add(reasonMeeting);
+            divManAlexandraMorozova.Reasons.Add(reasonConsultation);
+            divManAlexandraMorozova.Reasons.Add(reasonEnglish);
+            divManAlexandraMorozova.Reasons.Add(reasonOther);
+
             base.Seed(context);
         }
     }

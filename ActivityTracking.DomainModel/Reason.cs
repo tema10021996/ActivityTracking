@@ -13,15 +13,10 @@ namespace ActivityTracking.DomainModel
         public DateTime AddingTime { get; set; }
         public string Color { get; set; }
 
-
-        public int? UserWhoAddedId { get; set; }
-        public virtual ApplicationUser UserWhoAdded { get; set; }
-
-        public virtual ICollection<Group> Groups { get; set; }
-
+        public virtual ICollection<DivisionManager> DivisionManagers { get; set; }
         public Reason()
         {
-            Groups = new List<Group>();
+            DivisionManagers = new List<DivisionManager>();
         }
     }
 }

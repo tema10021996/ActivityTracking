@@ -6,9 +6,16 @@ using System.Threading.Tasks;
 
 namespace ActivityTracking.DomainModel
 {
-    public class UserLogin
+    public class DivisionManager
     {
         public int Id { get; set; }
         public string Login { get; set; }
+
+        public virtual ICollection<Reason> Reasons { get; set; }
+
+        public DivisionManager()
+        {
+            Reasons = new List<Reason>();
+        }
     }
 }

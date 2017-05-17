@@ -2,13 +2,13 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_ManagerLayout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
 }
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="text-right">
-            @using (Html.BeginForm("FindUserReport", "Manager"))
+            @using (Html.BeginForm("FindUserReport", "Admin"))
             {
                 <div class="input-group">
                     @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
@@ -20,87 +20,87 @@
             }
         </div>
 
-            @using (Html.BeginForm("ShowDepartmentReportWithValidation", "Manager"))
+        @using (Html.BeginForm("ShowDepartmentReportWithValidation", "Admin"))
             {
-                @Html.ValidationSummary(true)
+            @Html.ValidationSummary(true)
 
-                <div class="row">
-                    <div class="col-md-10 col-lg-10">
-                        <div class="text-center">
-                            @Html.Hidden("DepartmentList", Model.ChosenDepartmentName)
+            <div class="row">
+                <div class="col-md-10 col-lg-10">
+                    <div class="text-center">
+                        @Html.Hidden("DepartmentList", Model.ChosenDepartmentName)
 
-                            @Html.Hidden("PieChart", Model.PieChart)
-                            @Html.Hidden("BarChart", Model.BarChart)
-                            @Html.Hidden("ColumnChart", Model.ColumnChart)
+                        @Html.Hidden("PieChart", Model.PieChart)
+                        @Html.Hidden("BarChart", Model.BarChart)
+                        @Html.Hidden("ColumnChart", Model.ColumnChart)
 
-                            @Html.LabelFor(model => model.Start)
+                        @Html.LabelFor(model => model.Start)
 
-                            @Html.EditorFor(model => model.Start)
+                        @Html.EditorFor(model => model.Start)
 
-                            @Html.LabelFor(model => model.End)
+                        @Html.LabelFor(model => model.End)
 
-                            @Html.EditorFor(model => model.End)
+                        @Html.EditorFor(model => model.End)
 
-                            <button type="submit" class="btn btn-primary btn-sm">Apply</button>
-                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm">Apply</button>
                     </div>
                 </div>
+            </div>
 
-            }
-        </div>   
- 
+        }
+    </div>
 
-        <div class="row">           
-            <div class="col-md-10 col-lg-10">
-                <div class="text-center">
-                    <p><h4><b>@Model.ChosenDepartmentName</b></h4></p>
-                    <p><h5><b>@Model.Start.ToShortDateString()   -   @Model.End.ToShortDateString()</b></h5></p>
-                </div>
-                @if (Model.BarChart == true)
+
+    <div class="row">
+        <div class="col-md-10 col-lg-10">
+            <div class="text-center">
+                <p><h4><b>@Model.ChosenDepartmentName</b></h4></p>
+                <p><h5><b>@Model.Start.ToShortDateString()   -   @Model.End.ToShortDateString()</b></h5></p>
+            </div>
+            @if (Model.BarChart == true)
             {
-                    <div id="barchart_values"></div>
+                <div id="barchart_values"></div>
                     <div id="piechart" style="display:none"></div>
                     <div id="columnchart_values" style="display:none"></div>
 
-                }
-                else if (Model.PieChart == true)
-                {
-                    <div id="piechart" style="width: 900px; height: 400px;"></div>
+            }
+            else if (Model.PieChart == true)
+            {
+                <div id="piechart" style="width: 900px; height: 400px;"></div>
                     <div id="barchart_values" style="display:none"></div>
                     <div id="columnchart_values" style="display:none;"></div>
-                }
-                else
-                {
+            }
+            else
+            {
 
-                    <div id="piechart" style="display:none;"></div>
+                <div id="piechart" style="display:none;"></div>
                     <div id="barchart_values" style="display:none"></div>
                     <div id="columnchart_values"></div>
 
-                }
-            </div>
-            <div class="text-right col-md-2 col-lg-2">
-                @using (Html.BeginForm(new { Start = Model.Start, End = Model.End, BarChart = true, PieChart = false, ColumnChart = false, DepartmentList = Model.ChosenDepartmentName }))
-                {
-                    <button type="submit" style="padding:0px; margin:3px; border:none">
-                        <image src="~/Content/BarChart.png">
-                    </button>
-                }
-                @using (Html.BeginForm(new { Start = Model.Start, End = Model.End, BarChart = false, PieChart = true, ColumnChart = false, DepartmentList = Model.ChosenDepartmentName }))
-            {
-                    <button type="submit" style="padding:0px; margin:3px; border:none">
-                        <image src="~/Content/PieChart.png">
-                    </button>
-                }
-                @using (Html.BeginForm(new { Start = Model.Start, End = Model.End, BarChart = false, PieChart = false, ColumnChart = true, DepartmentList = Model.ChosenDepartmentName }))
-            {
-                    <button type="submit" style="padding:0px; margin:3px; border:none">
-                        <image src="~/Content/ColumnChart.png">
-                    </button>
-                }
-            </div>
-
+            }
         </div>
+        <div class="text-right col-md-2 col-lg-2">
+            @using (Html.BeginForm(new { Start = Model.Start, End = Model.End, BarChart = true, PieChart = false, ColumnChart = false, DepartmentList = Model.ChosenDepartmentName }))
+            {
+                <button type="submit" style="padding:0px; margin:3px; border:none">
+                    <image src="~/Content/BarChart.png">
+                </button>
+            }
+            @using (Html.BeginForm(new { Start = Model.Start, End = Model.End, BarChart = false, PieChart = true, ColumnChart = false, DepartmentList = Model.ChosenDepartmentName }))
+            {
+                <button type="submit" style="padding:0px; margin:3px; border:none">
+                    <image src="~/Content/PieChart.png">
+                </button>
+            }
+            @using (Html.BeginForm(new { Start = Model.Start, End = Model.End, BarChart = false, PieChart = false, ColumnChart = true, DepartmentList = Model.ChosenDepartmentName }))
+            {
+                <button type="submit" style="padding:0px; margin:3px; border:none">
+                    <image src="~/Content/ColumnChart.png">
+                </button>
+            }
+        </div>
+
     </div>
+</div>
 
 <script>
     var colorArray = JSON.parse('@ViewBag.Colors');
@@ -178,7 +178,7 @@
         dataTable.addColumn({ type: 'number', label: 'ReasonName' });
         dataTable.addColumn({ type: 'string', role: 'tooltip', p: { 'html': true } });
 
-       
+
 
         @foreach (var reasonInfo in Model.ReasonInfos)
             {
@@ -208,7 +208,7 @@
         dataTable.addRow(arr);
         </text>
         }
-        var options = {           
+        var options = {
             colors: colorArray,
             tooltip: { isHtml: true },
             chartArea: { left: 50, top: 20,},
@@ -276,7 +276,7 @@
                 },
                 colors: colorArray,
                 tooltip: { isHtml: true },
-                @*height: @Model.WorkersInfos.Count*50,*@            
+                @*height: @Model.WorkersInfos.Count*50,*@
                 chartArea: { top: 50, left: 100, width:900 },
             };
 
@@ -289,5 +289,4 @@
                '<b>' + 'Duration: ' + '</b>' + hours + 'hours' + ', ' + minutes + 'minutes' + ', ' + seconds + 'seconds' + '</div>';
         }
 </script>
-
 

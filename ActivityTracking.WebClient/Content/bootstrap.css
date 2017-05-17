@@ -3998,12 +3998,16 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
 .tab-content > .tab-pane,
 .pill-content > .pill-pane {
-  display: none;
+   display: inline;
+    visibility: hidden;
+    position: absolute;
 }
 
 .tab-content > .active,
 .pill-content > .active {
-  display: block;
+   display: inline;
+    visibility: visible;
+    position: absolute;
 }
 
 .nav .caret {
