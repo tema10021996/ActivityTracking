@@ -410,6 +410,75 @@ namespace ActivityTracking.WebClient.Controllers
         }
         #endregion
 
+        #region DeleteReason
+        public ActionResult DeleteReason(int Id)
+        {
+            ApplicationContext context = new ApplicationContext();
+            Repository<Absence> absenceRepository = new Repository<Absence>(context);
+            Repository<Reason> reasonRepository = new Repository<Reason>(context);
+            Reason reason = reasonRepository.GetList().First(r => r.Id == Id);
+            foreach (var absence in absenceRepository.GetList())
+            {
+                if (absence.Reason.Id == reason.Id)
+                {
+                    absenceRepository.Delete(absence.Id);
+                }
+            }
+            reasonRepository.Delete(reason.Id);
+            return RedirectToAction("Settings");
+        }
+        #endregion
+
+        #region AdsReason
+        public ActionResult AddReason(string reasonName, string reasonColor)
+        {
+            Repository<Reason> reasonRepository = new Repository<Reason>();
+            foreach (var reason in reasonRepository.GetList())
+            {
+                if (reason.Name == reasonName)
+                {
+                    TempData["message"] = "Reason with such name already exists";
+                    return RedirectToAction("Settings");
+                }
+            }
+            if (reasonName == "")
+            {
+                TempData["message"] = "You should enter reason's name";
+                return RedirectToAction("Settings");
+            }
+            else
+            {
+                Reason newReason = new Reason();
+                newReason.AddingTime = DateTime.Now;
+                newReason.Color = reasonColor;
+                newReason.Name = reasonName;
+                reasonRepository.Create(newReason);
+                return RedirectToAction("Settings");
+            }
+
+        }
+        #endregion
+
+        #region ChangeReason
+        public ActionResult ChangeReason(int Id, string reasonNewName, string reasonNewColor)
+        {
+            if (reasonNewName == "")
+            {
+                TempData["message"] = "You should enter reason's name";
+                return RedirectToAction("Settings");
+            }
+            else
+            {
+                Repository<Reason> reasonRepository = new Repository<Reason>();
+                Reason changingReason = reasonRepository.GetList().First(r => r.Id == Id);
+                changingReason.Name = reasonNewName;
+                changingReason.Color = reasonNewColor;
+                reasonRepository.Update(changingReason);
+                return RedirectToAction("Settings");
+            }
+        }
+        #endregion
+
         #region GenerateDataForDepartmentReportInPercentage
         private List<ReasonInfo> GenerateDataForDepartmentReportInPercentage(string DepartmentList, DateTime Start, DateTime End)
         {
@@ -703,9 +772,17 @@ namespace ActivityTracking.WebClient.Controllers
         }
         #endregion
 
+        #region Settings
         public ActionResult Settings()
         {
-            return View();
+            Repository<Reason> reasonRepository = new Repository<Reason>();
+            var allReasons = reasonRepository.GetList();
+            AdminSettingsViewModel adminSettingsViewModel = new AdminSettingsViewModel();
+            adminSettingsViewModel.AllReasons = allReasons.ToList();
+            return View(adminSettingsViewModel);
         }
+        #endregion
+
+      
     }
 }
