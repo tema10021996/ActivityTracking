@@ -210,7 +210,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\DescktopController.cs" />
+    <Compile Include="Controllers\DesktopController.cs" />
     <Compile Include="Controllers\ManagerController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -221,6 +221,7 @@
     <Compile Include="Models\ApplicationUserManager.cs" />
     <Compile Include="Models\ChartViewModel.cs" />
     <Compile Include="Models\DbInitializer.cs" />
+    <Compile Include="Models\DesktopModels.cs" />
     <Compile Include="Models\ManagerViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

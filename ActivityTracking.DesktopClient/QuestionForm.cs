@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ActivityTracking.DomainModel;
-using ActivityTracking.DAL.EntityFramework;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace ActivityTracking.DesktopClient
 {
@@ -16,8 +16,6 @@ namespace ActivityTracking.DesktopClient
     {
         KeyboardHook keyboardHook;
         MouseHook mouseHook;
-        ApplicationUser user;
-        DAL.EntityFramework.ApplicationContext context;
 
         Timer timer;
         public Timer Timer
@@ -29,7 +27,6 @@ namespace ActivityTracking.DesktopClient
         {
             InitializeComponent();
             TopMost = true;
-            context = new DAL.EntityFramework.ApplicationContext();
 
             InitializeUser();
 
@@ -43,13 +40,13 @@ namespace ActivityTracking.DesktopClient
         void InitializeUser()
         {
 
-            Repository <ApplicationUser> usersRepository = new Repository<ApplicationUser>(context);
-            user = usersRepository.GetList().First(u =>u.UserName == Environment.UserName);
+            //Repository <ApplicationUser> usersRepository = new Repository<ApplicationUser>(context);
+            //user = usersRepository.GetList().First(u =>u.UserName == Environment.UserName);
         }
         private void InitializeTimer()
         {
             timer = new Timer();
-            timer.Interval = user.Group.MayAbsentTime.Hours * 216000000 + user.Group.MayAbsentTime.Minutes * 60000 + user.Group.MayAbsentTime.Seconds * 1000;
+            timer.Interval = 1000; //user.Group.MayAbsentTime.Hours * 216000000 + user.Group.MayAbsentTime.Minutes * 60000 + user.Group.MayAbsentTime.Seconds * 1000;
             timer.Start();
             timer.Tick += timerTick; ;
         }
@@ -84,18 +81,55 @@ namespace ActivityTracking.DesktopClient
             timer.Start();
         }
 
-        private void timerTick(object sender, EventArgs e)
+        private async void timerTick(object sender, EventArgs e)
         {
             //TODO
             //Проверка в здании ли пользователь 
 
-            Repository<Absence> absenseRepository = new Repository<Absence>(context);
-            absenseRepository.Create(new Absence { StartAbsence = DateTime.Now, User = user, Date = DateTime.Today });
+
+            //using (var client = new HttpClient())
+            //{
+            //    PostModel postModel = new PostModel { Start = DateTime.Now, UserName = Environment.UserName, Date = DateTime.Now.Date };
+
+            //    client.BaseAddress = new Uri("http://localhost:14110/");
+            //    client.DefaultRequestHeaders.Accept.Clear();
+            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            //    HttpResponseMessage response = await client.PostAsJsonAsync("api/Desktop", postModel);
+
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        this.ForeColor = Color.AliceBlue;
+            //    }
+            //}
+
+            GetRequest("aaa");
+            
 
             ShowForm();
             timer.Stop();
         }
 
+        static async Task GetRequest(string ID)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:14110/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response;
+
+                string id = "aaa";
+
+                response = await client.GetAsync("api/Desktop/" + id);
+                if (response.IsSuccessStatusCode)
+                {
+                   
+                }
+
+            }
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
             notifyIcon1.Icon = Properties.Resources.lines;
@@ -111,28 +145,27 @@ namespace ActivityTracking.DesktopClient
 
          private void ReasonButton_Click(object sender, EventArgs e)
         {
-            if (((Button)sender).Text == "Meeting")
-            {
-                Repository<Reason> reasonsRepository = new Repository<Reason>(context);
-                Reason reason = reasonsRepository.GetList().First(r => r.Name == "Meeting");
-                Repository<Absence> absenseRepository = new Repository<Absence>(context);
-                Absence absence = absenseRepository.GetList().Last(a => a.User.UserName == user.UserName);
-                absence.Reason = reason;
-                absence.EndAbsence = DateTime.Now;
-                absenseRepository.Update(absence);
-            }
+            
+        //        Repository<Reason> reasonsRepository = new Repository<Reason>(context);
+        //        Reason reason = reasonsRepository.GetList().First(r => r.Name == "Meeting");
+        //        Repository<Absence> absenseRepository = new Repository<Absence>(context);
+        //        Absence absence = absenseRepository.GetList().Last(a => a.User.UserName == user.UserName);
+        //        absence.Reason = reason;
+        //        absence.EndAbsence = DateTime.Now;
+        //        absenseRepository.Update(absence);
+        //    }
 
-            HideForm();
-            timer.Start();
+        //    HideForm();
+        //    timer.Start();
         }
 
         
         private void OtherButton_Click(object sender, EventArgs e)
         {
-            timer.Stop();
-            HideForm();
-            CommentForm comentForm = new CommentForm(this, user, context);
-            comentForm.Show();
+        //    timer.Stop();
+        //    HideForm();
+        //    CommentForm comentForm = new CommentForm(this, user, context);
+        //    comentForm.Show();
         }
 
         private void ShowForm()
