@@ -719,3 +719,12 @@ C:\Users\Alexandr\Documents\GitHub\Резервная копия\ActivityTrackin
 C:\Users\Alexandr\Documents\GitHub\Резервная копия\ActivityTracking\ActivityTracking.WebClient\obj\Debug\ActivityTracking.WebClient.csprojResolveAssemblyReference.cache
 C:\Users\Alexandr\Documents\GitHub\Резервная копия\ActivityTracking\ActivityTracking.WebClient\obj\Debug\ActivityTracking.WebClient.dll
 C:\Users\Alexandr\Documents\GitHub\Резервная копия\ActivityTracking\ActivityTracking.WebClient\obj\Debug\ActivityTracking.WebClient.pdb
+D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\System.Net.Http.Formatting.dll
+D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Http.dll
+D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Http.WebHost.dll
+D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\System.Net.Http.Formatting.xml
+D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Http.xml
+D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\System.Web.Http.WebHost.xml
+D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\ru\System.Net.Http.Formatting.resources.dll
+D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\ru\System.Web.Http.resources.dll
+D:\Игры\ActivityTracking\ActivityTracking.WebClient\bin\ru\System.Web.Http.WebHost.resources.dll

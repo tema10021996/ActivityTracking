@@ -7,11 +7,8 @@ using System.Web.Mvc;
 
 namespace ActivityTracking.WebApi.Models
 {
-    public class AdminViewModels
+    public class AdminSettingsViewModel
     {
-        public class AdminSettingsViewModel
-        {
-            public List<Reason> AllReasons { get; set; }
-        }
+        public List<Reason> AllReasons { get; set; }
     }
 }

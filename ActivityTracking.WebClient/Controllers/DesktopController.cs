@@ -10,7 +10,7 @@ using ActivityTracking.WebClient.Models;
 
 namespace ActivityTracking.WebClient.Controllers
 {
-    public class DesktopController: ApiController
+    public class DesktopController : ApiController
     {
 
         [HttpGet]
@@ -31,21 +31,20 @@ namespace ActivityTracking.WebClient.Controllers
             }
             else
             {
-                return new List<string>() {"Meeting", "English"};
+                return new List<string>() { "Meeting", "English" };
             }
-            
+
         }
 
         [HttpPost]
-        public bool CreateAbsence(PostModel postModel)
+        public bool Post(PostModel postModel)
         {
-            Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>();
-            Repository<Absence> absenseRepository = new Repository<Absence>();
+            ApplicationContext context = new ApplicationContext();
+            Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>(context);
+            Repository<Absence> absenseRepository = new Repository<Absence>(context);
             if (userRepository.GetList().First(u => u.UserName == postModel.UserName) != null)
             {
-                    ApplicationUser user = userRepository.GetList().First(u => u.UserName == "AlexandrTkachuk");
-
-                //ApplicationUser user = userRepository.GetList().First(u => u.UserName == postModel.UserName);
+                ApplicationUser user = userRepository.GetList().First(u => u.UserName == postModel.UserName);
                 absenseRepository.Create(new Absence { StartAbsence = postModel.Start, User = user, Date = DateTime.Today });
                 return true;
             }
@@ -53,11 +52,10 @@ namespace ActivityTracking.WebClient.Controllers
             {
                 return false;
             }
-            
         }
 
         [HttpPut]
-        public bool UpdateAbsence(DateTime endAbsence, string userName,string reasonName)
+        public bool UpdateAbsence(DateTime endAbsence, string userName, string reasonName)
         {
             Repository<Reason> reasonsRepository = new Repository<Reason>();
             Reason reason = reasonsRepository.GetList().First(r => r.Name == reasonName);
@@ -68,6 +66,6 @@ namespace ActivityTracking.WebClient.Controllers
             absenseRepository.Update(absence);
             return true;
         }
-        
+
     }
 }

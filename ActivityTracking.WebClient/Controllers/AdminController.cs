@@ -11,20 +11,37 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ActivityTracking.GetUserInfo;
 using System.Collections;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace ActivityTracking.WebClient.Controllers
 {
     public class AdminController : Controller
     {
-        private ApplicationUserManager UserManager
-        {
-            get { return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
-        }
         #region Index
-        public ActionResult Index()
+        public async System.Threading.Tasks.Task<ActionResult> Index()
         {
-            List<string> managerDepartmentNames = GetUserInfo.UserInfo.GetManagerDepartments(HttpContext.User.Identity.Name);
+            List<string> managerDepartmentNames = new List<string>();
 
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:52721/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                //HttpResponseMessage response = await client.PostAsJsonAsync("api/Desktop", nn);
+
+                HttpResponseMessage response = await client.GetAsync("api/Admin/");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    List<string> names = await response.Content.ReadAsAsync<List<string>>();
+                    foreach (var item in names)
+                    {
+                        managerDepartmentNames.Add(item);
+                    }
+                }                
+            }
             return View(managerDepartmentNames);
         }
         #endregion
@@ -430,32 +447,28 @@ namespace ActivityTracking.WebClient.Controllers
         #endregion
 
         #region AdsReason
-        public ActionResult AddReason(string reasonName, string reasonColor)
+        public async System.Threading.Tasks.Task<ActionResult> AddReason(string reasonName, string reasonColor)
         {
-            Repository<Reason> reasonRepository = new Repository<Reason>();
-            foreach (var reason in reasonRepository.GetList())
-            {
-                if (reason.Name == reasonName)
+            List<string> list = new List<string>() { reasonName, reasonColor };
+            using (var client = new HttpClient())
+            {                
+                client.BaseAddress = new Uri("http://localhost:52721/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.PostAsJsonAsync("api/Admin", list);
+
+                if (response.IsSuccessStatusCode)
                 {
-                    TempData["message"] = "Reason with such name already exists";
-                    return RedirectToAction("Settings");
+                    bool result = await response.Content.ReadAsAsync<bool>();
+                    if (result)
+                    {
+                        return HttpNotFound();
+                    }                    
                 }
             }
-            if (reasonName == "")
-            {
-                TempData["message"] = "You should enter reason's name";
-                return RedirectToAction("Settings");
-            }
-            else
-            {
-                Reason newReason = new Reason();
-                newReason.AddingTime = DateTime.Now;
-                newReason.Color = reasonColor;
-                newReason.Name = reasonName;
-                reasonRepository.Create(newReason);
-                return RedirectToAction("Settings");
-            }
 
+            return RedirectToAction("Settings");
         }
         #endregion
 
@@ -781,8 +794,6 @@ namespace ActivityTracking.WebClient.Controllers
             adminSettingsViewModel.AllReasons = allReasons.ToList();
             return View(adminSettingsViewModel);
         }
-        #endregion
-
-      
+        #endregion      
     }
 }

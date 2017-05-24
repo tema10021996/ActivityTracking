@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
 using ActivityTracking.DAL.EntityFramework;
 using ActivityTracking.DomainModel;
 using ActivityTracking.WebClient.Models;
@@ -19,12 +18,24 @@ namespace ActivityTracking.WebApi.Controllers
 {
     public class AdminApiController : ApiController
     {
-        private ApplicationUserManager UserManager
+        [HttpGet]
+        public List<string> ViewIndex ()
         {
-            get { return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            List<string> list = new List<string>() { "12334234345", "12eqweer32we" };
+            //AdminController admin = new AdminController();
+            return list;
+            //return admin.Index();
         }
 
-        [HttpGet]
-        public ShowDepartmentUsers
+        [HttpPost]
+        public bool AddReason(List<string> list)
+        {
+            string[] ar = list.ToArray();
+            AdminController admin = new AdminController();
+            admin.AddReason(ar[0], ar[1]);
+
+            return true;
+        }
+
     }
 }

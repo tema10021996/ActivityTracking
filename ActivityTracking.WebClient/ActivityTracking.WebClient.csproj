@@ -218,9 +218,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModels.cs" />
-    <Compile Include="Models\ApplicationUserManager.cs" />
     <Compile Include="Models\ChartViewModel.cs" />
-    <Compile Include="Models\DbInitializer.cs" />
     <Compile Include="Models\DesktopModels.cs" />
     <Compile Include="Models\ManagerViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

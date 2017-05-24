@@ -16,3 +16,15 @@ C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DesktopClie
 C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DesktopClient\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DesktopClient\bin\Debug\System.Net.Http.Formatting.xml
 C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DesktopClient\bin\Debug\ru\System.Net.Http.Formatting.resources.dll
+D:\Игры\ActivityTracking\ActivityTracking.DesktopClient\bin\Debug\ActivityTracking.DesktopClient.exe
+D:\Игры\ActivityTracking\ActivityTracking.DesktopClient\bin\Debug\ActivityTracking.DesktopClient.pdb
+D:\Игры\ActivityTracking\ActivityTracking.DesktopClient\bin\Debug\Newtonsoft.Json.dll
+D:\Игры\ActivityTracking\ActivityTracking.DesktopClient\bin\Debug\System.Net.Http.Formatting.dll
+D:\Игры\ActivityTracking\ActivityTracking.DesktopClient\bin\Debug\Newtonsoft.Json.xml
+D:\Игры\ActivityTracking\ActivityTracking.DesktopClient\bin\Debug\System.Net.Http.Formatting.xml
+D:\Игры\ActivityTracking\ActivityTracking.DesktopClient\bin\Debug\ru\System.Net.Http.Formatting.resources.dll
+D:\Игры\ActivityTracking\ActivityTracking.DesktopClient\obj\Debug\ActivityTracking.DesktopClient.csprojResolveAssemblyReference.cache
+D:\Игры\ActivityTracking\ActivityTracking.DesktopClient\obj\Debug\ActivityTracking.DesktopClient.CommentForm.resources
+D:\Игры\ActivityTracking\ActivityTracking.DesktopClient\obj\Debug\ActivityTracking.DesktopClient.QuestionForm.resources
+D:\Игры\ActivityTracking\ActivityTracking.DesktopClient\obj\Debug\ActivityTracking.DesktopClient.Properties.Resources.resources
+D:\Игры\ActivityTracking\ActivityTracking.DesktopClient\obj\Debug\ActivityTracking.DesktopClient.csproj.GenerateResource.Cache
