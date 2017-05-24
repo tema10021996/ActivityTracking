@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivityTracking.DesktopCli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivityTracking.GetUserInfo", "ActivityTracking.GetUserInfo\ActivityTracking.GetUserInfo.csproj", "{0B0ECE86-CA90-495D-934E-68E9A416F792}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivityTracking.WebApi", "ActivityTracking.WebApi\ActivityTracking.WebApi.csproj", "{59A93AD8-8A13-4769-8D49-1CCA64FF9418}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{0B0ECE86-CA90-495D-934E-68E9A416F792}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B0ECE86-CA90-495D-934E-68E9A416F792}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B0ECE86-CA90-495D-934E-68E9A416F792}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59A93AD8-8A13-4769-8D49-1CCA64FF9418}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59A93AD8-8A13-4769-8D49-1CCA64FF9418}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59A93AD8-8A13-4769-8D49-1CCA64FF9418}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59A93AD8-8A13-4769-8D49-1CCA64FF9418}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

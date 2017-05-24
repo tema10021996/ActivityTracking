@@ -5,11 +5,11 @@ using Microsoft.Owin;
 using ActivityTracking.DAL.EntityFramework;
 using ActivityTracking.DomainModel;
 
-namespace ActivityTracking.WebClient.Models
+namespace ActivityTracking.WebApi.Models
 {
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {
-        public ApplicationUserManager(IUserStore<ApplicationUser> store): base(store)
+        public ApplicationUserManager(IUserStore<ApplicationUser> store) : base(store)
         {
         }
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
