@@ -213,6 +213,7 @@
     <Compile Include="Controllers\DesktopController.cs" />
     <Compile Include="Controllers\ManagerController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\WeatherController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

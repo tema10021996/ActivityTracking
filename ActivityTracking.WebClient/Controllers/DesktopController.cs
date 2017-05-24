@@ -37,15 +37,14 @@ namespace ActivityTracking.WebClient.Controllers
         }
 
         [HttpPost]
-        public bool CreateAbsence(PostModel postModel)
+        public bool Post(PostModel postModel)
         {
-            Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>();
-            Repository<Absence> absenseRepository = new Repository<Absence>();
+            ApplicationContext context = new ApplicationContext();
+            Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>(context);
+            Repository<Absence> absenseRepository = new Repository<Absence>(context);
             if (userRepository.GetList().First(u => u.UserName == postModel.UserName) != null)
             {
-                    ApplicationUser user = userRepository.GetList().First(u => u.UserName == "AlexandrTkachuk");
-
-                //ApplicationUser user = userRepository.GetList().First(u => u.UserName == postModel.UserName);
+                ApplicationUser user = userRepository.GetList().First(u => u.UserName == postModel.UserName);
                 absenseRepository.Create(new Absence { StartAbsence = postModel.Start, User = user, Date = DateTime.Today });
                 return true;
             }
@@ -53,7 +52,6 @@ namespace ActivityTracking.WebClient.Controllers
             {
                 return false;
             }
-            
         }
 
         [HttpPut]

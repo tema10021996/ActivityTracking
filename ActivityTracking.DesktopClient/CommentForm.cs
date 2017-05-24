@@ -15,19 +15,19 @@ namespace ActivityTracking.DesktopClient
     {
         QuestionForm questionForm;
 
-        //public CommentForm(QuestionForm questionForm, ApplicationUser user, DAL.EntityFramework.ApplicationContext context)
-        //{
-        //    TopMost = true;
-        //    InitializeComponent();
-        //    this.questionForm = questionForm;
-        //    this.user = user;
-        //    this.context = context;
-        //}
+        public CommentForm(QuestionForm questionForm)
+        {
+            TopMost = true;
+            InitializeComponent();
+            this.questionForm = questionForm;          
+        }
 
         private void OkButton_Click(object sender, EventArgs e)
         {
             questionForm.Timer.Start();
             this.Close();
+            questionForm.KeyboardHook.Install();
+            questionForm.MouseHook.Install();
         }
     }
 }
