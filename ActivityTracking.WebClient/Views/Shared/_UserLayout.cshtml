@@ -27,11 +27,13 @@
         </div>
     </div>
     <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+        <div>
+            @if (TempData["message"] != null)
+            {
+                <div class="alert alert-success text-center">@TempData["message"]</div>
+            }
+        </div>
+        @RenderBody()      
     </div>
 
     @Scripts.Render("~/bundles/jquery")

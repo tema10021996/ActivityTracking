@@ -213,7 +213,6 @@
     <Compile Include="Controllers\DesktopController.cs" />
     <Compile Include="Controllers\ManagerController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\WeatherController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -392,9 +391,8 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
@@ -415,6 +413,7 @@
     <Content Include="Views\Admin\ShowDepartmentReportByUsers.cshtml" />
     <Content Include="Views\Admin\ShowDepartmentReport.cshtml" />
     <Content Include="Views\Admin\Settings.cshtml" />
+    <Content Include="Views\Shared\_LoginPartialForAccountController.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

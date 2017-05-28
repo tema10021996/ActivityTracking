@@ -48,13 +48,13 @@
 </div>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("ShowUserReportWithValidation", "Admin"))
 {
     @Html.ValidationSummary(true)
 
     <div class="row">
         <div class="text-center">
-
+            @Html.Hidden("userName", Model.UserInfo.userInformarion.Login)
 
             @Html.LabelFor(model => model.Start)
 

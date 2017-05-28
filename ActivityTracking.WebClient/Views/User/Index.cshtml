@@ -8,27 +8,38 @@
 <script>
     var colorArray = JSON.parse('@ViewBag.Colors');
 </script>
-@using (Html.BeginForm("Index", "User", FormMethod.Post, new { style = "margin: 20px;" }))
-{
-    @Html.ValidationSummary(true)
+<div class="panel panel-default">
+    <div class="panel-heading">
+    <div class="text-center">
+        <h4><b>@User.Identity.Name report</b></h4>
+    </div>
+    @using (Html.BeginForm("IndexWithValidation", "User", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true)
 
-    <div class="row">
-        <div class="text-center">
+        <div class="row">
+            <div class="text-center">
 
-            @Html.LabelFor(model => model.Start)
+                @Html.LabelFor(model => model.Start)
 
-            @Html.EditorFor(model => model.Start)
+                @Html.EditorFor(model => model.Start)
 
-            @Html.LabelFor(model => model.End)
+                @Html.LabelFor(model => model.End)
 
-            @Html.EditorFor(model => model.End)
+                @Html.EditorFor(model => model.End)
 
-            <button type="submit" class="btn btn-primary btn-sm">Apply</button>
+                <button type="submit" class="btn btn-primary btn-sm">Apply</button>
+            </div>
         </div>
+
+    }
+    <br>
     </div>
 
-}
-<br>
+    <div class="panel-body">
+        <div id="container"></div>
+    </div>
+</div>
 
 <script type="text/javascript">
         google.charts.load("current", { packages: ["timeline"] });
@@ -44,16 +55,18 @@
             dataTable.addColumn({ type: 'date', id: 'Start' });
             dataTable.addColumn({ type: 'date', id: 'End' });
 
+            var countOfRows = 0;
 
 
-            @foreach (var t in Model.list)
-        {
-            if (t.Comment == null)
+            @foreach (var t in Model.listOfWorkAndAbesnceTimeForChart)
             {
+                if (t.Comment == null)
+                {
                 <text>
             dataTable.addRow(['@t.RowLabel', '@t.Barlabel', createCustomHTMLContentWithoutComment('@t.RowLabel', '@t.Barlabel', '@t.StartAbsence.Hour', '@t.StartAbsence.Minute','@t.StartAbsence.Second',
                 '@t.EndAbsence.Hour', '@t.EndAbsence.Minute', '@t.EndAbsence.Second', @t.Duration.Hours, @t.Duration.Minutes, @t.Duration.Seconds),
                     new Date(0, 0, 0, @t.StartAbsence.Hour, @t.StartAbsence.Minute, @t.StartAbsence.Second), new Date(0, 0, 0, @t.EndAbsence.Hour, @t.EndAbsence.Minute, @t.EndAbsence.Second)]);
+            countOfRows++;
             </text>
             }
             else
@@ -62,6 +75,7 @@
             dataTable.addRow(['@t.RowLabel', '@t.Barlabel', createCustomHTMLContentWithComment('@t.RowLabel', '@t.Barlabel', '@t.StartAbsence.Hour', '@t.StartAbsence.Minute','@t.StartAbsence.Second',
         '@t.EndAbsence.Hour', '@t.EndAbsence.Minute', '@t.EndAbsence.Second', '@t.Duration.Hours', '@t.Duration.Minutes', '@t.Duration.Seconds', '@t.Comment'),
                     new Date(0, 0, 0, @t.StartAbsence.Hour, @t.StartAbsence.Minute, @t.StartAbsence.Second), new Date(0, 0, 0, @t.EndAbsence.Hour, @t.EndAbsence.Minute, @t.EndAbsence.Second)]);
+            countOfRows++;
             </text>
             }
         }
@@ -71,7 +85,7 @@
                 timeline: { groupByRowLabel: true},
                 focusTarget: 'category',
                 colors: colorArray,
-                backgroundColor: '#adbfa6',
+                backgroundColor: '#d3d3d3',
                 height: @Model.DaysCount*41+110
             };
             chart.draw(dataTable, options);
@@ -89,8 +103,6 @@
         }
 
 </script>
-
-<div id="container"></div>
 
 
 

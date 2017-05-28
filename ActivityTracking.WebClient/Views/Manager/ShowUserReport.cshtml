@@ -2,7 +2,7 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "ShowUserReport";
     Layout = "~/Views/Shared/_ManagerLayout.cshtml";
 }
 <script>
@@ -48,13 +48,13 @@
 </div>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("ShowUserReportWithValidation","Manager"))
 {
     @Html.ValidationSummary(true)
 
     <div class="row">
         <div class="text-center">
- 
+            @Html.Hidden("userName", Model.UserInfo.userInformarion.Login)
 
             @Html.LabelFor(model => model.Start)
 

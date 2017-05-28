@@ -104,6 +104,7 @@ namespace ActivityTracking.WebClient.Controllers
             ViewBag.returnUrl = returnUrl;
             return View(model);
         }
+
         public ActionResult Logout()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);

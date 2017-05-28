@@ -42,7 +42,8 @@
                         }
                     </td>
                     <td class="text-center">
-                        @using (Html.BeginForm("ShowDepartmentReportWithValidation", "Manager", new { BarChart = true, PieChart = false, ColumnChart = false }))
+                        @using (Html.BeginForm("ShowDepartmentReportWithValidation", "Manager", new { DepartmentList = department, Start = DateTime.Now.AddDays(-7).Date,
+                                End = DateTime.Now.AddDays(-1).Date, BarChart = true, PieChart = false, ColumnChart = false }))
                         {
                             @Html.Hidden("DepartmentList", department)
                             @Html.Hidden("Start", DateTime.Now.AddDays(-7).Date)
@@ -51,7 +52,8 @@
                         }
                     </td>
                     <td class="text-center">
-                        @using (Html.BeginForm("ShowDepartmentReportByUsersWithValidation", "Manager"))
+                        @using (Html.BeginForm("ShowDepartmentReportByUsersWithValidation", "Manager", new { DepartmentList = department, Start = DateTime.Now.AddDays(-7).Date,
+                                End = DateTime.Now.AddDays(-1).Date}))
                         {
                             @Html.Hidden("departmentName", department)
                             @Html.Hidden("start", DateTime.Now.AddDays(-7).Date)
