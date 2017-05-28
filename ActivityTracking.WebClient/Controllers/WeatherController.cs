@@ -12,57 +12,51 @@ namespace ActivityTracking.WebClient.Controllers
 {
     public class WeatherController : ApiController
     {
-        //The data should come from database but here I am hard coding it.    
-        public static List<String> reports = new List<String>
+        public static List<string> reports = new List<string>
         {
-            "weewr","werewrewrew","sssssss"
+            "aaaa", "sssssss"
         };
 
         [HttpGet]
-        public List<String> Get()
+        public List<string> Get()
         {
             return reports;
         }
 
         [HttpGet]
-        public String Get(int id)
+        public string Get(int id)
         {
             return reports.First();
         }
 
         [HttpPost]
-        public bool Post(PostModel postModel)
+        public bool Post(PostModel report)
         {
-            ApplicationContext context = new ApplicationContext();
-            Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>(context);
-            Repository<Absence> absenseRepository = new Repository<Absence>(context);
-            if (userRepository.GetList().First(u => u.UserName == postModel.UserName) != null)
-            {
-                //ApplicationUser user = userRepository.GetList().First(u => u.UserName == "AlexandrTkachuk");
-
-                ApplicationUser user = userRepository.GetList().First(u => u.UserName == postModel.UserName);
-                absenseRepository.Create(new Absence { StartAbsence = postModel.Start, User = user, Date = DateTime.Today });
-                return true;
-            }
-            else
-            {
+            //try
+            //{
+            //    Weather w = new Weather { id = 1, City = report.Start.ToShortTimeString(), Temperature = report.Date.ToString(), Humidity = report.UserName, Precipitation = "0%", Wind = "15mph" };
+            //    reports.Add(w);
+            //    return true;
+            //}
+            //catch
+            //{
                 return false;
-            }
+            //}
         }
 
-        //[HttpDelete]
-        //public bool Delete(int id)
-        //{
-        //    try
-        //    {
-        //        var itemToRemove = reports.Find((r) => r.id == id);
-        //        reports.Remove(itemToRemove);
-        //        return true;
-        //    }
-        //    catch
-        //    {
-        //        return false;
-        //    }
-        //}
+        [HttpDelete]
+        public bool Delete(int id)
+        {
+            //try
+            //{
+            //    var itemToRemove = reports.Find((r) => r.id == id);
+            //    reports.Remove(itemToRemove);
+            //    return true;
+            //}
+            //catch
+            //{
+                return false;
+            //}
+        }
     }
 }

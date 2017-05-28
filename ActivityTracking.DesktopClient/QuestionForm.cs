@@ -14,6 +14,10 @@ namespace ActivityTracking.DesktopClient
 {
     public partial class QuestionForm : Form
     {
+        List<string> reasonsNames;
+        int MayAbsentMinutes;
+        Timer formAppearanceTimer;
+        Timer formStartTimer;
         KeyboardHook keyboardHook;
         MouseHook mouseHook;
 
@@ -21,48 +25,46 @@ namespace ActivityTracking.DesktopClient
         {
             get { return keyboardHook; }
         }
-
         public MouseHook MouseHook
         {
             get { return mouseHook; }
-        }
-
-        Timer timer;
-        public Timer Timer
+        }      
+        public Timer FormAppearanceTimer
         {
-            get { return timer; }
+            get { return formAppearanceTimer; }
         }
 
+        #region QuestionForm() Constructor
         public QuestionForm()
         {
+            MayAbsentMinutes = 5;
+            reasonsNames = new List<string>() { "Meeting", "English", "Other" };
             InitializeComponent();
-            TopMost = true;
-
-            InitializeUser();
-
             InitializeHooks();
-
-            InitializeTimer();
-
+            InitializeTimers();
+            TopMost = true;          
+            ChecktMayAbsentMinutes();
+            CheckDepartmentReasonsChanging();
         }
+        #endregion
 
-
-        void InitializeUser()
+        #region InitializeTimer
+        private void InitializeTimers()
         {
+            formAppearanceTimer = new Timer();
+            //TODO *60 - minutes
+            formAppearanceTimer.Interval = MayAbsentMinutes * 1000; //*60;      
+            formAppearanceTimer.Tick += FormAppearanceTimer_Tick;
+            formAppearanceTimer.Start();
 
-            //Repository <ApplicationUser> usersRepository = new Repository<ApplicationUser>(context);
-            //user = usersRepository.GetList().First(u =>u.UserName == Environment.UserName);
+            formStartTimer = new Timer();
+            formStartTimer.Interval = 3000;
+            formStartTimer.Tick += FormStartTimer_Tick;
+            formStartTimer.Start();
         }
-        private void InitializeTimer()
-        {
-            timer = new Timer();
-            timer.Interval = 10000; //user.Group.MayAbsentTime.Hours * 216000000 + user.Group.MayAbsentTime.Minutes * 60000 + user.Group.MayAbsentTime.Seconds * 1000;
-            timer.Start();
-            timer.Tick += timerTick; ;
-        }
+        #endregion
 
-
-
+        #region InitializeHooks
         private void InitializeHooks()
         {
             keyboardHook = new KeyboardHook();
@@ -77,144 +79,225 @@ namespace ActivityTracking.DesktopClient
             mouseHook.RightButtonDown += new MouseHook.MouseHookCallback(HookMouseActivity);
             mouseHook.Install(); 
         }
-        
+        #endregion
 
+        #region HookMouseActivity
         private void HookMouseActivity(MouseHook.MSLLHOOKSTRUCT mouseStruc)
         {
-            timer.Stop();
-            timer.Start();
+            formAppearanceTimer.Stop();
+            formAppearanceTimer.Start();
         }
+        #endregion'
 
+        #region HookKeyDown
         private void HookKeyDown(KeyboardHook.VKeys key)
         {
-            timer.Stop();
-            timer.Start();
+            formAppearanceTimer.Stop();
+            formAppearanceTimer.Start();
         }
+        #endregion
 
-
-        //--------------------
-        //this.MeetingButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-        //    this.MeetingButton.Location = new System.Drawing.Point(12, 46);
-        //    this.MeetingButton.Name = "MeetingButton";
-        //    this.MeetingButton.Size = new System.Drawing.Size(352, 33);
-        //    this.MeetingButton.TabIndex = 1;
-        //    this.MeetingButton.Text = "Meeting";
-        //    this.MeetingButton.UseVisualStyleBackColor = true;
-        //    this.MeetingButton.Click += new System.EventHandler(this.ReasonButton_Click);
-            //=========================
-
-
-        private async void timerTick(object sender, EventArgs e)
+        #region FormAppearanceTimer_Tick
+        private void FormAppearanceTimer_Tick(object sender, EventArgs e)
         {
             //TODO
             //Проверка в здании ли пользователь 
-
-            timer.Stop();
+            
+            formAppearanceTimer.Stop();            
             keyboardHook.Uninstall();
             mouseHook.Uninstall();
+            PostAbsence();
+            ShowForm();
+        }
+        #endregion
 
+        private void FormStartTimer_Tick(object sender, EventArgs e)
+        {
+            formStartTimer.Stop();
+            formStartTimer.Dispose();
+            this.Hide();
+        }
 
-           PostModel nn = new PostModel { Start = DateTime.Now, Date = DateTime.Today, UserName = "AlexandrTkachuk" };
+            #region PostAbsence()
+            async void PostAbsence()
+        {
+            PostModel postModel = new PostModel { StartAbsence = DateTime.Now, Date = DateTime.Today, UserName = "AlexandrTkachuk" };
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:14110/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                this.Width += 100;
-                HttpResponseMessage response = await client.PostAsJsonAsync("api/Desktop", nn);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    
-                    bool result = await response.Content.ReadAsAsync<bool>();
-                    if (result)
-                    {
-                        this.ForeColor = Color.AliceBlue;
-                    }
-                    else
-                        this.ForeColor = Color.Brown;
-                }
+                HttpResponseMessage response = await client.PostAsJsonAsync("api/Desktop/CreateAbsence", postModel);
+            }
+        }
+        #endregion
+
+        #region PutAbsence()
+        async void PutAbsence(string reasonName, string comment)
+        {
+            PutModel putModel = new PutModel { EndAbsence = DateTime.Now, UserName = "AlexandrTkachuk", ReasonName = reasonName, Comment = comment };
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:14110/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.PutAsJsonAsync("api/Desktop/UpdateAbsence", putModel);
             }
 
-            ShowForm();
-            //timer.Stop();
         }
+        #endregion
 
-        //static async Task GetRequest(string ID)
-        //{
-        //    using (var client = new HttpClient())
-        //    {
-        //        client.BaseAddress = new Uri("http://localhost:14110/");
-        //        client.DefaultRequestHeaders.Accept.Clear();
-        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        //        HttpResponseMessage response;
-
-        //        string id = "aaa";
-
-
-        //        response = await client.GetAsync("api/Desktop/" + id);
-        //        if (response.IsSuccessStatusCode)
-        //        {
-
-        //        }
-
-        //    }
-        //}
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            notifyIcon1.Icon = Properties.Resources.lines;
-            HideForm();
-        }
-         
-
+        //TODO DeLETE!
         private void notifyIcon1_Click(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Normal;
-            this.ShowInTaskbar = true;
-        }  
+            this.Show();
+            //this.WindowState = FormWindowState.Normal;
+            //this.ShowInTaskbar = true;
+        }
 
-         private void ReasonButton_Click(object sender, EventArgs e)
+        #region ReasonButton_Click
+        private void ReasonButton_Click(object sender, EventArgs e)
         {
-
-            //        Repository<Reason> reasonsRepository = new Repository<Reason>(context);
-            //        Reason reason = reasonsRepository.GetList().First(r => r.Name == "Meeting");
-            //        Repository<Absence> absenseRepository = new Repository<Absence>(context);
-            //        Absence absence = absenseRepository.GetList().Last(a => a.User.UserName == user.UserName);
-            //        absence.Reason = reason;
-            //        absence.EndAbsence = DateTime.Now;
-            //        absenseRepository.Update(absence);
-            //    }
-
-            //    HideForm();
-            //    timer.Start();
+            string reasonName = ((Button)sender).Text;
+            PutAbsence(reasonName, null);
+            this.Hide();
+            formAppearanceTimer.Start();
             keyboardHook.Install();
             mouseHook.Install();
         }
+        #endregion
 
-        
+        #region OtherButton_Click
         private void OtherButton_Click(object sender, EventArgs e)
         {
-            //    timer.Stop();
-            //    HideForm();
-            //    CommentForm comentForm = new CommentForm(this, user, context);
-            //    comentForm.Show();
+            this.Hide();
+            CommentForm comentForm = new CommentForm(this);
+            comentForm.Show();
 
         }
+        #endregion
 
+        #region ShowForm
         private void ShowForm()
         {
-            this.WindowState = FormWindowState.Normal;
-            this.ShowInTaskbar = true;
+            ChecktMayAbsentMinutes();
+            CheckDepartmentReasonsChanging();
+            this.Controls.Clear();
+            CreateButtonsAndLabel();
+            this.Show();
         }
-        private void HideForm()
+        #endregion
+
+        #region CheckDepartmentReasonsChanging
+        private async void CheckDepartmentReasonsChanging()
         {
-            this.WindowState = FormWindowState.Minimized;
-            this.ShowInTaskbar = false;
+            List<string> requestReasonsNames = null;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:14110/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                string a = "AlexandrTkachuk";
+                HttpResponseMessage response = await client.GetAsync("api/Desktop/GetReasonsNames/" + a);
+                if (response.IsSuccessStatusCode)
+                {
+                    requestReasonsNames = await response.Content.ReadAsAsync<List<string>>();
+                    if (!CompareReasonsNames(reasonsNames, requestReasonsNames))
+                    {
+                        reasonsNames = requestReasonsNames;                      
+                    }
+
+                }
+            }
+        }
+        #endregion
+
+        #region CreateButtonsAndLabel
+        private void CreateButtonsAndLabel()
+        {
+            this.Height = 120;
+            Label label = new Label();
+            label.Size = new Size(227, 20);
+            label.Location = new Point(12, 19);
+            label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            label.Text = "Choose the reason of abence: ";
+            this.Controls.Add(label);
+
+            foreach (var reasonName in reasonsNames)
+            {
+                this.Height += 39;
+                Button reasonButton = new Button();
+                reasonButton.Text = reasonName;
+                reasonButton.Size = new Size(352, 33);
+                reasonButton.Location = new Point(12, this.Height - 92);
+                if (reasonName == "Other")
+                {
+                    reasonButton.Click += new System.EventHandler(OtherButton_Click);
+                }
+                else
+                {
+                    reasonButton.Click += new System.EventHandler(ReasonButton_Click);                  
+                }
+                reasonButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+                this.Controls.Add(reasonButton);
+            }
+        }
+        #endregion
+
+        #region CompareReasonsNames
+        bool CompareReasonsNames(List<string> oldReasonsNames, List<string> newReasonsNames)
+        {
+            if (oldReasonsNames.Count == newReasonsNames.Count)
+            {
+                var oldReasonsNamesToarray = oldReasonsNames.ToArray();
+                var newReasonsNamesToarray = newReasonsNames.ToArray();
+                for (int i = 0; i < oldReasonsNamesToarray.Length; i++)
+                {
+                    if (oldReasonsNamesToarray[i] != newReasonsNamesToarray[i])
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        #endregion
+
+        #region ChecktMayAbsentMinutes
+        private async void ChecktMayAbsentMinutes()
+        {
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:14110/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+               string userName = "AlexandrTkachuk";
+                HttpResponseMessage response = await client.GetAsync("api/Desktop/GetMayAbsentMinutes/" + userName);
+                if (response.IsSuccessStatusCode)
+                {
+                    MayAbsentMinutes = await response.Content.ReadAsAsync<int>();
+                    formAppearanceTimer.Interval = MayAbsentMinutes * 1000;
+                }               
+            }
 
         }
+        #endregion
 
-        
-        
+        #region QuestionForm_Load
+        private void QuestionForm_Load(object sender, EventArgs e)
+        {
+            notifyIcon1.Icon = Properties.Resources.lines;
+        }
+        #endregion
+
     }
 }

@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 
 namespace ActivityTracking.DesktopClient
@@ -24,10 +26,25 @@ namespace ActivityTracking.DesktopClient
 
         private void OkButton_Click(object sender, EventArgs e)
         {
-            questionForm.Timer.Start();
+            PutAbsence("Other", commentTextBox.Text);
+            questionForm.FormAppearanceTimer.Start();
             this.Close();
             questionForm.KeyboardHook.Install();
             questionForm.MouseHook.Install();
+        }
+
+        async void PutAbsence(string reasonName, string comment)
+        {
+            PutModel putModel = new PutModel { EndAbsence = DateTime.Now, UserName = "AlexandrTkachuk", ReasonName = reasonName, Comment = comment };
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:14110/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.PutAsJsonAsync("api/Desktop/UpdateAbsence", putModel);
+            }
+
         }
     }
 }

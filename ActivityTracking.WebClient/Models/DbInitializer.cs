@@ -410,7 +410,7 @@ namespace ActivityTracking.WebClient.Models
             #endregion
 
             Repository<DivisionManager> divManRep = new Repository<DivisionManager>(context);
-            DivisionManager divManAlexandraMorozova = new DivisionManager { Login = "AlexandraMorozova" };
+            DivisionManager divManAlexandraMorozova = new DivisionManager { Login = "AlexandraMorozova", MayAbsentMinutes = 10 };
             divManRep.Create(divManAlexandraMorozova);
             divManAlexandraMorozova.Reasons.Add(reasonMeeting);
             divManAlexandraMorozova.Reasons.Add(reasonConsultation);

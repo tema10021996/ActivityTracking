@@ -21,12 +21,12 @@
         <h4>Reason settings</h4>
     </div>
     <div class="panel-body">
-        <p>Your reasons</p>
+        <p><h4><b>Choose reasons for your division: </b></h4></p>
         @using (Html.BeginForm())
         {
             for (int i = 0; i < Model.AllReasonModels.Count; i++)
             {
-
+                @Html.Hidden("MayAbsentMinutes", Model.MayAbsentMinutes)
                 @Html.CheckBoxFor(m=>m.AllReasonModels[i].isChoosen, new { @class = "checkbox-primary" })
                 @Model.AllReasonModels[i].Reason.Name
                 @Html.HiddenFor(m => Model.AllReasonModels[i].Reason.Id)
@@ -41,8 +41,36 @@
                 <input type="submit" class="btn btn-primary btn-sm" value="Save" />
             </p>
         }
-</div>
     </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#changeMayAbsentMinutes">Change MayAbsentMinutes</button>
+        <div id="changeMayAbsentMinutes" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    @using (Html.BeginForm("ChangeDivisionMayAbsentMinutes", "Manager"))
+                    {
+                        <div class="modal-header text-center">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <p><b>Current MayAbsentMinutes: @Model.MayAbsentMinutes</b></p>
+                        </div>
+                        <div class="modal-body text-left">
+                            <b class="text-center">Change to: </b>
 
+                            @Html.TextBox("Minutes", null, new { style = "width: 50px;" })
+                            @Html.Label("minutes")
+                        </div>
+                        <div class="modal-footer">
 
+                            <input type="submit" class="btn btn-danger btn-sm" value="Change" />
+                            <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Close</button>
 
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

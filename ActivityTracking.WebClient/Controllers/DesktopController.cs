@@ -14,12 +14,12 @@ namespace ActivityTracking.WebClient.Controllers
     {
 
         [HttpGet]
-        public List<String> GetReasonsNames(string userName)
-        {
+        public List<String> GetReasonsNames(string id)
+         {
             Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>();
-            if (userRepository.GetList().First(u => u.UserName == userName) != null)
+            if (userRepository.GetList().First(u => u.UserName == id) != null)
             {
-                string divisionManagerName = GetUserInfo.UserInfo.GetDivisionManagerOfUser(userName);
+                string divisionManagerName = GetUserInfo.UserInfo.GetDivisionManagerOfUser(id);
                 Repository<DivisionManager> divManagerRepository = new Repository<DivisionManager>();
                 DivisionManager divisionManger = divManagerRepository.GetList().First(m => m.Login == divisionManagerName);
                 List<string> reasonsNames = new List<string>();
@@ -31,13 +31,32 @@ namespace ActivityTracking.WebClient.Controllers
             }
             else
             {
-                return new List<string>() {"Meeting", "English"};
+                return new List<string>() { "Meeting", "English" };
             }
-            
+
         }
 
+        [HttpGet]
+        public int GetMayAbsentMinutes(string id)
+        {
+            Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>();
+            if (userRepository.GetList().First(u => u.UserName == id) != null)
+            {
+                string divisionManagerName = GetUserInfo.UserInfo.GetDivisionManagerOfUser(id);
+                Repository<DivisionManager> divManagerRepository = new Repository<DivisionManager>();
+                DivisionManager divisionManger = divManagerRepository.GetList().First(m => m.Login == divisionManagerName);
+                return divisionManger.MayAbsentMinutes;
+            }
+            else
+            {
+                return 20;
+            }
+
+        }
+
+
         [HttpPost]
-        public bool Post(PostModel postModel)
+        public bool CreateAbsence(PostModel postModel)
         {
             ApplicationContext context = new ApplicationContext();
             Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>(context);
@@ -45,7 +64,7 @@ namespace ActivityTracking.WebClient.Controllers
             if (userRepository.GetList().First(u => u.UserName == postModel.UserName) != null)
             {
                 ApplicationUser user = userRepository.GetList().First(u => u.UserName == postModel.UserName);
-                absenseRepository.Create(new Absence { StartAbsence = postModel.Start, User = user, Date = DateTime.Today });
+                absenseRepository.Create(new Absence { StartAbsence = postModel.StartAbsence, User = user, Date = DateTime.Today });
                 return true;
             }
             else
@@ -55,16 +74,30 @@ namespace ActivityTracking.WebClient.Controllers
         }
 
         [HttpPut]
-        public bool UpdateAbsence(DateTime endAbsence, string userName,string reasonName)
+        public bool UpdateAbsence(PutModel putModel)
         {
-            Repository<Reason> reasonsRepository = new Repository<Reason>();
-            Reason reason = reasonsRepository.GetList().First(r => r.Name == reasonName);
-            Repository<Absence> absenseRepository = new Repository<Absence>();
-            Absence absence = absenseRepository.GetList().Last(a => a.User.UserName == userName);
-            absence.Reason = reason;
-            absence.EndAbsence = endAbsence;
-            absenseRepository.Update(absence);
-            return true;
+            ApplicationContext context = new ApplicationContext();
+            Repository<Reason> reasonsRepository = new Repository<Reason>(context);
+            Reason reason = null;
+            reason = reasonsRepository.GetList().First(r => r.Name == putModel.ReasonName);
+            Repository<Absence> absenseRepository = new Repository<Absence>(context);
+            Absence absence = absenseRepository.GetList().Last(a => a.User.UserName == putModel.UserName);
+            if (absence.EndAbsence == null)
+            {
+                absence.Reason = reason;
+                absence.EndAbsence = putModel.EndAbsence;
+                if (putModel.Comment != null)
+                {
+                    absence.Comment = putModel.Comment;
+                }
+                absenseRepository.Update(absence);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
         
     }

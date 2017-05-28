@@ -46,22 +46,6 @@ D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking
 D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.csprojResolveAssemblyReference.cache
 D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.dll
 D:\Маша\Артём Чухало\ActivityTrackingApplication\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.pdb
-C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.dll.config
-C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.dll
-C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.pdb
-C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DomainModel.dll
-C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\EntityFramework.dll
-C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\EntityFramework.SqlServer.dll
-C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\Microsoft.AspNet.Identity.Core.dll
-C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
-C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DomainModel.pdb
-C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\EntityFramework.xml
-C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\Microsoft.AspNet.Identity.Core.xml
-C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
-C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.csprojResolveAssemblyReference.cache
-C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.dll
-C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.pdb
 D:\Игры\C#\Курсы\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.dll.config
 D:\Игры\C#\Курсы\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.dll
 D:\Игры\C#\Курсы\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.pdb
@@ -82,8 +66,6 @@ D:\Игры\C#\Курсы\ActivityTracking\ActivityTracking.DAL.EntityFramework\
 D:\Игры\C#\Курсы\ActivityTracking\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.csprojResolveAssemblyReference.cache
 D:\Игры\C#\Курсы\ActivityTracking\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.dll
 D:\Игры\C#\Курсы\ActivityTracking\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.pdb
-C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ru\Microsoft.AspNet.Identity.Core.resources.dll
-C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ru\Microsoft.AspNet.Identity.EntityFramework.resources.dll
 D:\Игры\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.dll.config
 D:\Игры\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.dll
 D:\Игры\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.pdb
@@ -120,3 +102,21 @@ D:\ISD\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ru\Micros
 D:\ISD\ActivityTracking\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.csprojResolveAssemblyReference.cache
 D:\ISD\ActivityTracking\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.dll
 D:\ISD\ActivityTracking\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.pdb
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.dll.config
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.dll
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DAL.EntityFramework.pdb
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DomainModel.dll
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\EntityFramework.dll
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ActivityTracking.DomainModel.pdb
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\EntityFramework.xml
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ru\Microsoft.AspNet.Identity.Core.resources.dll
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\bin\Debug\ru\Microsoft.AspNet.Identity.EntityFramework.resources.dll
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.csprojResolveAssemblyReference.cache
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.dll
+C:\Users\Alexandr\Documents\GitHub\ActivityTracking\ActivityTracking.DAL.EntityFramework\obj\Debug\ActivityTracking.DAL.EntityFramework.pdb

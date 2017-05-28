@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.commentTextBox = new System.Windows.Forms.TextBox();
             this.OkButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // textBox1
+            // commentTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 32);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(435, 150);
-            this.textBox1.TabIndex = 0;
+            this.commentTextBox.Location = new System.Drawing.Point(12, 32);
+            this.commentTextBox.Multiline = true;
+            this.commentTextBox.Name = "commentTextBox";
+            this.commentTextBox.Size = new System.Drawing.Size(435, 150);
+            this.commentTextBox.TabIndex = 0;
             // 
             // OkButton
             // 
@@ -69,7 +69,7 @@
             this.ClientSize = new System.Drawing.Size(455, 220);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.OkButton);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.commentTextBox);
             this.Name = "CommentForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CommentForm";
@@ -80,7 +80,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox commentTextBox;
         private System.Windows.Forms.Button OkButton;
         private System.Windows.Forms.Label label1;
     }

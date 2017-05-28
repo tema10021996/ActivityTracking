@@ -36,12 +36,12 @@ namespace ActivityTracking.WebClient.Controllers
         #region Settings
         public ActionResult Settings()
         {
-            ManagerSettingsViewModel managerSettingsViewModel = new ManagerSettingsViewModel {AllReasonModels = new List<ReasonModel>() };
+            
             Repository<DivisionManager> divisionManagerRepository = new Repository<DivisionManager>();
             Repository<Reason> reasonRepository = new Repository<Reason>();
             DivisionManager divisionManager = divisionManagerRepository.GetList().First(m => m.Login == User.Identity.Name);
             var allReasons = reasonRepository.GetList();
-            
+            ManagerSettingsViewModel managerSettingsViewModel = new ManagerSettingsViewModel { AllReasonModels = new List<ReasonModel>(), MayAbsentMinutes = divisionManager.MayAbsentMinutes };
             foreach (var reason in allReasons)
             {
                 bool divManagerHasThisReason = false;
@@ -116,7 +116,6 @@ namespace ActivityTracking.WebClient.Controllers
         }
         #endregion
 
-
         #region ShowDepartmentReport
         [HttpPost]
         public ActionResult ShowDepartmentReport(string DepartmentList, DateTime Start, DateTime End, bool BarChart, bool PieChart, bool ColumnChart)
@@ -150,7 +149,6 @@ namespace ActivityTracking.WebClient.Controllers
             return View("ShowDepartmentReport", managerShowDepartmentReportViewModel);
         }
         #endregion
-
 
         #region GenerateDataForDepartmentReportInPercentage
         private List<ReasonInfo> GenerateDataForDepartmentReportInPercentage(string DepartmentList, DateTime Start, DateTime End)
@@ -242,7 +240,6 @@ namespace ActivityTracking.WebClient.Controllers
             return ReasonInfos;
         }
         #endregion
-    
 
         #region CalculateWorkDuartionForOneUserForOneDay
         private TimeSpan CalculateWorkDuartionForOneUserForOneDay(WorkTime[] userTimesForOneDayToArray, Absence[] userAbsencesforOneDayToArray)
@@ -474,16 +471,16 @@ namespace ActivityTracking.WebClient.Controllers
         }
         #endregion
 
-        //#region ChangeGroupMayAbsentTime
-        //public ActionResult ChangeGroupMayAbsentTime(int Id, string Minutes)
-        //{
-        //    Repository<Group> groupRepository = new Repository<Group>();
-        //    var group = groupRepository.GetList().First(g=>g.Id == Id);
-        //    group.MayAbsentTime = new TimeSpan(0, Convert.ToInt32(Minutes), 0);
-        //    groupRepository.Update(group);
-        //    return RedirectToAction("ShowUsers");
-        //}
-        //#endregion
+        #region ChangeDivisionMayAbsentMinutes
+        public ActionResult ChangeDivisionMayAbsentMinutes(string Minutes)
+        {
+            Repository<DivisionManager> divManagerRepository = new Repository<DivisionManager>();
+            DivisionManager divisionManager = divManagerRepository.GetList().First(m => m.Login == User.Identity.Name);
+            divisionManager.MayAbsentMinutes = Convert.ToInt32(Minutes);
+            divManagerRepository.Update(divisionManager);
+            return RedirectToAction("Settings");
+        }
+        #endregion
 
         #region ShowUserReportWithValidation
         public ActionResult ShowUserReportWithValidation(string userName, DateTime? Start, DateTime? End)

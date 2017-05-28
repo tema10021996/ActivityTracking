@@ -10,6 +10,7 @@ namespace ActivityTracking.DomainModel
     {
         public int Id { get; set; }
         public string Login { get; set; }
+        public int MayAbsentMinutes { get; set; }
 
         public virtual ICollection<Reason> Reasons { get; set; }
 

@@ -63,31 +63,4 @@
             }
         </table>
     </div>
-@*<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#changeMayAbsentTime">Change MayAbsentTime</button>
-<div id="changeMayAbsentTime" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            @using (Html.BeginForm("ChangeGroupMayAbsentTime", "Manager"))
-            {
-                <div class="modal-header text-center">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>                   
-                </div>
-                <div class="modal-body text-left">
-                    <b class="text-center">Change to: </b>
-                    @Html.Hidden("Id", Model.Id)
-
-                    @Html.TextBox("Minutes", null, new { style = "width: 50px;" })
-                    @Html.Label("minutes")
-                </div>
-                <div class="modal-footer">
-
-                    <input type="submit" class="btn btn-danger btn-sm" value="Change" />
-                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Close</button>
-
-                </div>
-            }
-        </div>
-
-    </div>
-</div>*@
 </div>

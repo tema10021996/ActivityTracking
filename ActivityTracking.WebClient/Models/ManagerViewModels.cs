@@ -54,8 +54,8 @@ namespace ActivityTracking.WebClient.Models
 
     public class ManagerSettingsViewModel
     {
-        //public List<ReasonModel> DefaultReasonModels { get; set; }
         public List<ReasonModel> AllReasonModels { get; set; }
+        public int MayAbsentMinutes { get; set; }
     }
 
     public class ReasonModel
