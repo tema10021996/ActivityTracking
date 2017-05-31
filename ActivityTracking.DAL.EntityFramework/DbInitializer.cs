@@ -6,9 +6,9 @@ using ActivityTracking.DomainModel;
 using System;
 using System.Linq;
 
-namespace ActivityTracking.WebClient.Models
+namespace ActivityTracking.DAL.EntityFramework
 {
-    public class DbInitializer :  DropCreateDatabaseAlways<ApplicationContext>
+    public class DbInitializer : CreateDatabaseIfNotExists<ApplicationContext>
     {
         protected override void Seed(ApplicationContext context)
         {

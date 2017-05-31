@@ -5,42 +5,35 @@
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
 
-   
-<div class="col-md-offset-5">
-    <h2>Registration</h2>
-</div>
-
-
-    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-
-        <div>
-            <hr />
-            @Html.ValidationSummary(false)
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Login, new { @class = "col-md-4 control-label" })
-                <div class="col-md-8">
-                    @Html.TextBoxFor(model => model.Login, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Password, new { @class = "col-md-4 control-label" })
-                <div class="col-md-8">
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.Label("Password confirm", new { @class = "col-md-4 control-label" })
-                <div class="col-md-8">
-                    @Html.PasswordFor(m => m.PasswordConfirm, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-4 col-md-8">
-                    <input type="submit" class="btn btn-primary" value="Register" />
-                </div>
+<h2>Registration</h2>
+<hr />
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div> 
+        @Html.ValidationSummary(false)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Login, new { @class = "col-md-2 control-label" })
+            <div>
+                @Html.TextBoxFor(model => model.Login, new { @class = "form-control" })
             </div>
         </div>
-    }
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+            <div>
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Password confirm", new { @class = "col-md-2 control-label" })
+            <div>
+                @Html.PasswordFor(m => m.PasswordConfirm, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2">
+                <input type="submit" class="btn btn-primary" value="Register" />
+            </div>
+        </div>
+    </div>
+}

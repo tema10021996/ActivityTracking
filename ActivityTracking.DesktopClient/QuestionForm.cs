@@ -38,13 +38,16 @@ namespace ActivityTracking.DesktopClient
         public QuestionForm()
         {
             MayAbsentMinutes = 5;
-            reasonsNames = new List<string>() { "Meeting", "English", "Other" };
+            reasonsNames = new List<string>() { "Meeting", "Defult Reason" };
             InitializeComponent();
             InitializeHooks();
             InitializeTimers();
-            TopMost = true;          
-            ChecktMayAbsentMinutes();
-            CheckDepartmentReasonsChanging();
+            TopMost = true;
+            List<string> managerDepartmentsNames = new List<string>();
+            Task reasonTask = Task.Run(() => CheckDepartmentReasonsChanging());
+            reasonTask.Wait();
+            Task mayAbsentMinutesTask = Task.Run(() => CheckDepartmentMayAbsentMinutes());
+            mayAbsentMinutesTask.Wait();
         }
         #endregion
 
@@ -118,8 +121,8 @@ namespace ActivityTracking.DesktopClient
             this.Hide();
         }
 
-            #region PostAbsence()
-            async void PostAbsence()
+        #region PostAbsence()
+        async void PostAbsence()
         {
             PostModel postModel = new PostModel { StartAbsence = DateTime.Now, Date = DateTime.Today, UserName = "AlexandrTkachuk" };
             using (var client = new HttpClient())
@@ -182,8 +185,10 @@ namespace ActivityTracking.DesktopClient
         #region ShowForm
         private void ShowForm()
         {
-            ChecktMayAbsentMinutes();
-            CheckDepartmentReasonsChanging();
+            Task mayAbsentMinutesTask = Task.Run(() => CheckDepartmentMayAbsentMinutes());
+            mayAbsentMinutesTask.Wait();
+            Task reasonTask = Task.Run(() => CheckDepartmentReasonsChanging());
+            reasonTask.Wait();
             this.Controls.Clear();
             CreateButtonsAndLabel();
             this.Show();
@@ -191,7 +196,7 @@ namespace ActivityTracking.DesktopClient
         #endregion
 
         #region CheckDepartmentReasonsChanging
-        private async void CheckDepartmentReasonsChanging()
+        private async Task CheckDepartmentReasonsChanging()
         {
             List<string> requestReasonsNames = null;
             using (var client = new HttpClient())
@@ -270,8 +275,8 @@ namespace ActivityTracking.DesktopClient
         }
         #endregion
 
-        #region ChecktMayAbsentMinutes
-        private async void ChecktMayAbsentMinutes()
+        #region CheckDepartmentMayAbsentMinutes
+        private async Task CheckDepartmentMayAbsentMinutes()
         {
 
             using (var client = new HttpClient())

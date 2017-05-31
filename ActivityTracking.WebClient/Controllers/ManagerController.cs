@@ -121,14 +121,15 @@ namespace ActivityTracking.WebClient.Controllers
         public ActionResult ShowDepartmentReport(string DepartmentList, DateTime Start, DateTime End, bool BarChart, bool PieChart, bool ColumnChart)
         {
             ArrayList colors = new ArrayList();
-
-            
+           
             ManagerShowDepartmentReportViewModel managerShowDepartmentReportViewModel = new ManagerShowDepartmentReportViewModel()
             { Start = Start, End = End, ReasonsNames = new List<string>(), ReasonInfos = GenerateDataForDepartmentReportInPercentage(DepartmentList, Start, End), ChosenDepartmentName = DepartmentList, BarChart = BarChart, PieChart = PieChart, ColumnChart = ColumnChart };
 
             Repository<Absence> absenceRepository = new Repository<Absence>();
-            Repository<Reason> reasonRepository = new Repository<Reason>();
-            var reasons = reasonRepository.GetList();
+            Repository<DivisionManager> divManagerRepository = new Repository<DivisionManager>();
+            string divManagerName = UserInfo.GetDivisionManagerOfUser(HttpContext.User.Identity.Name);
+            DivisionManager divisionManager = divManagerRepository.GetList().First(d => d.Login == divManagerName);
+            ICollection<Reason> reasons = divisionManager.Reasons;
             managerShowDepartmentReportViewModel.ReasonsNames.Add("Work");
             if (!colors.Contains("#0000FF"))
             {
@@ -155,8 +156,10 @@ namespace ActivityTracking.WebClient.Controllers
         {
             List<ReasonInfo> ReasonInfos = new List<ReasonInfo>();
             Repository<Absence> absenceRepository = new Repository<Absence>();
-            Repository<Reason> reasonRepository = new Repository<Reason>();
-            var reasons = reasonRepository.GetList();
+            Repository<DivisionManager> divManagerRepository = new Repository<DivisionManager>();
+            string divManagerName = UserInfo.GetDivisionManagerOfUser(HttpContext.User.Identity.Name);
+            DivisionManager divisionManager = divManagerRepository.GetList().First(d => d.Login == divManagerName);
+            ICollection<Reason> reasons = divisionManager.Reasons;
             var departmentUserInfoModels = UserInfo.GetUserOrDepartmentIformation(DepartmentList, null, Start, End);
             TimeSpan workDurationForGivenDays = new TimeSpan(0, 0, 0);
             foreach (var userInfoModel in departmentUserInfoModels.OrderBy(u => u.userInformarion.Login))
@@ -200,7 +203,7 @@ namespace ActivityTracking.WebClient.Controllers
                 Color = "#0000FF"
 
             });
-            foreach (var reason in reasonRepository.GetList())
+            foreach (var reason in reasons)
             {
                 TimeSpan reasonDuration = new TimeSpan(0, 0, 0);
                 foreach (var userInfoModel in departmentUserInfoModels)
@@ -352,8 +355,10 @@ namespace ActivityTracking.WebClient.Controllers
                 WorkersInfos = new List<WorkerInfo>() { }, ReasonInfosForPercentageReport = GenerateDataForDepartmentReportInPercentage(departmentName, Start, End),
                 ChosenDepartmentName = departmentName};
 
-            Repository<Reason> reasonRepository = new Repository<Reason>();
-            var reasons = reasonRepository.GetList();
+            Repository<DivisionManager> divManagerRepository = new Repository<DivisionManager>();
+            string divManagerName = UserInfo.GetDivisionManagerOfUser(HttpContext.User.Identity.Name);
+            DivisionManager divisionManager = divManagerRepository.GetList().First(d => d.Login == divManagerName);
+            ICollection<Reason> reasons = divisionManager.Reasons;
             viewModel.ReasonsNames.Add("Work");
             if (!colors.Contains("#0000FF"))
             {
@@ -409,7 +414,7 @@ namespace ActivityTracking.WebClient.Controllers
                 });
 
 
-                foreach (var reason in reasonRepository.GetList())
+                foreach (var reason in reasons)
                 {
                     TimeSpan reasonTotalTime = new TimeSpan(0, 0, 0);
                     var reasonAbsences = userAbsences.Where(a => a.Reason.Id == reason.Id);

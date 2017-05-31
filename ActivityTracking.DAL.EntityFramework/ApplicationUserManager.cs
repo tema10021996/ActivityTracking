@@ -5,7 +5,7 @@ using Microsoft.Owin;
 using ActivityTracking.DomainModel;
 using ActivityTracking.DAL.EntityFramework;
 
-namespace ActivityTracking.WebClient.Models
+namespace ActivityTracking.DAL.EntityFramework
 {
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {

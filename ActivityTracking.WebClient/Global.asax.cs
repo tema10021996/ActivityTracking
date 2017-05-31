@@ -17,7 +17,7 @@ namespace ActivityTracking.WebClient
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
 
-            Database.SetInitializer<ApplicationContext>(new Models.DbInitializer());
+            Database.SetInitializer<ApplicationContext>(new DbInitializer());
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
