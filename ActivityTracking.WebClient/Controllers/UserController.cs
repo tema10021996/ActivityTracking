@@ -13,21 +13,43 @@ namespace ActivityTracking.WebClient.Controllers
 {
     public class UserController : Controller
     {
-        //TODO Delete
+        #region Index()
         public ActionResult Index()
         {
-            DateTime End = DateTime.Now.AddDays(-1).Date;
-            DateTime Start = DateTime.Now.AddDays(-7).Date;
+            DateTime Start = new DateTime();
+            DateTime End = new DateTime();
+            Repository<WeekBeginningDay> weekBeginingDyRepository = new Repository<WeekBeginningDay>();
+            WeekBeginningDay weekBeginningDay = weekBeginingDyRepository.GetItem(1);
+            for (DateTime i = DateTime.Today; i >= DateTime.Now.AddDays(-7).Date; i = i.AddDays(-1))
+            {
+                if (i.DayOfWeek.ToString() == weekBeginningDay.DayName)
+                {
+                    Start = i;
+                    End = DateTime.Today;
+                    return Index(Start, End);
+                }
+            }
             return Index(Start, End);
         }
+        #endregion
 
+        #region IndexWithValidation
         public ActionResult IndexWithValidation(DateTime? Start, DateTime? End)
         {
             if (Start == null || End == null)
             {
                 TempData["message"] = "You should enter two dates";
-                End = DateTime.Now.AddDays(-1).Date;
-                Start = DateTime.Now.AddDays(-7).Date;
+                Repository<WeekBeginningDay> weekBeginingDyRepository = new Repository<WeekBeginningDay>();
+                WeekBeginningDay weekBeginningDay = weekBeginingDyRepository.GetItem(1);
+                for (DateTime i = DateTime.Today; i >= DateTime.Now.AddDays(-7).Date; i = i.AddDays(-1))
+                {
+                    if (i.DayOfWeek.ToString() == weekBeginningDay.DayName)
+                    {
+                        Start = i;
+                        End = DateTime.Today;
+                        return Index((DateTime)Start, (DateTime)End);
+                    }
+                }
 
                 return Index((DateTime)Start, (DateTime)End);
 
@@ -35,8 +57,18 @@ namespace ActivityTracking.WebClient.Controllers
             else if (Start > End)
             {
                 TempData["message"] = "End date should be bigger then start date";
-                End = DateTime.Now.AddDays(-1).Date;
-                Start = DateTime.Now.AddDays(-7).Date;
+                Repository<WeekBeginningDay> weekBeginingDyRepository = new Repository<WeekBeginningDay>();
+                WeekBeginningDay weekBeginningDay = weekBeginingDyRepository.GetItem(1);
+                for (DateTime i = DateTime.Today; i >= DateTime.Now.AddDays(-7).Date; i = i.AddDays(-1))
+                {
+                    if (i.DayOfWeek.ToString() == weekBeginningDay.DayName)
+                    {
+                        Start = i;
+                        End = DateTime.Today;
+                        return Index((DateTime)Start, (DateTime)End);
+                    }
+                }
+
                 return Index((DateTime)Start, (DateTime)End);
             }
             else
@@ -44,7 +76,9 @@ namespace ActivityTracking.WebClient.Controllers
                 return Index((DateTime)Start, (DateTime)End);
             }
         }
+        #endregion
 
+        #region Index(DateTime Start, DateTime End)
         [HttpPost]
         public ActionResult Index(DateTime Start, DateTime End)
         {
@@ -296,5 +330,6 @@ namespace ActivityTracking.WebClient.Controllers
             ViewBag.User = user.UserName;
             return View("Index", resultModel);
         }
+        #endregion
     }
 }

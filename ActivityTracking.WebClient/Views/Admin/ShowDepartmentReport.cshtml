@@ -27,19 +27,63 @@
             <div class="row">
                 <div class="col-md-10 col-lg-10">
                     <div class="text-center">
+                        <p><h4><b>@Model.ChosenDepartmentName</b></h4></p>
                         @Html.Hidden("DepartmentList", Model.ChosenDepartmentName)
 
                         @Html.Hidden("PieChart", Model.PieChart)
                         @Html.Hidden("BarChart", Model.BarChart)
                         @Html.Hidden("ColumnChart", Model.ColumnChart)
+                        @{
+                            string startMonth = null;
+                            string startDay = null;
+                            if (Model.Start.Month < 10)
+                            {
+                                startMonth = "0" + Model.Start.Month;
+                            }
+                            else
+                            {
+                                startMonth = Model.Start.Month.ToString();
+                            }
+                            if (Model.Start.Day < 10)
+                            {
+                                startDay = "0" + Model.Start.Day;
+                            }
+                            else
+                            {
+                                startDay = Model.Start.Day.ToString();
+                            }
+                            string startValue = Model.Start.Year + "-" + startMonth + "-" + startDay;
 
+                        }
+                        @{
+                            string endMonth = null;
+                            string endDay = null;
+                            if (Model.End.Month < 10)
+                            {
+                                endMonth = "0" + Model.End.Month;
+                            }
+                            else
+                            {
+                                endMonth = Model.End.Month.ToString();
+                            }
+                            if (Model.End.Day < 10)
+                            {
+                                endDay = "0" + Model.End.Day;
+                            }
+                            else
+                            {
+                                endDay = Model.End.Day.ToString();
+                            }
+                            string endValue = Model.Start.Year + "-" + endMonth + "-" + endDay;
+
+                        }
                         @Html.LabelFor(model => model.Start)
 
-                        @Html.EditorFor(model => model.Start)
+                        <input type="date" name="Start" id="Start" class="Myform-control" value="@startValue" onchange="ChangeStyle()">
 
                         @Html.LabelFor(model => model.End)
 
-                        @Html.EditorFor(model => model.End)
+                        <input type="date" name="End" id="End" class="Myform-control" value="@endValue"> 
 
                         <button type="submit" class="btn btn-primary btn-sm">Apply</button>
                     </div>
@@ -51,33 +95,51 @@
 
 
     <div class="row">
-        <div class="col-md-10 col-lg-10">
-            <div class="text-center">
-                <p><h4><b>@Model.ChosenDepartmentName</b></h4></p>
-                <p><h5><b>@Model.Start.ToShortDateString()   -   @Model.End.ToShortDateString()</b></h5></p>
+        @{
+            bool isEmptyModel = true;
+            foreach (var reasonInfo in Model.ReasonInfos)
+            {
+                if (reasonInfo.DurationInHours != 0.0)
+                {
+                    isEmptyModel = false;
+                }
+            }
+        }
+        @if (isEmptyModel == false)
+            {
+            <div class="col-md-10 col-lg-10">
+                @if (Model.BarChart == true)
+                {
+                    <div id="barchart_values"></div>
+                        <div id="piechart" style="display:none"></div>
+                        <div id="columnchart_values" style="display:none"></div>
+
+                }
+                else if (Model.PieChart == true)
+                {
+                    <div id="piechart" style="width: 900px; height: 400px;"></div>
+                        <div id="barchart_values" style="display:none"></div>
+                        <div id="columnchart_values" style="display:none;"></div>
+                }
+                else
+                {
+
+                    <div id="piechart" style="display:none;"></div>
+                        <div id="barchart_values" style="display:none"></div>
+                        <div id="columnchart_values"></div>
+
+                }
             </div>
-            @if (Model.BarChart == true)
-            {
-                <div id="barchart_values"></div>
-                    <div id="piechart" style="display:none"></div>
-                    <div id="columnchart_values" style="display:none"></div>
+        }
+        else
+        {
+            <div class="col-md-10 col-lg-10 text-center">
+                <br>
+                <br>
+                <p><h4><b>There are no data for this period</b></h4></p>
+            </div>
+        }
 
-            }
-            else if (Model.PieChart == true)
-            {
-                <div id="piechart" style="width: 900px; height: 400px;"></div>
-                    <div id="barchart_values" style="display:none"></div>
-                    <div id="columnchart_values" style="display:none;"></div>
-            }
-            else
-            {
-
-                <div id="piechart" style="display:none;"></div>
-                    <div id="barchart_values" style="display:none"></div>
-                    <div id="columnchart_values"></div>
-
-            }
-        </div>
         <div class="text-right col-md-2 col-lg-2">
             @using (Html.BeginForm(new { Start = Model.Start, End = Model.End, BarChart = true, PieChart = false, ColumnChart = false, DepartmentList = Model.ChosenDepartmentName }))
             {
@@ -100,6 +162,7 @@
         </div>
 
     </div>
+
 </div>
 
 <script>
@@ -290,3 +353,13 @@
         }
 </script>
 
+<script type="text/javascript">
+function ChangeStyle()
+{
+    var startDate = document.getElementById("Start").value;
+
+    var endDate = new Date(startDate);
+    endDate.setDate(endDate.getDate()+7);
+    document.getElementById("End").valueAsDate = endDate;
+}
+</script>

@@ -3,6 +3,8 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
 }
+@*@Styles.Render("~/Content/MyCss.css")*@
+@*<link rel="stylesheet" href="~/Content/MyCss.css" type="text/css">*@
 
 <div class="panel panel-default">
     <div class="panel-heading text-center">
@@ -74,11 +76,11 @@
                                         </div>
                                         <div class="modal-body text-left">
                                             <b>Reason name: </b>
-                                            @Html.TextBox("reasonNewName", reason.Name)
+                                            @Html.TextBox("reasonNewName", reason.Name, new { @class = "Myform-control" })
                                             <br>
                                             <br>
                                             @Html.Label("Change color: ")
-                                            <input type="color" name="reasonNewColor" id="reasonNewColor" style="padding:0;" value="@reason.Color" />
+                                            <input type="color" name="reasonNewColor" id="reasonNewColor" class="Myform-control" style="padding:0; height:24px; background-color:white" value="@reason.Color" />
                                         </div>
                                         <div class="modal-footer">
                                             <input type="submit" class="btn btn-danger btn-sm" value="Save" />
@@ -109,11 +111,11 @@
                         </div>
                         <div class="modal-body text-left">                           
                             <b>Reason name: </b>
-                            @Html.TextBox("reasonName")
+                            @Html.TextBox("reasonName", null, new { @class = "Myform-control" })
                             <br>
                             <br>
                             @Html.Label("Choose color: ")
-                            <input type="color" name="reasonColor" id="reasonColor" style="padding:0"/>
+                            <input type="color" name="reasonColor" id="reasonColor" class="Myform-control" style="padding:0; height:24px; background-color:white"/>
                         </div>
                         <div class="modal-footer">
 
@@ -126,7 +128,30 @@
 
             </div>
         </div>
+        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#changeWeekBeginningDay">Change week beginning day</button>
+        <div id="changeWeekBeginningDay" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    @using (Html.BeginForm("ChangeWeekBeginningDay", "Admin"))
+                    {
+                        <div class="modal-header text-center">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <b class="text-center">Current week beginning day: @Model.CurrentDayName</b>
+                        </div>
+                        <div class="modal-body text-center">
+                            <b class="text-center">Change to: </b>
+                            @Html.DropDownList("DayNames", Model.DayNames, new { @class = "Myform-control" })                       
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-danger btn-sm " value="Change" />
+                            <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Close</button>
 
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
        
 
 

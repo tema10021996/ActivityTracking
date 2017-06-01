@@ -12,7 +12,6 @@ namespace ActivityTracking.WebClient.Controllers
 {
     public class DesktopController: ApiController
     {
-
         [HttpGet]
         public List<String> GetReasonsNames(string id)
          {
@@ -31,7 +30,7 @@ namespace ActivityTracking.WebClient.Controllers
             }
             else
             {
-                return new List<string>() { "Meeting", "English" };
+                return new List<string>() {"Default" };
             }
 
         }

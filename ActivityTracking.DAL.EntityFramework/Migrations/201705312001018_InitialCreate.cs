@@ -116,6 +116,15 @@ namespace ActivityTracking.DAL.EntityFramework.Migrations
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
             
             CreateTable(
+                "dbo.WeekBeginningDays",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        DayName = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.DivisionManagerReasons",
                 c => new
                     {
@@ -151,6 +160,7 @@ namespace ActivityTracking.DAL.EntityFramework.Migrations
             DropIndex("dbo.Absences", new[] { "User_Id" });
             DropIndex("dbo.Absences", new[] { "ReasonId" });
             DropTable("dbo.DivisionManagerReasons");
+            DropTable("dbo.WeekBeginningDays");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");

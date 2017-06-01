@@ -90,38 +90,77 @@ namespace ActivityTracking.WebClient.Controllers
 
         #region ShowDepartmentReportWithValidation
         [HttpPost]
-        public ActionResult ShowDepartmentReportWithValidation(string DepartmentList, DateTime? Start, DateTime? End, bool BarChart, bool PieChart, bool ColumnChart)
+        public ActionResult ShowDepartmentReportWithValidation(string returnUrl, string DepartmentList, DateTime? Start, DateTime? End, bool BarChart, bool PieChart, bool ColumnChart, bool isDefaultRequest = false)
         {
+            if (isDefaultRequest == true)
+            {
+                Repository<WeekBeginningDay> weekBeginingDyRepository = new Repository<WeekBeginningDay>();
+                WeekBeginningDay weekBeginningDay = weekBeginingDyRepository.GetItem(1);
+                for (DateTime i = DateTime.Today; i >= DateTime.Now.AddDays(-7).Date; i = i.AddDays(-1))
+                {
+                    if (i.DayOfWeek.ToString() == weekBeginningDay.DayName)
+                    {
+                        Start = i;
+                        End = DateTime.Today;
+                        return ShowDepartmentReport(returnUrl, DepartmentList, (DateTime)Start, (DateTime)End, BarChart, PieChart, ColumnChart);
+                    }
+                }
+
+            }
             if (Start == null || End == null)
             {
                 TempData["message"] = "You should enter two dates";
-                End = DateTime.Now.AddDays(-1).Date;
-                Start = DateTime.Now.AddDays(-7).Date;
-                
-                return ShowDepartmentReport(DepartmentList, (DateTime)Start, (DateTime)End, BarChart, PieChart, ColumnChart);
+                Repository<WeekBeginningDay> weekBeginingDyRepository = new Repository<WeekBeginningDay>();
+                WeekBeginningDay weekBeginningDay = weekBeginingDyRepository.GetItem(1);
+                for (DateTime i = DateTime.Today; i >= DateTime.Now.AddDays(-7).Date; i = i.AddDays(-1))
+                {
+                    if (i.DayOfWeek.ToString() == weekBeginningDay.DayName)
+                    {
+                        Start = i;
+                        End = DateTime.Today;
+                        return ShowDepartmentReport(returnUrl, DepartmentList, (DateTime)Start, (DateTime)End, BarChart, PieChart, ColumnChart);
+                    }
+                }
+
+                return ShowDepartmentReport(returnUrl, DepartmentList, (DateTime)Start, (DateTime)End, BarChart, PieChart, ColumnChart);
 
             }
             else if (Start > End)
             {
                 TempData["message"] = "End date should be bigger then start date";
-                End = DateTime.Now.AddDays(-1).Date;
-                Start = DateTime.Now.AddDays(-7).Date;
-                return ShowDepartmentReport(DepartmentList, (DateTime)Start, (DateTime)End, BarChart, PieChart, ColumnChart);
+                Repository<WeekBeginningDay> weekBeginingDyRepository = new Repository<WeekBeginningDay>();
+                WeekBeginningDay weekBeginningDay = weekBeginingDyRepository.GetItem(1);
+                for (DateTime i = DateTime.Today; i >= DateTime.Now.AddDays(-7).Date; i = i.AddDays(-1))
+                {
+                    if (i.DayOfWeek.ToString() == weekBeginningDay.DayName)
+                    {
+                        Start = i;
+                        End = DateTime.Today;
+                        return ShowDepartmentReport(returnUrl,DepartmentList, (DateTime)Start, (DateTime)End, BarChart, PieChart, ColumnChart);
+                    }
+                }
+                return ShowDepartmentReport(returnUrl,DepartmentList, (DateTime)Start, (DateTime)End, BarChart, PieChart, ColumnChart);
             }
             else
             {
-                return ShowDepartmentReport(DepartmentList, (DateTime)Start, (DateTime)End, BarChart, PieChart, ColumnChart);
+                return ShowDepartmentReport(returnUrl, DepartmentList, (DateTime)Start, (DateTime)End, BarChart, PieChart, ColumnChart);
             }
- 
         }
         #endregion
 
         #region ShowDepartmentReport
         [HttpPost]
-        public ActionResult ShowDepartmentReport(string DepartmentList, DateTime Start, DateTime End, bool BarChart, bool PieChart, bool ColumnChart)
+        public ActionResult ShowDepartmentReport(string returnUrl, string DepartmentList, DateTime Start, DateTime End, bool BarChart, bool PieChart, bool ColumnChart)
         {
             ArrayList colors = new ArrayList();
-           
+
+            List<UserInfoModel> usersInDepartmentInfoModels = GetUserInfo.UserInfo.GetUserOrDepartmentIformation(DepartmentList, null, Start, End);
+            if (usersInDepartmentInfoModels.Count == 0)
+            {
+                TempData["message"] = "This Department doesn't contain users";
+                return Redirect(returnUrl);
+            }
+
             ManagerShowDepartmentReportViewModel managerShowDepartmentReportViewModel = new ManagerShowDepartmentReportViewModel()
             { Start = Start, End = End, ReasonsNames = new List<string>(), ReasonInfos = GenerateDataForDepartmentReportInPercentage(DepartmentList, Start, End), ChosenDepartmentName = DepartmentList, BarChart = BarChart, PieChart = PieChart, ColumnChart = ColumnChart };
 
@@ -160,7 +199,12 @@ namespace ActivityTracking.WebClient.Controllers
             string divManagerName = UserInfo.GetDivisionManagerOfUser(HttpContext.User.Identity.Name);
             DivisionManager divisionManager = divManagerRepository.GetList().First(d => d.Login == divManagerName);
             ICollection<Reason> reasons = divisionManager.Reasons;
-            var departmentUserInfoModels = UserInfo.GetUserOrDepartmentIformation(DepartmentList, null, Start, End);
+            List<UserInfoModel> departmentUserInfoModels = UserInfo.GetUserOrDepartmentIformation(DepartmentList, null, Start, End);
+            if (departmentUserInfoModels.Count == 0)
+            {
+                TempData["message"] = "This Department doesn't contain users";
+                return null;
+            }
             TimeSpan workDurationForGivenDays = new TimeSpan(0, 0, 0);
             foreach (var userInfoModel in departmentUserInfoModels.OrderBy(u => u.userInformarion.Login))
             {
@@ -299,38 +343,60 @@ namespace ActivityTracking.WebClient.Controllers
         #region ShowMyReport
         public ActionResult ShowMyReport()
         {
-            DateTime End = DateTime.Now.AddDays(-1).Date;
-            DateTime Start = DateTime.Now.AddDays(-7).Date;
-            return ShowUserReport( HttpContext.User.Identity.Name,Start, End);
-        }
-        #endregion
-
-        #region ShowMyReport [HttpPost]
-        [HttpPost]
-        public ActionResult ShowMyReport(string userName, DateTime Start, DateTime End)
-        {
-            return ShowUserReport(HttpContext.User.Identity.Name, Start, End);
+            return ShowUserReportWithValidation(HttpContext.User.Identity.Name, null, null, true);
+           
         }
         #endregion
 
         #region ShowDepartmentReportByUsersWithValidation
 
-        public ActionResult ShowDepartmentReportByUsersWithValidation(string departmentName, DateTime? Start, DateTime? End)
+        public ActionResult ShowDepartmentReportByUsersWithValidation(string departmentName, DateTime? Start, DateTime? End, bool isDefaultRequest = false)
         {
+            if (isDefaultRequest == true)
+            {
+                Repository<WeekBeginningDay> weekBeginingDyRepository = new Repository<WeekBeginningDay>();
+                WeekBeginningDay weekBeginningDay = weekBeginingDyRepository.GetItem(1);
+                for (DateTime i = DateTime.Today; i >= DateTime.Now.AddDays(-7).Date; i = i.AddDays(-1))
+                {
+                    if (i.DayOfWeek.ToString() == weekBeginningDay.DayName)
+                    {
+                        Start = i;
+                        End = DateTime.Today;
+                        return ShowDepartmentReportByUsers(departmentName, (DateTime)Start, (DateTime)End);
+                    }
+                }
+
+            }
             if (Start == null || End == null)
             {
                 TempData["message"] = "You should enter two dates";
-                End = DateTime.Now.AddDays(-1).Date;
-                Start = DateTime.Now.AddDays(-7).Date;
-
+                Repository<WeekBeginningDay> weekBeginingDyRepository = new Repository<WeekBeginningDay>();
+                WeekBeginningDay weekBeginningDay = weekBeginingDyRepository.GetItem(1);
+                for (DateTime i = DateTime.Today; i >= DateTime.Now.AddDays(-7).Date; i = i.AddDays(-1))
+                {
+                    if (i.DayOfWeek.ToString() == weekBeginningDay.DayName)
+                    {
+                        Start = i;
+                        End = DateTime.Today;
+                        return ShowDepartmentReportByUsers(departmentName, (DateTime)Start, (DateTime)End);
+                    }
+                }
                 return ShowDepartmentReportByUsers(departmentName, (DateTime)Start, (DateTime)End);
-
             }
             else if (Start > End)
             {
                 TempData["message"] = "End date should be bigger then start date";
-                End = DateTime.Now.AddDays(-1).Date;
-                Start = DateTime.Now.AddDays(-7).Date;
+                Repository<WeekBeginningDay> weekBeginingDyRepository = new Repository<WeekBeginningDay>();
+                WeekBeginningDay weekBeginningDay = weekBeginingDyRepository.GetItem(1);
+                for (DateTime i = DateTime.Today; i >= DateTime.Now.AddDays(-7).Date; i = i.AddDays(-1))
+                {
+                    if (i.DayOfWeek.ToString() == weekBeginningDay.DayName)
+                    {
+                        Start = i;
+                        End = DateTime.Today;
+
+                    }
+                }
                 return ShowDepartmentReportByUsers(departmentName, (DateTime)Start, (DateTime)End);
             }
             else
@@ -350,6 +416,11 @@ namespace ActivityTracking.WebClient.Controllers
             ArrayList colors = new ArrayList();
 
             List<UserInfoModel> usersInDepartmentInfoModels = GetUserInfo.UserInfo.GetUserOrDepartmentIformation(departmentName, null, Start, End);
+            if (usersInDepartmentInfoModels.Count == 0)
+            {
+                TempData["message"] = "This Department doesn't contain users";
+                return RedirectToAction("Index");
+            }
 
             ManagerShowDepartmentReportByUsersViewModel viewModel = new ManagerShowDepartmentReportByUsersViewModel { Start = Start, End = End, ReasonsNames = new List<string>(),
                 WorkersInfos = new List<WorkerInfo>() { }, ReasonInfosForPercentageReport = GenerateDataForDepartmentReportInPercentage(departmentName, Start, End),
@@ -488,13 +559,37 @@ namespace ActivityTracking.WebClient.Controllers
         #endregion
 
         #region ShowUserReportWithValidation
-        public ActionResult ShowUserReportWithValidation(string userName, DateTime? Start, DateTime? End)
+        public ActionResult ShowUserReportWithValidation(string userName, DateTime? Start, DateTime? End, bool isDefaultRequest = false)
         {
+            if (isDefaultRequest == true)
+            {
+                Repository<WeekBeginningDay> weekBeginingDyRepository = new Repository<WeekBeginningDay>();
+                WeekBeginningDay weekBeginningDay = weekBeginingDyRepository.GetItem(1);
+                for (DateTime i = DateTime.Today; i >= DateTime.Now.AddDays(-7).Date; i = i.AddDays(-1))
+                {
+                    if (i.DayOfWeek.ToString() == weekBeginningDay.DayName)
+                    {
+                        Start = i;
+                        End = DateTime.Today;
+                        return ShowUserReport(userName, (DateTime)Start, (DateTime)End);
+                    }
+                }
+
+            }
             if (Start == null || End == null)
             {
                 TempData["message"] = "You should enter two dates";
-                End = DateTime.Now.AddDays(-1).Date;
-                Start = DateTime.Now.AddDays(-7).Date;
+                Repository<WeekBeginningDay> weekBeginingDyRepository = new Repository<WeekBeginningDay>();
+                WeekBeginningDay weekBeginningDay = weekBeginingDyRepository.GetItem(1);
+                for (DateTime i = DateTime.Today; i >= DateTime.Now.AddDays(-7).Date; i = i.AddDays(-1))
+                {
+                    if (i.DayOfWeek.ToString() == weekBeginningDay.DayName)
+                    {
+                        Start = i;
+                        End = DateTime.Today;
+                        return ShowUserReport(userName, (DateTime)Start, (DateTime)End);
+                    }
+                }
 
                 return ShowUserReport(userName, (DateTime)Start, (DateTime)End);
 
@@ -502,12 +597,22 @@ namespace ActivityTracking.WebClient.Controllers
             else if (Start > End)
             {
                 TempData["message"] = "End date should be bigger then start date";
-                End = DateTime.Now.AddDays(-1).Date;
-                Start = DateTime.Now.AddDays(-7).Date;
+                Repository<WeekBeginningDay> weekBeginingDyRepository = new Repository<WeekBeginningDay>();
+                WeekBeginningDay weekBeginningDay = weekBeginingDyRepository.GetItem(1);
+                for (DateTime i = DateTime.Today; i >= DateTime.Now.AddDays(-7).Date; i = i.AddDays(-1))
+                {
+                    if (i.DayOfWeek.ToString() == weekBeginningDay.DayName)
+                    {
+                        Start = i;
+                        End = DateTime.Today;
+                        return ShowUserReport(userName, (DateTime)Start, (DateTime)End);
+                    }
+                }
                 return ShowUserReport(userName, (DateTime)Start, (DateTime)End);
             }
             else
             {
+
                 return ShowUserReport(userName, (DateTime)Start, (DateTime)End);
             }
         }

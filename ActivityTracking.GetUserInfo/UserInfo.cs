@@ -24,7 +24,7 @@ namespace ActivityTracking.GetUserInfo
                         HireDate = "1.05.2017",
                         ISDExperiance = "0.5 year",
                         LastName = "Tkachuk",
-                        Login = "AlexandrTkachuk",
+                        Login = "Alexandr",
                         Manager = "AlexandraMorozova",
                         OfficeLocation = "Dnepr",
                         Position = "c# developer",
@@ -101,6 +101,25 @@ namespace ActivityTracking.GetUserInfo
                         ISDExperiance = "0.5 year",
                         LastName = "Maximov",
                         Login = "MaxMaximov",
+                        Manager = "AlexandraMorozova",
+                        OfficeLocation = "Dnepr",
+                        Position = "c# developer",
+                        Profession = "professor",
+                        Role = "user",
+                        Sector = "sector",
+                        Title = "title"
+                },
+                 new UserInformation
+                {
+                        Company = "ISD",
+                        CommercialExperiance = "5",
+                        Department = "Department1",
+                        Division = "Division",
+                        FirstName = "Alex",
+                        HireDate = "1.05.2014",
+                        ISDExperiance = "3 year",
+                        LastName = "Morozova",
+                        Login = "omor",
                         Manager = "AlexandraMorozova",
                         OfficeLocation = "Dnepr",
                         Position = "c# developer",
@@ -255,7 +274,7 @@ namespace ActivityTracking.GetUserInfo
         #region GetAllUsersLogins
         public static List<String> GetAllUsersLogins()
         {
-            return new List<string>() { "AlexandrTkachuk", "NikitaMaltsev", "ArtemChuhalo", "IvanIvanov", "MaxMaximov", "AlexandraMorozova" };
+            return new List<string>() { "AlexandrT", "NikitaMaltsev", "ArtemChuhalo", "IvanIvanov", "MaxMaximov", "omor", "AlexandraMorozova" };
         }
         #endregion
 

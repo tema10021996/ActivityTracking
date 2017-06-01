@@ -13,7 +13,7 @@ namespace ActivityTracking.DAL.EntityFramework.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201705311423013_InitialCreate"; }
+            get { return "201705312001018_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

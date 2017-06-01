@@ -35,7 +35,7 @@ namespace ActivityTracking.DesktopClient
 
         async void PutAbsence(string reasonName, string comment)
         {
-            PutModel putModel = new PutModel { EndAbsence = DateTime.Now, UserName = "AlexandrTkachuk", ReasonName = reasonName, Comment = comment };
+            PutModel putModel = new PutModel { EndAbsence = DateTime.Now, UserName = Environment.UserName, ReasonName = reasonName, Comment = comment };
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:14110/");

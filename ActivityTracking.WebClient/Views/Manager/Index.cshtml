@@ -42,22 +42,22 @@
                         }
                     </td>
                     <td class="text-center">
-                        @using (Html.BeginForm("ShowDepartmentReportWithValidation", "Manager", new { DepartmentList = department, Start = DateTime.Now.AddDays(-7).Date,
-                                End = DateTime.Now.AddDays(-1).Date, BarChart = true, PieChart = false, ColumnChart = false }))
+                        @using (Html.BeginForm("ShowDepartmentReportWithValidation", "Manager"))
                         {
+                            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                            @Html.Hidden("BarChart", true)
+                            @Html.Hidden("PieChart", false)
+                            @Html.Hidden("ColumnChart", false)
                             @Html.Hidden("DepartmentList", department)
-                            @Html.Hidden("Start", DateTime.Now.AddDays(-7).Date)
-                            @Html.Hidden("End", DateTime.Now.AddDays(-1).Date)
+                            @Html.Hidden("isDefaultRequest", true)
                             <input type="submit" class="btn btn-primary btn-sm" value="Show report" />
                         }
                     </td>
                     <td class="text-center">
-                        @using (Html.BeginForm("ShowDepartmentReportByUsersWithValidation", "Manager", new { DepartmentList = department, Start = DateTime.Now.AddDays(-7).Date,
-                                End = DateTime.Now.AddDays(-1).Date}))
+                        @using (Html.BeginForm("ShowDepartmentReportByUsersWithValidation", "Manager"))
                         {
                             @Html.Hidden("departmentName", department)
-                            @Html.Hidden("start", DateTime.Now.AddDays(-7).Date)
-                            @Html.Hidden("Snd", DateTime.Now.AddDays(-1).Date)
+                            @Html.Hidden("isDefaultRequest", true)
                             <input type="submit" class="btn btn-primary btn-sm" value="Show report" />
                         }
                     </td>                   

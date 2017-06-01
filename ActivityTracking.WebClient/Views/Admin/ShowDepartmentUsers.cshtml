@@ -28,7 +28,7 @@
             @foreach (var userName in Model.UsersNames)
             {
                 <tr>
-                    <td class="text-left">@Html.ActionLink(userName, "ShowUserReportWithValidation", new { userName = userName, Start = DateTime.Now.AddDays(-7).Date, End = DateTime.Now.AddDays(-1).Date })</td>
+                    <td class="text-left">@Html.ActionLink(userName, "ShowUserReportWithValidation", new { userName = userName,  isDefaultRequest= true})</td>
                 </tr>
             }
         </table>

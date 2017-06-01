@@ -22,12 +22,17 @@
         <h4 class="text-center"><b>Choose department</b></h4>
     </div>
     
-        @using (Html.BeginForm("ShowDepartmentReport", "Manager", new { BarChart = true, PieChart = false, ColumnChart = false, Start = DateTime.Now.AddDays(-7).Date, End = DateTime.Now.AddDays(-1).Date }))
-        {
-            <div class="panel-body text-center">                
-                    @Html.DropDownList("DepartmentList")
-                    <input type="submit" class="btn  btn-primary btn-sm" value="Show department report" />
-                </div>
+       @using (Html.BeginForm("ShowDepartmentReportWithValidation", "Manager"))
+       {
+            <div class="panel-body text-center">   
+                @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                @Html.Hidden("BarChart", true)
+                @Html.Hidden("PieChart", false)
+                @Html.Hidden("ColumnChart", false)  
+                @Html.Hidden("isDefaultRequest", true)           
+                @Html.DropDownList("DepartmentList", Model.DepartmentList, new { @class = "Myform-control" })
+                <input type="submit" class="btn  btn-primary btn-sm " value="Show department report" />            
+            </div>
         }
             
 </div>

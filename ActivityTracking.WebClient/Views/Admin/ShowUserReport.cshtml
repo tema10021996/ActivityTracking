@@ -56,13 +56,57 @@
         <div class="text-center">
             @Html.Hidden("userName", Model.UserInfo.userInformarion.Login)
 
-            @Html.LabelFor(model => model.Start)
+          @{
+                        string startMonth = null;
+                        string startDay = null;
+                        if (Model.Start.Month < 10)
+                        {
+                            startMonth = "0" + Model.Start.Month;
+                        }
+                        else
+                        {
+                            startMonth = Model.Start.Month.ToString();
+                        }
+                        if (Model.Start.Day < 10)
+                        {
+                            startDay = "0" + Model.Start.Day;
+                        }
+                        else
+                        {
+                            startDay = Model.Start.Day.ToString();
+                        }
+                        string startValue = Model.Start.Year + "-" + startMonth + "-" + startDay;
 
-            @Html.EditorFor(model => model.Start)
+                    }
+                    @{
+                        string endMonth = null;
+                        string endDay = null;
+                        if (Model.End.Month < 10)
+                        {
+                            endMonth = "0" + Model.End.Month;
+                        }
+                        else
+                        {
+                            endMonth = Model.End.Month.ToString();
+                        }
+                        if (Model.End.Day < 10)
+                        {
+                            endDay = "0" + Model.End.Day;
+                        }
+                        else
+                        {
+                            endDay = Model.End.Day.ToString();
+                        }
+                        string endValue = Model.Start.Year + "-" + endMonth + "-" + endDay;
 
-            @Html.LabelFor(model => model.End)
+                    }
+                    @Html.LabelFor(model => model.Start)
 
-            @Html.EditorFor(model => model.End)
+                    <input type="date" name="Start" id="Start" class="Myform-control" value="@startValue" onchange="ChangeStyle()">
+
+                    @Html.LabelFor(model => model.End)
+
+                    <input type="date" name="End" id="End" class="Myform-control" value="@endValue"> 
 
             <button type="submit" class="btn btn-primary btn-sm">Apply</button>
         </div>
@@ -70,7 +114,7 @@
 
 }
 <br>
-
+<div id="container"></div>
 <script type="text/javascript">
         google.charts.load("current", { packages: ["timeline"] });
         google.charts.setOnLoadCallback(drawChart);
@@ -134,4 +178,13 @@
 
 </script>
 
-<div id="container"></div>
+<script type="text/javascript">
+function ChangeStyle()
+{
+    var startDate = document.getElementById("Start").value;
+
+    var endDate = new Date(startDate);
+    endDate.setDate(endDate.getDate()+7);
+    document.getElementById("End").valueAsDate = endDate;
+}
+</script>

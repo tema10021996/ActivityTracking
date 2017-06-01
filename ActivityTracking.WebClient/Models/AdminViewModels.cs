@@ -10,6 +10,8 @@ namespace ActivityTracking.WebClient.Models
     public class AdminSettingsViewModel
     {
         public List<Reason> AllReasons { get; set; }
+        public SelectList DayNames { get; set; }
+        public string CurrentDayName { get; set; }
     }
 
 }

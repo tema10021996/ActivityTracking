@@ -44,10 +44,8 @@ namespace ActivityTracking.DesktopClient
             InitializeTimers();
             TopMost = true;
             List<string> managerDepartmentsNames = new List<string>();
-            Task reasonTask = Task.Run(() => CheckDepartmentReasonsChanging());
-            reasonTask.Wait();
-            Task mayAbsentMinutesTask = Task.Run(() => CheckDepartmentMayAbsentMinutes());
-            mayAbsentMinutesTask.Wait();
+            CheckDepartmentReasonsChanging();
+            CheckDepartmentMayAbsentMinutes();            
         }
         #endregion
 
@@ -124,7 +122,7 @@ namespace ActivityTracking.DesktopClient
         #region PostAbsence()
         async void PostAbsence()
         {
-            PostModel postModel = new PostModel { StartAbsence = DateTime.Now, Date = DateTime.Today, UserName = "AlexandrTkachuk" };
+            PostModel postModel = new PostModel { StartAbsence = DateTime.Now, Date = DateTime.Today, UserName = Environment.UserName };
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:14110/");
@@ -139,7 +137,7 @@ namespace ActivityTracking.DesktopClient
         #region PutAbsence()
         async void PutAbsence(string reasonName, string comment)
         {
-            PutModel putModel = new PutModel { EndAbsence = DateTime.Now, UserName = "AlexandrTkachuk", ReasonName = reasonName, Comment = comment };
+            PutModel putModel = new PutModel { EndAbsence = DateTime.Now, UserName = Environment.UserName, ReasonName = reasonName, Comment = comment };
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:14110/");
@@ -204,9 +202,8 @@ namespace ActivityTracking.DesktopClient
                 client.BaseAddress = new Uri("http://localhost:14110/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                string a = "AlexandrTkachuk";
-                HttpResponseMessage response = await client.GetAsync("api/Desktop/GetReasonsNames/" + a);
+                string userName = Environment.UserName;
+                HttpResponseMessage response = await client.GetAsync("api/Desktop/GetReasonsNames/" + userName);
                 if (response.IsSuccessStatusCode)
                 {
                     requestReasonsNames = await response.Content.ReadAsAsync<List<string>>();
@@ -284,8 +281,7 @@ namespace ActivityTracking.DesktopClient
                 client.BaseAddress = new Uri("http://localhost:14110/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-               string userName = "AlexandrTkachuk";
+                string userName = Environment.UserName;
                 HttpResponseMessage response = await client.GetAsync("api/Desktop/GetMayAbsentMinutes/" + userName);
                 if (response.IsSuccessStatusCode)
                 {
