@@ -1,0 +1,675 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://iepe100.isd.dp.ua/IsdData" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://iepe100.isd.dp.ua/IsdData" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://iepe100.isd.dp.ua/IsdData">
+      <s:element name="GetOfficeDataEx">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOfficeDataExResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOfficeDataExResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPhoto">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPhotoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPhotoResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetInOutDataByLogin">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="date" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetInOutDataByLoginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetInOutDataByLoginResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetIsdEmployeeOfficeData">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetIsdEmployeeOfficeDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetIsdEmployeeOfficeDataResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetIsdEmplDataByLoginOrDepartment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="team" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="department" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="toDate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetIsdEmplDataByLoginOrDepartmentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetIsdEmplDataByLoginOrDepartmentResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetThisDayTime">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="date" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetThisDayTimeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetThisDayTimeResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSubordinateList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSubordinateListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSubordinateListResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DataSet" nillable="true">
+        <s:complexType>
+          <s:sequence>
+            <s:element ref="s:schema" />
+            <s:any />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="base64Binary" nillable="true" type="s:base64Binary" />
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetOfficeDataExSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOfficeDataEx" />
+  </wsdl:message>
+  <wsdl:message name="GetOfficeDataExSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOfficeDataExResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPhotoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPhoto" />
+  </wsdl:message>
+  <wsdl:message name="GetPhotoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPhotoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetInOutDataByLoginSoapIn">
+    <wsdl:part name="parameters" element="tns:GetInOutDataByLogin" />
+  </wsdl:message>
+  <wsdl:message name="GetInOutDataByLoginSoapOut">
+    <wsdl:part name="parameters" element="tns:GetInOutDataByLoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetIsdEmployeeOfficeDataSoapIn">
+    <wsdl:part name="parameters" element="tns:GetIsdEmployeeOfficeData" />
+  </wsdl:message>
+  <wsdl:message name="GetIsdEmployeeOfficeDataSoapOut">
+    <wsdl:part name="parameters" element="tns:GetIsdEmployeeOfficeDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetIsdEmplDataByLoginOrDepartmentSoapIn">
+    <wsdl:part name="parameters" element="tns:GetIsdEmplDataByLoginOrDepartment" />
+  </wsdl:message>
+  <wsdl:message name="GetIsdEmplDataByLoginOrDepartmentSoapOut">
+    <wsdl:part name="parameters" element="tns:GetIsdEmplDataByLoginOrDepartmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetThisDayTimeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetThisDayTime" />
+  </wsdl:message>
+  <wsdl:message name="GetThisDayTimeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetThisDayTimeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSubordinateListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSubordinateList" />
+  </wsdl:message>
+  <wsdl:message name="GetSubordinateListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSubordinateListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOfficeDataExHttpGetIn">
+    <wsdl:part name="login" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetOfficeDataExHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="GetPhotoHttpGetIn">
+    <wsdl:part name="login" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPhotoHttpGetOut">
+    <wsdl:part name="Body" element="tns:base64Binary" />
+  </wsdl:message>
+  <wsdl:message name="GetInOutDataByLoginHttpGetIn">
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="date" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetInOutDataByLoginHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="GetIsdEmployeeOfficeDataHttpGetIn" />
+  <wsdl:message name="GetIsdEmployeeOfficeDataHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="GetIsdEmplDataByLoginOrDepartmentHttpGetIn">
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="team" type="s:string" />
+    <wsdl:part name="department" type="s:string" />
+    <wsdl:part name="fromDate" type="s:string" />
+    <wsdl:part name="toDate" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetIsdEmplDataByLoginOrDepartmentHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="GetThisDayTimeHttpGetIn">
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="date" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetThisDayTimeHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetSubordinateListHttpGetIn">
+    <wsdl:part name="login" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetSubordinateListHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="GetOfficeDataExHttpPostIn">
+    <wsdl:part name="login" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetOfficeDataExHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="GetPhotoHttpPostIn">
+    <wsdl:part name="login" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPhotoHttpPostOut">
+    <wsdl:part name="Body" element="tns:base64Binary" />
+  </wsdl:message>
+  <wsdl:message name="GetInOutDataByLoginHttpPostIn">
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="date" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetInOutDataByLoginHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="GetIsdEmployeeOfficeDataHttpPostIn" />
+  <wsdl:message name="GetIsdEmployeeOfficeDataHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="GetIsdEmplDataByLoginOrDepartmentHttpPostIn">
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="team" type="s:string" />
+    <wsdl:part name="department" type="s:string" />
+    <wsdl:part name="fromDate" type="s:string" />
+    <wsdl:part name="toDate" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetIsdEmplDataByLoginOrDepartmentHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="GetThisDayTimeHttpPostIn">
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="date" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetThisDayTimeHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetSubordinateListHttpPostIn">
+    <wsdl:part name="login" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetSubordinateListHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:portType name="IsdDataWebServiceSoap">
+    <wsdl:operation name="GetOfficeDataEx">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets extended office data for ISD employees. If &lt;code&gt;login&lt;/code&gt; is &lt;code&gt;null&lt;/code&gt; or list of employees with corresponding &lt;code&gt;login&lt;/code&gt; matched LIKE criteria</wsdl:documentation>
+      <wsdl:input message="tns:GetOfficeDataExSoapIn" />
+      <wsdl:output message="tns:GetOfficeDataExSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPhoto">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets photo by &lt;code&gt;login&lt;/code&gt;. Returns img/jpeg bytes</wsdl:documentation>
+      <wsdl:input message="tns:GetPhotoSoapIn" />
+      <wsdl:output message="tns:GetPhotoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInOutDataByLogin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets In/Out data by &lt;code&gt;login&lt;/code&gt; and &lt;code&gt;date&lt;/code&gt;. Returns DataSet</wsdl:documentation>
+      <wsdl:input message="tns:GetInOutDataByLoginSoapIn" />
+      <wsdl:output message="tns:GetInOutDataByLoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIsdEmployeeOfficeData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets the office data for ISD employees. Returns DataSet</wsdl:documentation>
+      <wsdl:input message="tns:GetIsdEmployeeOfficeDataSoapIn" />
+      <wsdl:output message="tns:GetIsdEmployeeOfficeDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIsdEmplDataByLoginOrDepartment">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets the office data for ISD employees. If &lt;code&gt;login&lt;/code&gt; is &lt;code&gt; not null&lt;/code&gt; and &lt;code&gt;team&lt;/code&gt; is &lt;code&gt;null&lt;/code&gt; and &lt;code&gt;department&lt;/code&gt; is &lt;code&gt;null&lt;/code&gt; or vice versa but not all is &lt;code&gt;null&lt;/code&gt; and &lt;code&gt;fromDate&lt;/code&gt; and &lt;code&gt;toDate&lt;/code&gt; is not null then list of employees with corresponding matched LIKE criterias. Returns DataSet</wsdl:documentation>
+      <wsdl:input message="tns:GetIsdEmplDataByLoginOrDepartmentSoapIn" />
+      <wsdl:output message="tns:GetIsdEmplDataByLoginOrDepartmentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetThisDayTime">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get work time from day by &lt;code&gt;login&lt;/code&gt; and &lt;code&gt;date&lt;/code&gt;. Returns string</wsdl:documentation>
+      <wsdl:input message="tns:GetThisDayTimeSoapIn" />
+      <wsdl:output message="tns:GetThisDayTimeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSubordinateList">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets subordinate list of emploees data by &lt;code&gt;login&lt;/code&gt;. Returns DataSet</wsdl:documentation>
+      <wsdl:input message="tns:GetSubordinateListSoapIn" />
+      <wsdl:output message="tns:GetSubordinateListSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IsdDataWebServiceHttpGet">
+    <wsdl:operation name="GetOfficeDataEx">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets extended office data for ISD employees. If &lt;code&gt;login&lt;/code&gt; is &lt;code&gt;null&lt;/code&gt; or list of employees with corresponding &lt;code&gt;login&lt;/code&gt; matched LIKE criteria</wsdl:documentation>
+      <wsdl:input message="tns:GetOfficeDataExHttpGetIn" />
+      <wsdl:output message="tns:GetOfficeDataExHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPhoto">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets photo by &lt;code&gt;login&lt;/code&gt;. Returns img/jpeg bytes</wsdl:documentation>
+      <wsdl:input message="tns:GetPhotoHttpGetIn" />
+      <wsdl:output message="tns:GetPhotoHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInOutDataByLogin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets In/Out data by &lt;code&gt;login&lt;/code&gt; and &lt;code&gt;date&lt;/code&gt;. Returns DataSet</wsdl:documentation>
+      <wsdl:input message="tns:GetInOutDataByLoginHttpGetIn" />
+      <wsdl:output message="tns:GetInOutDataByLoginHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIsdEmployeeOfficeData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets the office data for ISD employees. Returns DataSet</wsdl:documentation>
+      <wsdl:input message="tns:GetIsdEmployeeOfficeDataHttpGetIn" />
+      <wsdl:output message="tns:GetIsdEmployeeOfficeDataHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIsdEmplDataByLoginOrDepartment">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets the office data for ISD employees. If &lt;code&gt;login&lt;/code&gt; is &lt;code&gt; not null&lt;/code&gt; and &lt;code&gt;team&lt;/code&gt; is &lt;code&gt;null&lt;/code&gt; and &lt;code&gt;department&lt;/code&gt; is &lt;code&gt;null&lt;/code&gt; or vice versa but not all is &lt;code&gt;null&lt;/code&gt; and &lt;code&gt;fromDate&lt;/code&gt; and &lt;code&gt;toDate&lt;/code&gt; is not null then list of employees with corresponding matched LIKE criterias. Returns DataSet</wsdl:documentation>
+      <wsdl:input message="tns:GetIsdEmplDataByLoginOrDepartmentHttpGetIn" />
+      <wsdl:output message="tns:GetIsdEmplDataByLoginOrDepartmentHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetThisDayTime">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get work time from day by &lt;code&gt;login&lt;/code&gt; and &lt;code&gt;date&lt;/code&gt;. Returns string</wsdl:documentation>
+      <wsdl:input message="tns:GetThisDayTimeHttpGetIn" />
+      <wsdl:output message="tns:GetThisDayTimeHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSubordinateList">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets subordinate list of emploees data by &lt;code&gt;login&lt;/code&gt;. Returns DataSet</wsdl:documentation>
+      <wsdl:input message="tns:GetSubordinateListHttpGetIn" />
+      <wsdl:output message="tns:GetSubordinateListHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IsdDataWebServiceHttpPost">
+    <wsdl:operation name="GetOfficeDataEx">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets extended office data for ISD employees. If &lt;code&gt;login&lt;/code&gt; is &lt;code&gt;null&lt;/code&gt; or list of employees with corresponding &lt;code&gt;login&lt;/code&gt; matched LIKE criteria</wsdl:documentation>
+      <wsdl:input message="tns:GetOfficeDataExHttpPostIn" />
+      <wsdl:output message="tns:GetOfficeDataExHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPhoto">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets photo by &lt;code&gt;login&lt;/code&gt;. Returns img/jpeg bytes</wsdl:documentation>
+      <wsdl:input message="tns:GetPhotoHttpPostIn" />
+      <wsdl:output message="tns:GetPhotoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInOutDataByLogin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets In/Out data by &lt;code&gt;login&lt;/code&gt; and &lt;code&gt;date&lt;/code&gt;. Returns DataSet</wsdl:documentation>
+      <wsdl:input message="tns:GetInOutDataByLoginHttpPostIn" />
+      <wsdl:output message="tns:GetInOutDataByLoginHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIsdEmployeeOfficeData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets the office data for ISD employees. Returns DataSet</wsdl:documentation>
+      <wsdl:input message="tns:GetIsdEmployeeOfficeDataHttpPostIn" />
+      <wsdl:output message="tns:GetIsdEmployeeOfficeDataHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIsdEmplDataByLoginOrDepartment">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets the office data for ISD employees. If &lt;code&gt;login&lt;/code&gt; is &lt;code&gt; not null&lt;/code&gt; and &lt;code&gt;team&lt;/code&gt; is &lt;code&gt;null&lt;/code&gt; and &lt;code&gt;department&lt;/code&gt; is &lt;code&gt;null&lt;/code&gt; or vice versa but not all is &lt;code&gt;null&lt;/code&gt; and &lt;code&gt;fromDate&lt;/code&gt; and &lt;code&gt;toDate&lt;/code&gt; is not null then list of employees with corresponding matched LIKE criterias. Returns DataSet</wsdl:documentation>
+      <wsdl:input message="tns:GetIsdEmplDataByLoginOrDepartmentHttpPostIn" />
+      <wsdl:output message="tns:GetIsdEmplDataByLoginOrDepartmentHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetThisDayTime">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get work time from day by &lt;code&gt;login&lt;/code&gt; and &lt;code&gt;date&lt;/code&gt;. Returns string</wsdl:documentation>
+      <wsdl:input message="tns:GetThisDayTimeHttpPostIn" />
+      <wsdl:output message="tns:GetThisDayTimeHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSubordinateList">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets subordinate list of emploees data by &lt;code&gt;login&lt;/code&gt;. Returns DataSet</wsdl:documentation>
+      <wsdl:input message="tns:GetSubordinateListHttpPostIn" />
+      <wsdl:output message="tns:GetSubordinateListHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IsdDataWebServiceSoap" type="tns:IsdDataWebServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetOfficeDataEx">
+      <soap:operation soapAction="http://iepe100.isd.dp.ua/IsdData/GetOfficeDataEx" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPhoto">
+      <soap:operation soapAction="http://iepe100.isd.dp.ua/IsdData/GetPhoto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInOutDataByLogin">
+      <soap:operation soapAction="http://iepe100.isd.dp.ua/IsdData/GetInOutDataByLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIsdEmployeeOfficeData">
+      <soap:operation soapAction="http://iepe100.isd.dp.ua/IsdData/GetIsdEmployeeOfficeData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIsdEmplDataByLoginOrDepartment">
+      <soap:operation soapAction="http://iepe100.isd.dp.ua/IsdData/GetIsdEmplDataByLoginOrDepartment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetThisDayTime">
+      <soap:operation soapAction="http://iepe100.isd.dp.ua/IsdData/GetThisDayTime" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSubordinateList">
+      <soap:operation soapAction="http://iepe100.isd.dp.ua/IsdData/GetSubordinateList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="IsdDataWebServiceSoap12" type="tns:IsdDataWebServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetOfficeDataEx">
+      <soap12:operation soapAction="http://iepe100.isd.dp.ua/IsdData/GetOfficeDataEx" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPhoto">
+      <soap12:operation soapAction="http://iepe100.isd.dp.ua/IsdData/GetPhoto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInOutDataByLogin">
+      <soap12:operation soapAction="http://iepe100.isd.dp.ua/IsdData/GetInOutDataByLogin" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIsdEmployeeOfficeData">
+      <soap12:operation soapAction="http://iepe100.isd.dp.ua/IsdData/GetIsdEmployeeOfficeData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIsdEmplDataByLoginOrDepartment">
+      <soap12:operation soapAction="http://iepe100.isd.dp.ua/IsdData/GetIsdEmplDataByLoginOrDepartment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetThisDayTime">
+      <soap12:operation soapAction="http://iepe100.isd.dp.ua/IsdData/GetThisDayTime" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSubordinateList">
+      <soap12:operation soapAction="http://iepe100.isd.dp.ua/IsdData/GetSubordinateList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="IsdDataWebServiceHttpGet" type="tns:IsdDataWebServiceHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="GetOfficeDataEx">
+      <http:operation location="/GetOfficeDataEx" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPhoto">
+      <http:operation location="/GetPhoto" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInOutDataByLogin">
+      <http:operation location="/GetInOutDataByLogin" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIsdEmployeeOfficeData">
+      <http:operation location="/GetIsdEmployeeOfficeData" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIsdEmplDataByLoginOrDepartment">
+      <http:operation location="/GetIsdEmplDataByLoginOrDepartment" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetThisDayTime">
+      <http:operation location="/GetThisDayTime" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSubordinateList">
+      <http:operation location="/GetSubordinateList" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="IsdDataWebServiceHttpPost" type="tns:IsdDataWebServiceHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="GetOfficeDataEx">
+      <http:operation location="/GetOfficeDataEx" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPhoto">
+      <http:operation location="/GetPhoto" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInOutDataByLogin">
+      <http:operation location="/GetInOutDataByLogin" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIsdEmployeeOfficeData">
+      <http:operation location="/GetIsdEmployeeOfficeData" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIsdEmplDataByLoginOrDepartment">
+      <http:operation location="/GetIsdEmplDataByLoginOrDepartment" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetThisDayTime">
+      <http:operation location="/GetThisDayTime" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSubordinateList">
+      <http:operation location="/GetSubordinateList" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IsdDataWebService">
+    <wsdl:port name="IsdDataWebServiceSoap" binding="tns:IsdDataWebServiceSoap">
+      <soap:address location="http://iepe100/isddata/IsdDataWebService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="IsdDataWebServiceSoap12" binding="tns:IsdDataWebServiceSoap12">
+      <soap12:address location="http://iepe100/isddata/IsdDataWebService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="IsdDataWebServiceHttpGet" binding="tns:IsdDataWebServiceHttpGet">
+      <http:address location="http://iepe100/isddata/IsdDataWebService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="IsdDataWebServiceHttpPost" binding="tns:IsdDataWebServiceHttpPost">
+      <http:address location="http://iepe100/isddata/IsdDataWebService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
