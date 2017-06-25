@@ -1,4 +1,4 @@
-﻿@model ActivityTracking.WebClient.Models.ChooseDepartmentViewModel
+﻿@model ActivityTracking.WebClient.Models.ChooseDepartmentOrTeamViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_ManagerLayout.cshtml";
@@ -18,21 +18,46 @@
                 </div>
             }
         </div>
-
-        <h4 class="text-center"><b>Choose department</b></h4>
+        <br>
     </div>
-    
-       @using (Html.BeginForm("ShowDepartmentReportWithValidation", "Manager"))
-       {
-            <div class="panel-body text-center">   
-                @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
-                @Html.Hidden("BarChart", true)
-                @Html.Hidden("PieChart", false)
-                @Html.Hidden("ColumnChart", false)  
-                @Html.Hidden("isDefaultRequest", true)           
-                @Html.DropDownList("DepartmentList", Model.DepartmentList, new { @class = "Myform-control" })
-                <input type="submit" class="btn  btn-primary btn-sm " value="Show department report" />            
-            </div>
-        }
+    <div style="height:200px">
+        <ul class="nav nav-tabs nav-justified">
+            <li class="active"><a data-toggle="tab" href="#department" style="color: #555555;"><h4>Choose deparment</h4></a></li>
+            <li><a data-toggle="tab" href="#team" style="color: #555555;"><h4>Choose team</h4></a></li>
+        </ul>
+
+        <div class="tab-content" style="padding: 15px">
+            <div id="department" class="tab-pane fade in active" style="width:81.2%">
             
-</div>
+                @using (Html.BeginForm("ShowDepartmentReportWithValidation", "Manager"))
+                {
+                    <div class="text-center">
+                        <br>
+                        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                        @Html.Hidden("BarChart", true)
+                        @Html.Hidden("PieChart", false)
+                        @Html.Hidden("ColumnChart", false)
+                        @Html.Hidden("isDefaultRequest", true)
+                        @Html.DropDownList("DepartmentList", Model.DepartmentList, new { @class = "Myform-control" })
+                        <input type="submit" class="btn  btn-primary btn-sm " value="Show department report" />
+                    </div>
+                }
+            </div>
+            <div id="team" class="tab-pane fade" style="width:81.2%">
+                @using (Html.BeginForm("ShowTeamReportWithValidation", "Manager"))
+                {
+                    <div class="text-center">
+                        <br>
+                        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                        @Html.Hidden("BarChart", true)
+                        @Html.Hidden("PieChart", false)
+                        @Html.Hidden("ColumnChart", false)
+                        @Html.Hidden("isDefaultRequest", true)
+                        @Html.DropDownList("teamName", Model.TeamName, new { @class = "Myform-control" })
+                        <input type="submit" class="btn  btn-primary btn-sm " value="Show team report" />
+                    </div>
+                }
+            </div>           
+        </div>
+    </div> 
+    </div>

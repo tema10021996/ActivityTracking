@@ -1,4 +1,4 @@
-﻿@model ActivityTracking.WebClient.Models.ManagerShowDepartmentReportViewModel
+﻿@model ActivityTracking.WebClient.Models.ManagerShowDepartmentOrTeamReportViewModel
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 @{
     ViewBag.Title = "Index";
@@ -27,12 +27,13 @@
             <div class="row">
                 <div class="col-md-10 col-lg-10">
                     <div class="text-center">
-                        <p><h4><b>@Model.ChosenDepartmentName</b></h4></p>
-                        @Html.Hidden("DepartmentList", Model.ChosenDepartmentName)
+                        <p><h4><b>@Model.ChosenDepartmentOrTeamName</b></h4></p>
+                        @Html.Hidden("DepartmentList", Model.ChosenDepartmentOrTeamName)
 
                         @Html.Hidden("PieChart", Model.PieChart)
                         @Html.Hidden("BarChart", Model.BarChart)
                         @Html.Hidden("ColumnChart", Model.ColumnChart)
+
                         @{
                             string startMonth = null;
                             string startDay = null;
@@ -83,16 +84,14 @@
 
                         @Html.LabelFor(model => model.End)
 
-                        <input type="date" name="End" id="End" class="Myform-control" value="@endValue"> 
+                        <input type="date" name="End" id="End" class="Myform-control" value="@endValue">
 
                         <button type="submit" class="btn btn-primary btn-sm">Apply</button>
                     </div>
                 </div>
             </div>
-
-        }
+                            }
     </div>
-
 
     <div class="row">
         @{
@@ -141,19 +140,19 @@
         }
 
         <div class="text-right col-md-2 col-lg-2">
-            @using (Html.BeginForm(new { Start = Model.Start, End = Model.End, BarChart = true, PieChart = false, ColumnChart = false, DepartmentList = Model.ChosenDepartmentName }))
+            @using (Html.BeginForm(new { Start = Model.Start, End = Model.End, BarChart = true, PieChart = false, ColumnChart = false, DepartmentList = Model.ChosenDepartmentOrTeamName }))
             {
                 <button type="submit" style="padding:0px; margin:3px; border:none">
                     <image src="~/Content/BarChart.png">
                 </button>
             }
-            @using (Html.BeginForm(new { Start = Model.Start, End = Model.End, BarChart = false, PieChart = true, ColumnChart = false, DepartmentList = Model.ChosenDepartmentName }))
+            @using (Html.BeginForm(new { Start = Model.Start, End = Model.End, BarChart = false, PieChart = true, ColumnChart = false, DepartmentList = Model.ChosenDepartmentOrTeamName }))
             {
                 <button type="submit" style="padding:0px; margin:3px; border:none">
                     <image src="~/Content/PieChart.png">
                 </button>
             }
-            @using (Html.BeginForm(new { Start = Model.Start, End = Model.End, BarChart = false, PieChart = false, ColumnChart = true, DepartmentList = Model.ChosenDepartmentName }))
+            @using (Html.BeginForm(new { Start = Model.Start, End = Model.End, BarChart = false, PieChart = false, ColumnChart = true, DepartmentList = Model.ChosenDepartmentOrTeamName }))
             {
                 <button type="submit" style="padding:0px; margin:3px; border:none">
                     <image src="~/Content/ColumnChart.png">
@@ -162,7 +161,6 @@
         </div>
 
     </div>
-
 </div>
 
 <script>
@@ -194,7 +192,7 @@
                 <text>
         arr.push(0);
         arr.push('@reasonInfo.Color');
-                arr.push(createCustomHTMLContent('@Model.ChosenDepartmentName', '@reasonInfo.ReasonName', '0', '0', '0', '0'));
+                arr.push(createCustomHTMLContent('@Model.ChosenDepartmentOrTeamName', '@reasonInfo.ReasonName', '0', '0', '0', '0'));
                 </text>
             }
             else
@@ -205,7 +203,7 @@
                 var a = Number(c);
                 arr.push(a);
                 arr.push('@reasonInfo.Color');
-                arr.push(createCustomHTMLContent('@Model.ChosenDepartmentName', '@reasonInfo.ReasonName', '@reasonInfo.DurationInHours', '@reasonInfo.Hours', '@reasonInfo.Minutes', '@reasonInfo.Seconds'));
+                arr.push(createCustomHTMLContent('@Model.ChosenDepartmentOrTeamName', '@reasonInfo.ReasonName', '@reasonInfo.DurationInHours', '@reasonInfo.Hours', '@reasonInfo.Minutes', '@reasonInfo.Seconds'));
                 </text>
             }
             <text>
@@ -254,7 +252,7 @@
                 {
                     <text>
         arr.push(0);
-        arr.push(createCustomHTMLContent('@Model.ChosenDepartmentName', '@reasonInfo.ReasonName', '0', '0', '0', '0'));
+        arr.push(createCustomHTMLContent('@Model.ChosenDepartmentOrTeamName', '@reasonInfo.ReasonName', '0', '0', '0', '0'));
         </text>
                 }
                 else
@@ -264,7 +262,7 @@
         var c = d.replace(',', '.');
         var a = Number(c);
         arr.push(a);
-        arr.push(createCustomHTMLContent('@Model.ChosenDepartmentName', '@reasonInfo.ReasonName', '@reasonInfo.DurationInHours', '@reasonInfo.Hours', '@reasonInfo.Minutes', '@reasonInfo.Seconds'));
+        arr.push(createCustomHTMLContent('@Model.ChosenDepartmentOrTeamName', '@reasonInfo.ReasonName', '@reasonInfo.DurationInHours', '@reasonInfo.Hours', '@reasonInfo.Minutes', '@reasonInfo.Seconds'));
         </text>
             }
             <text>
@@ -274,8 +272,8 @@
         var options = {
             colors: colorArray,
             tooltip: { isHtml: true },
-            chartArea: { left: 50, top: 20,},
-            legend: {position: 'left'}
+            chartArea: { left: 50, top: 20, },
+            legend: { position: 'left' }
         };
 
 
@@ -288,71 +286,70 @@
 
 
 <script type="text/javascript">
-        google.charts.load("current", { packages: ["corechart"] });
-        google.charts.setOnLoadCallback(drawChart);
-        function drawChart() {
-            var dataTable = new google.visualization.DataTable();
+    google.charts.load("current", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var dataTable = new google.visualization.DataTable();
 
-            dataTable.addColumn({ type: 'string', id: 'DepartmentName' });
+        dataTable.addColumn({ type: 'string', id: 'DepartmentName' });
 
-            @foreach(var reasonName in Model.ReasonsNames)
+        @foreach(var reasonName in Model.ReasonsNames)
         {
             <text>
-            dataTable.addColumn({ type: 'number', label: '@reasonName' });
-            dataTable.addColumn({ type: 'string', role: 'tooltip', p: { 'html': true } });
-            </text>
+        dataTable.addColumn({ type: 'number', label: '@reasonName' });
+        dataTable.addColumn({ type: 'string', role: 'tooltip', p: { 'html': true } });
+        </text>
         }
 
 
-            var arr = [];
-            arr.push('');
+        var arr = [];
+        arr.push('');
 
-            @foreach (var reasonInfo in Model.ReasonInfos)
+        @foreach (var reasonInfo in Model.ReasonInfos)
             {
                 if (reasonInfo.DurationInHours == 0.0)
                 {
                     <text>
-            arr.push(0);
-            arr.push(createCustomHTMLContent('@Model.ChosenDepartmentName', '@reasonInfo.ReasonName', '0', '0', '0', '0'));
-            </text>
+        arr.push(0);
+        arr.push(createCustomHTMLContent('@Model.ChosenDepartmentOrTeamName', '@reasonInfo.ReasonName', '0', '0', '0', '0'));
+        </text>
                 }
                 else
                 {
                 <text>
-            var d = '@reasonInfo.DurationInHours';
-            var c = d.replace(',', '.');
-            var a = Number(c);
-            arr.push(a);
-            arr.push(createCustomHTMLContent('@Model.ChosenDepartmentName', '@reasonInfo.ReasonName', '@reasonInfo.DurationInHours', '@reasonInfo.Hours', '@reasonInfo.Minutes', '@reasonInfo.Seconds'));
-            </text>
+        var d = '@reasonInfo.DurationInHours';
+        var c = d.replace(',', '.');
+        var a = Number(c);
+        arr.push(a);
+        arr.push(createCustomHTMLContent('@Model.ChosenDepartmentOrTeamName', '@reasonInfo.ReasonName', '@reasonInfo.DurationInHours', '@reasonInfo.Hours', '@reasonInfo.Minutes', '@reasonInfo.Seconds'));
+        </text>
                 }
             }
 
-            dataTable.addRow(arr);
+        dataTable.addRow(arr);
 
-            var options = {
-                isStacked: 'percent',
-                legend:  {position: 'top', textStyle: {fontSize: 16} },
-                hAxis: {
-                    minValue: 0,
-                    ticks: [0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1]
-                },
-                colors: colorArray,
-                tooltip: { isHtml: true },
-                @*height: @Model.WorkersInfos.Count*50,*@
-                chartArea: { top: 50, left: 100, width:900 },
-            };
+        var options = {
+            isStacked: 'percent',
+            legend: { position: 'top', textStyle: { fontSize: 16 } },
+            hAxis: {
+                minValue: 0,
+                ticks: [0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1]
+            },
+            colors: colorArray,
+            tooltip: { isHtml: true },
+            @*height: @Model.WorkersInfos.Count*50,*@
+            chartArea: { top: 50, left: 100, width: 900 },
+        };
 
-            var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
-            chart.draw(dataTable, options);
-        }
-        function createCustomHTMLContent(departmentName, reasonName, durationInHours, hours, minutes, seconds) {
-            return '<div style="padding:20px; width:375px;">' + '<b>' + departmentName + '</b>' + '<hr>' + '<b>' + 'Reason: ' + '</b>' + reasonName + '<br>' +
-               '<b>' + 'Duration in hours: ' + '</b>' + durationInHours + 'h' + '<br>' +
-               '<b>' + 'Duration: ' + '</b>' + hours + 'hours' + ', ' + minutes + 'minutes' + ', ' + seconds + 'seconds' + '</div>';
-        }
+        var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
+        chart.draw(dataTable, options);
+    }
+    function createCustomHTMLContent(departmentName, reasonName, durationInHours, hours, minutes, seconds) {
+        return '<div style="padding:20px; width:375px;">' + '<b>' + departmentName + '</b>' + '<hr>' + '<b>' + 'Reason: ' + '</b>' + reasonName + '<br>' +
+           '<b>' + 'Duration in hours: ' + '</b>' + durationInHours + 'h' + '<br>' +
+           '<b>' + 'Duration: ' + '</b>' + hours + 'hours' + ', ' + minutes + 'minutes' + ', ' + seconds + 'seconds' + '</div>';
+    }
 </script>
-
 <script type="text/javascript">
 function ChangeStyle()
 {
@@ -363,3 +360,6 @@ function ChangeStyle()
     document.getElementById("End").valueAsDate = endDate;
 }
 </script>
+
+
+

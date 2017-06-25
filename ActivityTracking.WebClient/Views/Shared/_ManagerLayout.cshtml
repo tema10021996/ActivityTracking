@@ -23,8 +23,8 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("My departments", "Index", "Manager")</li>
-                    <li>@Html.ActionLink("Choose department", "ChooseDepartment", "Manager")</li>                   
+                    <li>@Html.ActionLink("My departments and teams", "Index", "Manager")</li>
+                    <li>@Html.ActionLink("Choose department or team", "ChooseDepartment", "Manager")</li>                   
                     @if (ActivityTracking.GetUserInfo.UserInfo.GetAllDivisionManagers().Contains(User.Identity.Name))
                     {
                         <li>@Html.ActionLink("Settings", "Settings", "Manager")</li>

@@ -20,12 +20,16 @@ namespace ActivityTracking.WebClient.Controllers
         {
             get { return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
         }
+
         #region Index
         public ActionResult Index()
         {
+            ManagerIndexViewModel viewModel = new ManagerIndexViewModel { DepartmentNames = new List<string>(), TeamNames = new List<string>() };
             List<string> managerDepartmentNames = GetUserInfo.UserInfo.GetManagerDepartments(HttpContext.User.Identity.Name);
-
-            return View(managerDepartmentNames);
+            List<string> managerTeamstNames = GetUserInfo.UserInfo.GetManagerTeams(HttpContext.User.Identity.Name);
+            viewModel.DepartmentNames = managerDepartmentNames;
+            viewModel.TeamNames = managerTeamstNames;
+            return View(viewModel);
         }
         #endregion
 
@@ -33,15 +37,20 @@ namespace ActivityTracking.WebClient.Controllers
         public ActionResult ShowDepartmentUsers(string departmentName)
         {
             ManagerShowUsersViewModel managerShowUsersViewModel = new ManagerShowUsersViewModel();
+            var userInfoModels = GetUserInfo.UserInfo.GetTeamOrDepartmentOrUserIformation(null, departmentName, null, DateTime.Today, DateTime.Today);
+            managerShowUsersViewModel.UserInfoModels = userInfoModels;
+            managerShowUsersViewModel.DepartmentOrTeamName = departmentName;
+            return View(managerShowUsersViewModel);
+        }
+        #endregion
 
-            var userInfoModels = GetUserInfo.UserInfo.GetUserOrDepartmentIformation(departmentName, null, DateTime.Today, DateTime.Today);
-            List<string> userNames = new List<string>();
-            foreach (var userInfoModel in userInfoModels)
-            {
-                userNames.Add(userInfoModel.userInformarion.Login);
-            }
-            managerShowUsersViewModel.UsersNames = userNames;
-            managerShowUsersViewModel.DepartmentName = departmentName;
+        #region ShowTeamUsers
+        public ActionResult ShowTeamUsers(string teamName)
+        {
+            ManagerShowUsersViewModel managerShowUsersViewModel = new ManagerShowUsersViewModel();
+            var userInfoModels = GetUserInfo.UserInfo.GetTeamOrDepartmentOrUserIformation(teamName, null, null, DateTime.Today, DateTime.Today);
+            managerShowUsersViewModel.UserInfoModels = userInfoModels;
+            managerShowUsersViewModel.DepartmentOrTeamName = teamName;
             return View(managerShowUsersViewModel);
         }
         #endregion
@@ -52,7 +61,7 @@ namespace ActivityTracking.WebClient.Controllers
             var ManagerDepartments = UserInfo.GetManagerDepartments(HttpContext.User.Identity.Name);
             foreach (var department in ManagerDepartments)
             {
-                var userInfos = UserInfo.GetUserOrDepartmentIformation(department, null, DateTime.Today, DateTime.Today);
+                var userInfos = UserInfo.GetTeamOrDepartmentOrUserIformation(null, department, null, DateTime.Today, DateTime.Today);
                 foreach (var user in userInfos)
                 {
                     if (user.userInformarion.Login == userName)
@@ -136,7 +145,7 @@ namespace ActivityTracking.WebClient.Controllers
             Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>(context);
             var user = userRepository.GetList().First(u => u.UserName == userName);
 
-            UserInfoModel info = GetUserInfo.UserInfo.GetUserOrDepartmentIformation(null, user.UserName, Start, End).First();
+            UserInfoModel info = GetUserInfo.UserInfo.GetTeamOrDepartmentOrUserIformation(null, null, user.UserName, Start, End).First();
 
 
             Repository<Absence> absenceRepository = new Repository<Absence>(context);
@@ -442,6 +451,66 @@ namespace ActivityTracking.WebClient.Controllers
         }
         #endregion
 
+        #region ShowTeamReportWithValidation
+        [HttpPost]
+        public ActionResult ShowTeamReportWithValidation(string returnUrl, string teamName, DateTime? Start, DateTime? End, bool BarChart, bool PieChart, bool ColumnChart, bool isDefaultRequest = false)
+        {
+            if (isDefaultRequest == true)
+            {
+                Repository<WeekBeginningDay> weekBeginingDyRepository = new Repository<WeekBeginningDay>();
+                WeekBeginningDay weekBeginningDay = weekBeginingDyRepository.GetItem(1);
+                for (DateTime i = DateTime.Today; i >= DateTime.Now.AddDays(-7).Date; i = i.AddDays(-1))
+                {
+                    if (i.DayOfWeek.ToString() == weekBeginningDay.DayName)
+                    {
+                        Start = i;
+                        End = DateTime.Today;
+                        return ShowTeamReport(returnUrl, teamName, (DateTime)Start, (DateTime)End, BarChart, PieChart, ColumnChart);
+                    }
+                }
+
+            }
+            if (Start == null || End == null)
+            {
+                TempData["message"] = "You should enter two dates";
+                Repository<WeekBeginningDay> weekBeginingDyRepository = new Repository<WeekBeginningDay>();
+                WeekBeginningDay weekBeginningDay = weekBeginingDyRepository.GetItem(1);
+                for (DateTime i = DateTime.Today; i >= DateTime.Now.AddDays(-7).Date; i = i.AddDays(-1))
+                {
+                    if (i.DayOfWeek.ToString() == weekBeginningDay.DayName)
+                    {
+                        Start = i;
+                        End = DateTime.Today;
+                        return ShowTeamReport(returnUrl, teamName, (DateTime)Start, (DateTime)End, BarChart, PieChart, ColumnChart);
+                    }
+                }
+
+                return ShowTeamReport(returnUrl, teamName, (DateTime)Start, (DateTime)End, BarChart, PieChart, ColumnChart);
+
+            }
+            else if (Start > End)
+            {
+                TempData["message"] = "End date should be bigger then start date";
+                Repository<WeekBeginningDay> weekBeginingDyRepository = new Repository<WeekBeginningDay>();
+                WeekBeginningDay weekBeginningDay = weekBeginingDyRepository.GetItem(1);
+                for (DateTime i = DateTime.Today; i >= DateTime.Now.AddDays(-7).Date; i = i.AddDays(-1))
+                {
+                    if (i.DayOfWeek.ToString() == weekBeginningDay.DayName)
+                    {
+                        Start = i;
+                        End = DateTime.Today;
+                        return ShowTeamReport(returnUrl, teamName, (DateTime)Start, (DateTime)End, BarChart, PieChart, ColumnChart);
+                    }
+                }
+                return ShowTeamReport(returnUrl, teamName, (DateTime)Start, (DateTime)End, BarChart, PieChart, ColumnChart);
+            }
+            else
+            {
+                return ShowTeamReport(returnUrl, teamName, (DateTime)Start, (DateTime)End, BarChart, PieChart, ColumnChart);
+            }
+        }
+        #endregion
+
         #region ShowDepartmentReport
         [HttpPost]
         public ActionResult ShowDepartmentReport(string DepartmentList, DateTime Start, DateTime End, bool BarChart, bool PieChart, bool ColumnChart)
@@ -449,12 +518,12 @@ namespace ActivityTracking.WebClient.Controllers
             ArrayList colors = new ArrayList();
 
 
-            ManagerShowDepartmentReportViewModel managerShowDepartmentReportViewModel = new ManagerShowDepartmentReportViewModel()
-            { Start = Start, End = End, ReasonsNames = new List<string>(), ReasonInfos = GenerateDataForDepartmentReportInPercentage(DepartmentList, Start, End), ChosenDepartmentName = DepartmentList, BarChart = BarChart, PieChart = PieChart, ColumnChart = ColumnChart };
+            ManagerShowDepartmentOrTeamReportViewModel managerShowDepartmentReportViewModel = new ManagerShowDepartmentOrTeamReportViewModel()
+            { Start = Start, End = End, ReasonsNames = new List<string>(), ReasonInfos = GenerateDataForDepartmentReportInPercentage(DepartmentList, Start, End), ChosenDepartmentOrTeamName = DepartmentList, BarChart = BarChart, PieChart = PieChart, ColumnChart = ColumnChart };
 
             Repository<Absence> absenceRepository = new Repository<Absence>();
 
-            List<UserInfoModel> usersInfosFromThisDepartment = UserInfo.GetUserOrDepartmentIformation(DepartmentList, null, DateTime.Today, DateTime.Today);
+            List<UserInfoModel> usersInfosFromThisDepartment = UserInfo.GetTeamOrDepartmentOrUserIformation(null, DepartmentList, null, DateTime.Today, DateTime.Today);
             if (usersInfosFromThisDepartment.Count == 0)
             {
                 TempData["message"] = "This Department doesn't contain users";
@@ -483,6 +552,49 @@ namespace ActivityTracking.WebClient.Controllers
             string dataStr = Newtonsoft.Json.JsonConvert.SerializeObject(colors, Newtonsoft.Json.Formatting.None);
             ViewBag.Colors = new HtmlString(dataStr);
             return View("ShowDepartmentReport", managerShowDepartmentReportViewModel);
+        }
+        #endregion
+
+        #region ShowTeamReport
+        [HttpPost]
+        public ActionResult ShowTeamReport(string returnUrl, string teamName, DateTime Start, DateTime End, bool BarChart, bool PieChart, bool ColumnChart)
+        {
+            ArrayList colors = new ArrayList();
+
+            List<UserInfoModel> usersInTeamInfoModels = GetUserInfo.UserInfo.GetTeamOrDepartmentOrUserIformation(teamName, null, null, Start, End);
+            if (usersInTeamInfoModels.Count == 0)
+            {
+                TempData["message"] = "This Department doesn't contain users";
+                return Redirect(returnUrl);
+            }
+
+            ManagerShowDepartmentOrTeamReportViewModel viewModel = new ManagerShowDepartmentOrTeamReportViewModel()
+            { Start = Start, End = End, ReasonsNames = new List<string>(), ReasonInfos = GenerateDataForTeamReportInPercentage(teamName, Start, End), ChosenDepartmentOrTeamName = teamName, BarChart = BarChart, PieChart = PieChart, ColumnChart = ColumnChart };
+
+            Repository<Absence> absenceRepository = new Repository<Absence>();
+            Repository<DivisionManager> divManagerRepository = new Repository<DivisionManager>();
+            string randomUserFromThisTeamtLogin = usersInTeamInfoModels.First().userInformarion.Login;
+            string divManagerOfThisRandomUserLogin = UserInfo.GetDivisionManagerOfUser(randomUserFromThisTeamtLogin);
+            DivisionManager divisionManager = divManagerRepository.GetList().First(d => d.Login == divManagerOfThisRandomUserLogin);
+            ICollection<Reason> reasons = divisionManager.Reasons;
+            viewModel.ReasonsNames.Add("Work");
+            if (!colors.Contains("#0000FF"))
+            {
+                colors.Add("#0000FF");
+            }
+            foreach (var reason in reasons)
+            {
+                viewModel.ReasonsNames.Add(reason.Name);
+                if (!colors.Contains(reason.Color))
+                {
+                    colors.Add(reason.Color);
+                }
+            }
+
+
+            string dataStr = Newtonsoft.Json.JsonConvert.SerializeObject(colors, Newtonsoft.Json.Formatting.None);
+            ViewBag.Colors = new HtmlString(dataStr);
+            return View("ShowTeamReport", viewModel);
         }
         #endregion
 
@@ -572,7 +684,7 @@ namespace ActivityTracking.WebClient.Controllers
         {
             List<ReasonInfo> ReasonInfos = new List<ReasonInfo>();
             Repository<Absence> absenceRepository = new Repository<Absence>();
-            List<UserInfoModel> usersInfosFromThisDepartment = UserInfo.GetUserOrDepartmentIformation(DepartmentList, null, DateTime.Today, DateTime.Today);
+            List<UserInfoModel> usersInfosFromThisDepartment = UserInfo.GetTeamOrDepartmentOrUserIformation(null, DepartmentList, null, Start, End);
             if (usersInfosFromThisDepartment.Count == 0)
             {
                 TempData["message"] = "This Department doesn't contain users";
@@ -583,9 +695,8 @@ namespace ActivityTracking.WebClient.Controllers
             Repository<DivisionManager> divManagerRepository = new Repository<DivisionManager>();
             DivisionManager divisionManager = divManagerRepository.GetList().First(d => d.Login == divManagerFromThisDepartmentLogin);
             ICollection<Reason> reasons = divisionManager.Reasons;
-            var departmentUserInfoModels = UserInfo.GetUserOrDepartmentIformation(DepartmentList, null, Start, End);
             TimeSpan workDurationForGivenDays = new TimeSpan(0, 0, 0);
-            foreach (var userInfoModel in departmentUserInfoModels.OrderBy(u => u.userInformarion.Login))
+            foreach (var userInfoModel in usersInfosFromThisDepartment.OrderBy(u => u.userInformarion.Login))
             {
 
                 var userAbsences = absenceRepository.GetList().Where(a => a.Date >= Start && a.Date <= End).Where(a => a.User.UserName == userInfoModel.userInformarion.Login);
@@ -629,7 +740,102 @@ namespace ActivityTracking.WebClient.Controllers
             foreach (var reason in reasons)
             {
                 TimeSpan reasonDuration = new TimeSpan(0, 0, 0);
-                foreach (var userInfoModel in departmentUserInfoModels)
+                foreach (var userInfoModel in usersInfosFromThisDepartment)
+                {
+                    var userAbsences = absenceRepository.GetList().Where(a => a.Date >= Start && a.Date <= End).Where(a => a.User.UserName == userInfoModel.userInformarion.Login).Where(a => a.Reason.Name == reason.Name);
+                    foreach (var absence in userAbsences)
+                    {
+                        reasonDuration += ((DateTime)absence.EndAbsence - absence.StartAbsence);
+                    }
+                }
+
+
+                string hours = reasonDuration.TotalHours.ToString();
+                int index = hours.IndexOf(',');
+                int resultHours = reasonDuration.Hours;
+                if (index == -1)
+                {
+                    resultHours = Convert.ToInt32(reasonDuration.TotalHours);
+                }
+                else
+                {
+                    resultHours = Convert.ToInt32(hours.Remove(index));
+                }
+                ReasonInfos.Add(new ReasonInfo
+                {
+                    ReasonName = reason.Name,
+                    DurationInHours = reasonDuration.TotalHours,
+                    Hours = resultHours,
+                    Minutes = reasonDuration.Minutes,
+                    Seconds = reasonDuration.Seconds,
+                    Color = reason.Color
+                });
+
+
+            }
+
+            return ReasonInfos;
+        }
+        #endregion
+
+        #region GenerateDataForTeamReportInPercentage
+        private List<ReasonInfo> GenerateDataForTeamReportInPercentage(string teamName, DateTime Start, DateTime End)
+        {
+            List<ReasonInfo> ReasonInfos = new List<ReasonInfo>();
+            Repository<Absence> absenceRepository = new Repository<Absence>();
+            List<UserInfoModel> usersInfosFromThisTeam = UserInfo.GetTeamOrDepartmentOrUserIformation(teamName, null, null, Start, End);
+            if (usersInfosFromThisTeam.Count == 0)
+            {
+                TempData["message"] = "This Department doesn't contain users";
+                return null;
+            }
+            string randomUserFromThisTeamtLogin = usersInfosFromThisTeam.First().userInformarion.Login;
+            string divManagerOfThisRandomUserLogin = UserInfo.GetDivisionManagerOfUser(randomUserFromThisTeamtLogin);
+            Repository<DivisionManager> divManagerRepository = new Repository<DivisionManager>();
+            DivisionManager divisionManager = divManagerRepository.GetList().First(d => d.Login == divManagerOfThisRandomUserLogin);
+            ICollection<Reason> reasons = divisionManager.Reasons;            
+            TimeSpan workDurationForGivenDays = new TimeSpan(0, 0, 0);
+            foreach (var userInfoModel in usersInfosFromThisTeam.OrderBy(u => u.userInformarion.Login))
+            {
+                var userAbsences = absenceRepository.GetList().Where(a => a.Date >= Start && a.Date <= End).Where(a => a.User.UserName == userInfoModel.userInformarion.Login);
+                if (userInfoModel.WorkTimes != null)
+                {
+                    foreach (var userTimesForOneDay in userInfoModel.WorkTimes.GroupBy(t => t.TimeIn.Date))
+                    {
+
+                        var userTimesForOneDayToArray = userTimesForOneDay.ToArray();
+                        var userAbsencesforOneDayToArray = userAbsences.Where(a => a.Date.Date == userTimesForOneDayToArray[0].TimeIn.Date).ToArray();
+
+
+                        workDurationForGivenDays += CalculateWorkDuartionForOneUserForOneDay(userTimesForOneDayToArray, userAbsencesforOneDayToArray);
+                    }
+                }
+            }
+            string Workhours = workDurationForGivenDays.TotalHours.ToString();
+            int Workindex = Workhours.IndexOf(',');
+            int WorkresultHours = workDurationForGivenDays.Hours;
+            if (Workindex == -1)
+            {
+                WorkresultHours = Convert.ToInt32(workDurationForGivenDays.TotalHours);
+            }
+            else
+            {
+                WorkresultHours = Convert.ToInt32(Workhours.Remove(Workindex));
+            }
+            ReasonInfos.Add(new ReasonInfo
+            {
+                ReasonName = "Work",
+                DurationInHours = workDurationForGivenDays.TotalHours,
+                Hours = WorkresultHours,
+                Minutes = workDurationForGivenDays.Minutes,
+                Seconds = workDurationForGivenDays.Seconds,
+                Color = "#0000FF"
+
+            });
+            foreach (var reason in reasons)
+            {
+                TimeSpan reasonDuration = new TimeSpan(0, 0, 0);
+                foreach (var userInfoModel in usersInfosFromThisTeam)
                 {
                     var userAbsences = absenceRepository.GetList().Where(a => a.Date >= Start && a.Date <= End).Where(a => a.User.UserName == userInfoModel.userInformarion.Login).Where(a => a.Reason.Name == reason.Name);
                     foreach (var absence in userAbsences)
@@ -778,6 +984,65 @@ namespace ActivityTracking.WebClient.Controllers
         }
         #endregion
 
+        #region ShowTeamReportByUsersWithValidation
+
+        public ActionResult ShowTeamReportByUsersWithValidation(string teamName, DateTime? Start, DateTime? End, bool isDefaultRequest = false)
+        {
+            if (isDefaultRequest == true)
+            {
+                Repository<WeekBeginningDay> weekBeginingDyRepository = new Repository<WeekBeginningDay>();
+                WeekBeginningDay weekBeginningDay = weekBeginingDyRepository.GetItem(1);
+                for (DateTime i = DateTime.Today; i >= DateTime.Now.AddDays(-7).Date; i = i.AddDays(-1))
+                {
+                    if (i.DayOfWeek.ToString() == weekBeginningDay.DayName)
+                    {
+                        Start = i;
+                        End = DateTime.Today;
+                        return ShowTeamReportByUsers(teamName, (DateTime)Start, (DateTime)End);
+                    }
+                }
+
+            }
+            if (Start == null || End == null)
+            {
+                TempData["message"] = "You should enter two dates";
+                Repository<WeekBeginningDay> weekBeginingDyRepository = new Repository<WeekBeginningDay>();
+                WeekBeginningDay weekBeginningDay = weekBeginingDyRepository.GetItem(1);
+                for (DateTime i = DateTime.Today; i >= DateTime.Now.AddDays(-7).Date; i = i.AddDays(-1))
+                {
+                    if (i.DayOfWeek.ToString() == weekBeginningDay.DayName)
+                    {
+                        Start = i;
+                        End = DateTime.Today;
+                        return ShowDepartmentReportByUsers(teamName, (DateTime)Start, (DateTime)End);
+                    }
+                }
+                return ShowTeamReportByUsers(teamName, (DateTime)Start, (DateTime)End);
+            }
+            else if (Start > End)
+            {
+                TempData["message"] = "End date should be bigger then start date";
+                Repository<WeekBeginningDay> weekBeginingDyRepository = new Repository<WeekBeginningDay>();
+                WeekBeginningDay weekBeginningDay = weekBeginingDyRepository.GetItem(1);
+                for (DateTime i = DateTime.Today; i >= DateTime.Now.AddDays(-7).Date; i = i.AddDays(-1))
+                {
+                    if (i.DayOfWeek.ToString() == weekBeginningDay.DayName)
+                    {
+                        Start = i;
+                        End = DateTime.Today;
+
+                    }
+                }
+                return ShowTeamReportByUsers(teamName, (DateTime)Start, (DateTime)End);
+            }
+            else
+            {
+                return ShowTeamReportByUsers(teamName, (DateTime)Start, (DateTime)End);
+            }
+
+        }
+        #endregion
+
         #region ShowDepartmentReportByUsers
         [HttpPost]
         public ActionResult ShowDepartmentReportByUsers(string departmentName, DateTime Start, DateTime End)
@@ -786,19 +1051,19 @@ namespace ActivityTracking.WebClient.Controllers
             Repository<ApplicationUser> applicationUserRepository = new Repository<ApplicationUser>();
             ArrayList colors = new ArrayList();
 
-            List<UserInfoModel> usersInDepartmentInfoModels = GetUserInfo.UserInfo.GetUserOrDepartmentIformation(departmentName, null, Start, End);
+            List<UserInfoModel> usersInDepartmentInfoModels = GetUserInfo.UserInfo.GetTeamOrDepartmentOrUserIformation(null, departmentName, null, Start, End);
 
-            ManagerShowDepartmentReportByUsersViewModel viewModel = new ManagerShowDepartmentReportByUsersViewModel
+            ManagerShowDepartmentOrTeamReportByUsersViewModel viewModel = new ManagerShowDepartmentOrTeamReportByUsersViewModel
             {
                 Start = Start,
                 End = End,
                 ReasonsNames = new List<string>(),
                 WorkersInfos = new List<WorkerInfo>() { },
                 ReasonInfosForPercentageReport = GenerateDataForDepartmentReportInPercentage(departmentName, Start, End),
-                ChosenDepartmentName = departmentName
+                ChosenDepartmentOrTeamName = departmentName
             };
 
-            List<UserInfoModel> usersInfosFromThisDepartment = UserInfo.GetUserOrDepartmentIformation(departmentName, null, DateTime.Today, DateTime.Today);
+            List<UserInfoModel> usersInfosFromThisDepartment = UserInfo.GetTeamOrDepartmentOrUserIformation(null, departmentName, null, DateTime.Today, DateTime.Today);
             if (usersInfosFromThisDepartment.Count == 0)
             {
                 TempData["message"] = "This Department doesn't contain users";
@@ -906,6 +1171,135 @@ namespace ActivityTracking.WebClient.Controllers
             ViewBag.Colors = new HtmlString(dataStr);
 
             return View("ShowDepartmentReportByUsers", viewModel);
+        }
+        #endregion
+
+        #region ShowTeamReportByUsers
+        [HttpPost]
+        public ActionResult ShowTeamReportByUsers(string teamName, DateTime Start, DateTime End)
+        {
+            Repository<Absence> absenceRepository = new Repository<Absence>();
+            Repository<ApplicationUser> applicationUserRepository = new Repository<ApplicationUser>();
+            ArrayList colors = new ArrayList();
+            List<UserInfoModel> usersInTeamInfoModels = GetUserInfo.UserInfo.GetTeamOrDepartmentOrUserIformation(teamName, null, null, Start, End);
+            if (usersInTeamInfoModels.Count == 0)
+            {
+                TempData["message"] = "This Department doesn't contain users";
+                return RedirectToAction("Index");
+            }
+
+            ManagerShowDepartmentOrTeamReportByUsersViewModel viewModel = new ManagerShowDepartmentOrTeamReportByUsersViewModel
+            {
+                Start = Start,
+                End = End,
+                ReasonsNames = new List<string>(),
+                WorkersInfos = new List<WorkerInfo>() { },
+                ReasonInfosForPercentageReport = GenerateDataForTeamReportInPercentage(teamName, Start, End),
+                ChosenDepartmentOrTeamName = teamName
+            };
+
+            Repository<DivisionManager> divManagerRepository = new Repository<DivisionManager>();
+            string randomUserFromThisTeamtLogin = usersInTeamInfoModels.First().userInformarion.Login;
+            string divManagerOfThisRandomUserLogin = UserInfo.GetDivisionManagerOfUser(randomUserFromThisTeamtLogin);
+            DivisionManager divisionManager = divManagerRepository.GetList().First(d => d.Login == divManagerOfThisRandomUserLogin);
+            ICollection<Reason> reasons = divisionManager.Reasons;
+            viewModel.ReasonsNames.Add("Work");
+            if (!colors.Contains("#0000FF"))
+            {
+                colors.Add("#0000FF");
+            }
+            foreach (var reason in reasons)
+            {
+                viewModel.ReasonsNames.Add(reason.Name);
+            }
+
+
+
+            foreach (var userInfoModel in usersInTeamInfoModels.OrderBy(u => u.userInformarion.Login))
+            {
+
+                var user = applicationUserRepository.GetList().First(u => u.UserName == userInfoModel.userInformarion.Login);
+
+                WorkerInfo workerInfo = new WorkerInfo { Name = user.UserName, ReasonInfos = new List<ReasonInfo>() };
+                var userAbsences = absenceRepository.GetList().Where(a => a.User.Id == user.Id).Where(ab => ab.Date.Date >= Start.Date && ab.Date <= End.Date);
+
+                TimeSpan workDurationForGivenDays = new TimeSpan(0, 0, 0);
+
+                if (userInfoModel.WorkTimes != null)
+                {
+                    foreach (var userTimesForOneDay in userInfoModel.WorkTimes.GroupBy(t => t.TimeIn.Date))
+                    {
+
+                        var userTimesForOneDayToArray = userTimesForOneDay.ToArray();
+                        var userAbsencesforOneDayToArray = userAbsences.Where(a => a.Date.Date == userTimesForOneDayToArray[0].TimeIn.Date).ToArray();
+
+
+                        workDurationForGivenDays += CalculateWorkDuartionForOneUserForOneDay(userTimesForOneDayToArray, userAbsencesforOneDayToArray);
+                    }
+                }
+                string Workhours = workDurationForGivenDays.TotalHours.ToString();
+                int Workindex = Workhours.IndexOf(',');
+                int WorkresultHours = workDurationForGivenDays.Hours;
+                if (Workindex == -1)
+                {
+                    WorkresultHours = Convert.ToInt32(workDurationForGivenDays.TotalHours);
+                }
+                else
+                {
+                    WorkresultHours = Convert.ToInt32(Workhours.Remove(Workindex));
+                }
+                workerInfo.ReasonInfos.Add(new ReasonInfo
+                {
+                    ReasonName = "Work",
+                    DurationInHours = workDurationForGivenDays.TotalHours,
+                    Hours = WorkresultHours,
+                    Minutes = workDurationForGivenDays.Minutes,
+                    Seconds = workDurationForGivenDays.Seconds
+                });
+
+
+                foreach (var reason in reasons)
+                {
+                    TimeSpan reasonTotalTime = new TimeSpan(0, 0, 0);
+                    var reasonAbsences = userAbsences.Where(a => a.Reason.Id == reason.Id);
+                    foreach (var absence in reasonAbsences)
+                    {
+                        reasonTotalTime += ((DateTime)absence.EndAbsence - absence.StartAbsence);
+                    }
+                    string hours = reasonTotalTime.TotalHours.ToString();
+                    int index = hours.IndexOf(',');
+                    int resultHours = reasonTotalTime.Hours;
+                    if (index == -1)
+                    {
+                        resultHours = Convert.ToInt32(reasonTotalTime.TotalHours);
+                    }
+                    else
+                    {
+                        resultHours = Convert.ToInt32(hours.Remove(index));
+                    }
+                    workerInfo.ReasonInfos.Add(new ReasonInfo
+                    {
+                        ReasonName = reason.Name,
+                        DurationInHours = reasonTotalTime.TotalHours,
+                        Hours = resultHours,
+                        Minutes = reasonTotalTime.Minutes,
+                        Seconds = reasonTotalTime.Seconds
+                    });
+                    if (!colors.Contains(reason.Color))
+                    {
+                        colors.Add(reason.Color);
+                    }
+                }
+
+                viewModel.WorkersInfos.Add(workerInfo);
+
+
+            }
+
+            string dataStr = Newtonsoft.Json.JsonConvert.SerializeObject(colors, Newtonsoft.Json.Formatting.None);
+            ViewBag.Colors = new HtmlString(dataStr);
+
+            return View("ShowTeamReportByUsers", viewModel);
         }
         #endregion
 

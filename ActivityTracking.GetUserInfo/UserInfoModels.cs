@@ -16,6 +16,7 @@ namespace ActivityTracking.GetUserInfo
         public string FirstName { get; set; }
         public string Sector { get; set; }
         public string Department { get; set; }
+        public string Team { get; set; }
         public string Division { get; set; }
         public string Profession { get; set; }
         public string Title { get; set; }

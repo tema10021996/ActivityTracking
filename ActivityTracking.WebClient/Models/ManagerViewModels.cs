@@ -8,17 +8,25 @@ using ActivityTracking.DomainModel;
 
 namespace ActivityTracking.WebClient.Models
 {
-    public class ManagerShowUsersViewModel
+    public class ManagerIndexViewModel
     {
-        public List<string> UsersNames { get; set; }
-        public string DepartmentName { get; set; }
-    }
-    public class ChooseDepartmentViewModel
-    {
-        public SelectList DepartmentList { get; set; }
+        public List<string> DepartmentNames { get; set; }
+        public List<string> TeamNames { get; set; }
     }
 
-    public class ManagerShowDepartmentReportViewModel
+
+    public class ManagerShowUsersViewModel
+    {
+        public List<GetUserInfo.UserInfoModel> UserInfoModels { get; set; }
+        public string DepartmentOrTeamName { get; set; }
+    }
+    public class ChooseDepartmentOrTeamViewModel
+    {
+        public SelectList DepartmentList { get; set; }
+        public SelectList TeamName { get; set; }
+    }
+
+    public class ManagerShowDepartmentOrTeamReportViewModel
     {
         public List<ReasonInfo> ReasonInfos { get; set; }
         public List<String> ReasonsNames { get; set; }
@@ -29,7 +37,7 @@ namespace ActivityTracking.WebClient.Models
         [DataType(DataType.Date)]
         public DateTime End { get; set; }
 
-        public string ChosenDepartmentName { get; set; }
+        public string ChosenDepartmentOrTeamName { get; set; }
 
         public bool BarChart { get; set; }
 
@@ -37,7 +45,7 @@ namespace ActivityTracking.WebClient.Models
         public bool ColumnChart { get; set; }
     }
 
-    public class ManagerShowDepartmentReportByUsersViewModel
+    public class ManagerShowDepartmentOrTeamReportByUsersViewModel
     {
         public List<WorkerInfo> WorkersInfos { get; set; }
         public List<String> ReasonsNames { get; set; }
@@ -49,7 +57,7 @@ namespace ActivityTracking.WebClient.Models
         [DataType(DataType.Date)]        
         public DateTime End { get; set; }
 
-        public string ChosenDepartmentName { get; set; }
+        public string ChosenDepartmentOrTeamName { get; set; }
     }
 
     public class ManagerSettingsViewModel

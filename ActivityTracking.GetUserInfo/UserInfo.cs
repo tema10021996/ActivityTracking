@@ -11,7 +11,7 @@ namespace ActivityTracking.GetUserInfo
     public static class UserInfo
     {
         #region GetUserInformation
-        private static List<UserInformation> GetUserInformation(string login, string departmentName)
+        private static List<UserInformation> GetUserInformation(string teamName, string departmentName, string login)
         {
             List<UserInformation> AllUserInfoModels = new List<UserInformation>() {
                 new UserInformation
@@ -19,6 +19,7 @@ namespace ActivityTracking.GetUserInfo
                         Company = "ISD",
                         CommercialExperiance = "5",
                         Department = "Department1",
+                        Team = "Team1",
                         Division = "Division",
                         FirstName = "Alexandr",
                         HireDate = "1.05.2017",
@@ -38,6 +39,7 @@ namespace ActivityTracking.GetUserInfo
                         Company = "ISD",
                         CommercialExperiance = "5",
                         Department = "Department1",
+                        Team = "Team1",
                         Division = "Division",
                         FirstName = "Nikita",
                         HireDate = "1.05.2017",
@@ -57,6 +59,7 @@ namespace ActivityTracking.GetUserInfo
                         Company = "ISD",
                         CommercialExperiance = "5",
                         Department = "Department1",
+                        Team = "Team1",
                         Division = "Division",
                         FirstName = "Artem",
                         HireDate = "1.05.2017",
@@ -76,6 +79,7 @@ namespace ActivityTracking.GetUserInfo
                         Company = "ISD",
                         CommercialExperiance = "5",
                         Department = "Department1",
+                        Team = "Team2",
                         Division = "Division",
                         FirstName = "Ivan",
                         HireDate = "1.05.2017",
@@ -96,6 +100,7 @@ namespace ActivityTracking.GetUserInfo
                         CommercialExperiance = "5",
                         Department = "Department1",
                         Division = "Division",
+                        Team = "Team2",
                         FirstName = "Max",
                         HireDate = "1.05.2017",
                         ISDExperiance = "0.5 year",
@@ -114,6 +119,7 @@ namespace ActivityTracking.GetUserInfo
                         Company = "ISD",
                         CommercialExperiance = "5",
                         Department = "Department1",
+                        Team = "Team1",
                         Division = "Division",
                         FirstName = "Alex",
                         HireDate = "1.05.2014",
@@ -133,6 +139,7 @@ namespace ActivityTracking.GetUserInfo
                         Company = "ISD",
                         CommercialExperiance = "5",
                         Department = "Department28",
+                        Team = "Team28",
                         Division = "Division",
                         FirstName = "Alexandra",
                         HireDate = "1.05.2017",
@@ -149,12 +156,12 @@ namespace ActivityTracking.GetUserInfo
                 }
             };
             List<UserInformation> result = new List<UserInformation>();
-            if (departmentName == null)
+            if (departmentName == null && teamName == null)
             {
                 result.Add(AllUserInfoModels.First(u => u.Login == login));
                 return result;
             }
-            else
+            else if (teamName == null)
             {
                 foreach (var userInfoModel in AllUserInfoModels)
                 {
@@ -165,26 +172,38 @@ namespace ActivityTracking.GetUserInfo
                 }
                 return result;
             }
+            else
+            {
+                foreach (var userInfoModel in AllUserInfoModels)
+                {
+                    if (userInfoModel.Team == teamName)
+                    {
+                        result.Add(userInfoModel);
+                    }
+                }
+                return result;
+
+            }
         }
         #endregion
 
-        #region  GetUserOrDepartmentIformation
-        public static List<UserInfoModel> GetUserOrDepartmentIformation(string departmentName, string login, DateTime start, DateTime end)
+        #region  GetTeamOrDepartmentOrUserIformation
+        public static List<UserInfoModel> GetTeamOrDepartmentOrUserIformation(string teamName, string departmentName, string login, DateTime start, DateTime end)
         {
             List<UserInfoModel> returnInformation = new List<UserInfoModel>();
 
-            if (departmentName == null)
+            if (departmentName == null && teamName == null)
             {
                 UserInfoModel userinfo = new UserInfoModel
                 {
-                    userInformarion = GetUserInformation(login, null).First(),
+                    userInformarion = GetUserInformation(null, null, login).First(),
                     WorkTimes = GetUserWorkTimes(login, start, end)
                 };
                 returnInformation.Add(userinfo);
             }
-            else
+            else if (teamName == null)
             {
-                var usersInformationsFromDepartment = GetUserInformation(null, departmentName);
+                var usersInformationsFromDepartment = GetUserInformation(null, departmentName, null);
                 foreach (var tempUserInfo in usersInformationsFromDepartment)
                 {
                     UserInfoModel userinfo = new UserInfoModel
@@ -194,6 +213,20 @@ namespace ActivityTracking.GetUserInfo
                     };
                     returnInformation.Add(userinfo);
 
+                }
+
+            }
+            else
+            {
+                var usersInformationsFromTeam = GetUserInformation( teamName, null, null);
+                foreach (var tempUserInfo in usersInformationsFromTeam)
+                {
+                    UserInfoModel userinfo = new UserInfoModel
+                    {
+                        userInformarion = tempUserInfo,
+                        WorkTimes = GetUserWorkTimes(tempUserInfo.Login, start, end)
+                    };
+                    returnInformation.Add(userinfo);
                 }
 
             }
@@ -250,8 +283,16 @@ namespace ActivityTracking.GetUserInfo
         #region GetManagerDepartments
         public static List<string> GetManagerDepartments(string ManagerLogin)
         {
-            List<String> departmentsList = new List<string>() { "Department1", "Department2", "Department3", "Department4" };
+            List<String> departmentsList = new List<string>() { "Department1", "Department2", "Department3", "Department4"};
             return departmentsList;
+        }
+        #endregion
+
+        #region GetManagerTeams
+        public static List<string> GetManagerTeams(string ManagerLogin)
+        {
+            List<String> teamsList = new List<string>() { "Team1", "Team2", "Team3"};
+            return teamsList;
         }
         #endregion
 

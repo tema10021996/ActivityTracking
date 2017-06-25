@@ -86,7 +86,7 @@ namespace ActivityTracking.WebClient.Controllers
             Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>(context);
             var user = userRepository.GetList().First(u => u.UserName == HttpContext.User.Identity.Name);
 
-            UserInfoModel info = GetUserInfo.UserInfo.GetUserOrDepartmentIformation(null, user.UserName, Start, End).First();
+            UserInfoModel info = GetUserInfo.UserInfo.GetTeamOrDepartmentOrUserIformation(null, null, user.UserName, Start, End).First();
 
 
             Repository<Absence> absenceRepository = new Repository<Absence>(context);

@@ -1,4 +1,4 @@
-﻿@model List<string>
+﻿@model ActivityTracking.WebClient.Models.ManagerIndexViewModel
 
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -19,48 +19,116 @@
                 </div>
             }
         </div>
-        <h4 class="text-center"><b>All departments</b></h4>
     </div>
-    <div class="panel-body">
-        <table class="table table-striped table-condensed table-bordered">
-            <tr>
-                <th class="text-center">Department</th>
-                <th class="text-center">Show users</th>
-                <th class="text-center">Show report</th>
-                <th class="text-center">Show report by users</th>
-            </tr>
-            @foreach (var department in Model)
-            {
-                <tr>
-                    <td class="text-left">@department</td>
-                    <td class="text-center">
-                        @using (Html.BeginForm("ShowDepartmentUsers", "Admin"))
-                        {
-                            @Html.Hidden("departmentName", department)
-                            <input type="submit" class="btn btn-primary btn-sm" value="Show users" />
-                        }
-                    </td>
-                    <td class="text-center">
-                        @using (Html.BeginForm("ShowDepartmentReportWithValidation", "Admin"))
-                        {                            
-                            @Html.Hidden("BarChart", true)
-                            @Html.Hidden("PieChart", false)
-                            @Html.Hidden("ColumnChart", false)
-                            @Html.Hidden("DepartmentList", department)
-                            @Html.Hidden("isDefaultRequest", true)
-                            <input type="submit" class="btn btn-primary btn-sm" value="Show report" />
-                        }
-                    </td>
-                    <td class="text-center">
-                        @using (Html.BeginForm("ShowDepartmentReportByUsersWithValidation", "Admin"))
-                        {
-                            @Html.Hidden("departmentName", department)
-                            @Html.Hidden("isDefaultRequest", true)
-                            <input type="submit" class="btn btn-primary btn-sm" value="Show report" />
-                        }
-                    </td>
-                </tr>
-            }
-        </table>
+    <div id="tableDiv">
+        <ul class="nav nav-tabs nav-justified">
+            <li class="active" onclick="ChangeDepartmentDivHeight()"><a data-toggle="tab" href="#departments" style="color: #555555;"><h4>All deparments</h4></a></li>
+            <li onclick="ChangeTeamDivHeight()"><a data-toggle="tab" href="#teams" style="color: #555555;"><h4>All teams</h4></a></li>
+        </ul>
+        <br>
+        <div class="tab-content" style="padding: 15px">
+            <div id="departments" class="tab-pane fade in active" style="width:81.2%">
+                <table class="table table-striped table-condensed table-bordered">
+                    <tr>
+                        <th class="text-center">Department</th>
+                        <th class="text-center">Show users</th>
+                        <th class="text-center">Show report</th>
+                        <th class="text-center">Show report by users</th>
+                    </tr>
+                    @foreach (var departmentName in Model.DepartmentNames)
+                    {
+                        <tr>
+                            <td class="text-left">@departmentName</td>
+                            <td class="text-center">
+                                @using (Html.BeginForm("ShowDepartmentUsers", "Admin"))
+                                {
+                                    @Html.Hidden("departmentName", departmentName)
+                                    <input type="submit" class="btn btn-primary btn-sm" value="Show users" />
+                                }
+                            </td>
+                            <td class="text-center">
+                                @using (Html.BeginForm("ShowDepartmentReportWithValidation", "Admin"))
+                                {
+                                    @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                                    @Html.Hidden("BarChart", true)
+                                    @Html.Hidden("PieChart", false)
+                                    @Html.Hidden("ColumnChart", false)
+                                    @Html.Hidden("DepartmentList", departmentName)
+                                    @Html.Hidden("isDefaultRequest", true)
+                                    <input type="submit" class="btn btn-primary btn-sm" value="Show report" />
+                                }
+                            </td>
+                            <td class="text-center">
+                                @using (Html.BeginForm("ShowDepartmentReportByUsersWithValidation", "Admin"))
+                                {
+                                    @Html.Hidden("departmentName", departmentName)
+                                    @Html.Hidden("isDefaultRequest", true)
+                                    <input type="submit" class="btn btn-primary btn-sm" value="Show report" />
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <div id="teams" class="tab-pane fade" style="width:81.1%">
+                <table class="table table-striped table-condensed table-bordered">
+                    <tr>
+                        <th class="text-center">Team</th>
+                        <th class="text-center">Show users</th>
+                        <th class="text-center">Show report</th>
+                        <th class="text-center">Show report by users</th>
+                    </tr>
+                    @foreach (var teamName in Model.TeamNames)
+                    {
+                        <tr>
+                            <td class="text-left">@teamName</td>
+                            <td class="text-center">
+                                @using (Html.BeginForm("ShowTeamUsers", "Admin"))
+                                {
+                                    @Html.Hidden("teamName", teamName)
+                                    <input type="submit" class="btn btn-primary btn-sm" value="Show users" />
+                                }
+                            </td>
+                            <td class="text-center">
+                                @using (Html.BeginForm("ShowTeamReportWithValidation", "Admin"))
+                                {
+                                    @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                                    @Html.Hidden("BarChart", true)
+                                    @Html.Hidden("PieChart", false)
+                                    @Html.Hidden("ColumnChart", false)
+                                    @Html.Hidden("teamName", teamName)
+                                    @Html.Hidden("isDefaultRequest", true)
+                                    <input type="submit" class="btn btn-primary btn-sm" value="Show report" />
+                                }
+                            </td>
+                            <td class="text-center">
+                                @using (Html.BeginForm("ShowTeamReportByUsersWithValidation", "Admin"))
+                                {
+                                    @Html.Hidden("teamName", teamName)
+                                    @Html.Hidden("isDefaultRequest", true)
+                                    <input type="submit" class="btn btn-primary btn-sm" value="Show report" />
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+
     </div>
 </div>
+<script type="text/javascript">
+function ChangeDepartmentDivHeight()
+{
+    document.getElementById("tableDiv").style.height = 95+32+@Model.DepartmentNames.Count*41+30+"px";
+}
+
+function ChangeTeamDivHeight()
+{
+    document.getElementById("tableDiv").style.height = 95+32+@Model.TeamNames.Count*41+30+"px";
+}
+    window.onload = function () {
+        ChangeDepartmentDivHeight();
+    }
+
+</script>

@@ -1,4 +1,4 @@
-﻿@model ActivityTracking.WebClient.Models.ManagerShowDepartmentReportByUsersViewModel
+﻿@model ActivityTracking.WebClient.Models.ManagerShowDepartmentOrTeamReportByUsersViewModel
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 @{
     ViewBag.Title = "Index";
@@ -31,8 +31,8 @@
 
             <div class="row">
                 <div class="text-center">
-                    <p><h4><b>@Model.ChosenDepartmentName</b></h4></p>
-                    @Html.Hidden("departmentName", Model.ChosenDepartmentName)
+                    <p><h4><b>@Model.ChosenDepartmentOrTeamName</b></h4></p>
+                    @Html.Hidden("departmentName", Model.ChosenDepartmentOrTeamName)
                     @{
                         string startMonth = null;
                         string startDay = null;
@@ -83,42 +83,42 @@
 
                     @Html.LabelFor(model => model.End)
 
-                    <input type="date" name="End" id="End" class="Myform-control" value="@endValue"> 
+                    <input type="date" name="End" id="End" class="Myform-control" value="@endValue">
 
                     <button type="submit" class="btn btn-primary btn-sm">Apply</button>
                 </div>
             </div>
 
-        }
-        @{
-            bool isEmptyModel = true;
-            foreach (var workerInfo in Model.WorkersInfos)
+                        }
+    </div>
+    @{
+        bool isEmptyModel = true;
+        foreach (var workerInfo in Model.WorkersInfos)
+        {
+            foreach (var reasonInfo in workerInfo.ReasonInfos)
             {
-                foreach (var reasonInfo in workerInfo.ReasonInfos)
+                if (reasonInfo.DurationInHours != 0.0)
                 {
-                    if (reasonInfo.DurationInHours != 0.0)
-                    {
-                        isEmptyModel = false;
-                    }
+                    isEmptyModel = false;
                 }
             }
         }
-        @if (isEmptyModel == false)
-        {
-            <div id="barchart_values"></div>
-            <hr>
-            <div id="departmentReport"></div>
+    }
+    @if (isEmptyModel == false)
+    {
+        <div id="barchart_values"></div>
+        <hr>
+        <div id="departmentReport"></div>
 
-        }
-        else
-        {
-            <div class="text-center">
-                <br>
-                <br>
-                <p><h4><b>There are no data for this period</b></h4></p>
-            </div>
-        }
-
+    }
+    else
+    {
+        <div class="text-center">
+            <br>
+            <br>
+            <p><h4><b>There are no data for this period</b></h4></p>
+        </div>
+    }
 
 
     <script type="text/javascript">
@@ -195,7 +195,7 @@
         function drawChart() {
             var dataTable = new google.visualization.DataTable();
 
-            dataTable.addColumn({ type: 'string', id: 'DepartmentName' });
+            dataTable.addColumn({ type: 'string', id: 'TeamName' });
 
             @foreach(var reasonName in Model.ReasonsNames)
         {
@@ -215,7 +215,7 @@
                 {
                     <text>
             arr.push(0);
-            arr.push(createCustomHTMLContent('@Model.ChosenDepartmentName', '@reasonInfo.ReasonName', '0', '0', '0', '0'));
+            arr.push(createCustomHTMLContent('@Model.ChosenDepartmentOrTeamName', '@reasonInfo.ReasonName', '0', '0', '0', '0'));
             </text>
                 }
                 else
@@ -225,7 +225,7 @@
             var c = d.replace(',', '.');
             var a = Number(c);
             arr.push(a);
-            arr.push(createCustomHTMLContent('@Model.ChosenDepartmentName', '@reasonInfo.ReasonName', '@reasonInfo.DurationInHours', '@reasonInfo.Hours', '@reasonInfo.Minutes', '@reasonInfo.Seconds'));
+            arr.push(createCustomHTMLContent('@Model.ChosenDepartmentOrTeamName', '@reasonInfo.ReasonName', '@reasonInfo.DurationInHours', '@reasonInfo.Hours', '@reasonInfo.Minutes', '@reasonInfo.Seconds'));
             </text>
                 }
             }

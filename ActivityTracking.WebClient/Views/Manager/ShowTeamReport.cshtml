@@ -19,148 +19,147 @@
                 </div>
             }
         </div>
-            @using (Html.BeginForm("ShowDepartmentReportWithValidation", "Manager"))
+        @using (Html.BeginForm("ShowTeamReportWithValidation", "Manager"))
             {
-                @Html.ValidationSummary(true)
+            @Html.ValidationSummary(true)
 
-                <div class="row">
-                    <div class="col-md-10 col-lg-10">
-                        <div class="text-center">
-                            <p><h4><b>@Model.ChosenDepartmentOrTeamName</b></h4></p>
-                            @Html.Hidden("DepartmentList", Model.ChosenDepartmentOrTeamName)
+            <div class="row">
+                <div class="col-md-10 col-lg-10">
+                    <div class="text-center">
+                        <p><h4><b>@Model.ChosenDepartmentOrTeamName</b></h4></p>
+                        @Html.Hidden("teamName", Model.ChosenDepartmentOrTeamName)
+                        @Html.Hidden("PieChart", Model.PieChart)
+                        @Html.Hidden("BarChart", Model.BarChart)
+                        @Html.Hidden("ColumnChart", Model.ColumnChart)
 
-                            @Html.Hidden("PieChart", Model.PieChart)
-                            @Html.Hidden("BarChart", Model.BarChart)
-                            @Html.Hidden("ColumnChart", Model.ColumnChart)
-
-                            @{
-                                string startMonth = null;
-                                string startDay = null;
-                                if (Model.Start.Month < 10)
-                                {
-                                    startMonth = "0" + Model.Start.Month;
-                                }
-                                else
-                                {
-                                    startMonth = Model.Start.Month.ToString();
-                                }
-                                if (Model.Start.Day < 10)
-                                {
-                                    startDay = "0" + Model.Start.Day;
-                                }
-                                else
-                                {
-                                    startDay = Model.Start.Day.ToString();
-                                }
-                                string startValue = Model.Start.Year + "-" + startMonth + "-" + startDay;
-
+                        @{
+                            string startMonth = null;
+                            string startDay = null;
+                            if (Model.Start.Month < 10)
+                            {
+                                startMonth = "0" + Model.Start.Month;
                             }
-                            @{
-                                string endMonth = null;
-                                string endDay = null;
-                                if (Model.End.Month < 10)
-                                {
-                                    endMonth = "0" + Model.End.Month;
-                                }
-                                else
-                                {
-                                    endMonth = Model.End.Month.ToString();
-                                }
-                                if (Model.End.Day < 10)
-                                {
-                                    endDay = "0" + Model.End.Day;
-                                }
-                                else
-                                {
-                                    endDay = Model.End.Day.ToString();
-                                }
-                                string endValue = Model.Start.Year + "-" + endMonth + "-" + endDay;
-
+                            else
+                            {
+                                startMonth = Model.Start.Month.ToString();
                             }
-                            @Html.LabelFor(model => model.Start)
+                            if (Model.Start.Day < 10)
+                            {
+                                startDay = "0" + Model.Start.Day;
+                            }
+                            else
+                            {
+                                startDay = Model.Start.Day.ToString();
+                            }
+                            string startValue = Model.Start.Year + "-" + startMonth + "-" + startDay;
 
-                            <input type="date" name="Start" id="Start" class="Myform-control" value="@startValue" onchange="ChangeStyle()">
+                        }
+                        @{
+                            string endMonth = null;
+                            string endDay = null;
+                            if (Model.End.Month < 10)
+                            {
+                                endMonth = "0" + Model.End.Month;
+                            }
+                            else
+                            {
+                                endMonth = Model.End.Month.ToString();
+                            }
+                            if (Model.End.Day < 10)
+                            {
+                                endDay = "0" + Model.End.Day;
+                            }
+                            else
+                            {
+                                endDay = Model.End.Day.ToString();
+                            }
+                            string endValue = Model.Start.Year + "-" + endMonth + "-" + endDay;
 
-                            @Html.LabelFor(model => model.End)
+                        }
+                        @Html.LabelFor(model => model.Start)
 
-                            <input type="date" name="End" id="End" class="Myform-control" value="@endValue"> 
+                        <input type="date" name="Start" id="Start" class="Myform-control" value="@startValue" onchange="ChangeStyle()">
 
-                            <button type="submit" class="btn btn-primary btn-sm">Apply</button>
-                        </div>
+                        @Html.LabelFor(model => model.End)
+
+                        <input type="date" name="End" id="End" class="Myform-control" value="@endValue">
+
+                        <button type="submit" class="btn btn-primary btn-sm">Apply</button>
                     </div>
                 </div>
-            }
-        </div>   
-   
-        <div class="row">   
-            @{
-                bool isEmptyModel = true;
-                foreach (var reasonInfo in Model.ReasonInfos)
+            </div>
+                            }
+    </div>
+
+    <div class="row">
+        @{
+            bool isEmptyModel = true;
+            foreach (var reasonInfo in Model.ReasonInfos)
+            {
+                if (reasonInfo.DurationInHours != 0.0)
                 {
-                    if (reasonInfo.DurationInHours != 0.0)
-                    {
-                        isEmptyModel = false;
-                    }
+                    isEmptyModel = false;
                 }
             }
-            @if (isEmptyModel == false)
+        }
+        @if (isEmptyModel == false)
             {
-                <div class="col-md-10 col-lg-10">
-                    @if (Model.BarChart == true)
-                    {
-                        <div id="barchart_values"></div>
+            <div class="col-md-10 col-lg-10">
+                @if (Model.BarChart == true)
+                {
+                    <div id="barchart_values"></div>
                         <div id="piechart" style="display:none"></div>
                         <div id="columnchart_values" style="display:none"></div>
 
-                    }
-                    else if (Model.PieChart == true)
-                    {
-                        <div id="piechart" style="width: 900px; height: 400px;"></div>
+                }
+                else if (Model.PieChart == true)
+                {
+                    <div id="piechart" style="width: 900px; height: 400px;"></div>
                         <div id="barchart_values" style="display:none"></div>
                         <div id="columnchart_values" style="display:none;"></div>
-                    }
-                    else
-                    {
+                }
+                else
+                {
 
-                        <div id="piechart" style="display:none;"></div>
+                    <div id="piechart" style="display:none;"></div>
                         <div id="barchart_values" style="display:none"></div>
                         <div id="columnchart_values"></div>
 
-                    }
-                </div>
-            }
-            else
-            {
-                 <div class="col-md-10 col-lg-10 text-center">
-                     <br>
-                     <br>
-                     <p><h4><b>There are no data for this period</b></h4></p>
-                  </div>
-            }
-
-            <div class="text-right col-md-2 col-lg-2">
-                @using (Html.BeginForm(new { Start = Model.Start, End = Model.End, BarChart = true, PieChart = false, ColumnChart = false, DepartmentList = Model.ChosenDepartmentOrTeamName }))
-                {
-                    <button type="submit" style="padding:0px; margin:3px; border:none">
-                        <image src="~/Content/BarChart.png">
-                    </button>
-                }
-                @using (Html.BeginForm(new { Start = Model.Start, End = Model.End, BarChart = false, PieChart = true, ColumnChart = false, DepartmentList = Model.ChosenDepartmentOrTeamName }))
-            {
-                    <button type="submit" style="padding:0px; margin:3px; border:none">
-                        <image src="~/Content/PieChart.png">
-                    </button>
-                }
-                @using (Html.BeginForm(new { Start = Model.Start, End = Model.End, BarChart = false, PieChart = false, ColumnChart = true, DepartmentList = Model.ChosenDepartmentOrTeamName }))
-            {
-                    <button type="submit" style="padding:0px; margin:3px; border:none">
-                        <image src="~/Content/ColumnChart.png">
-                    </button>
                 }
             </div>
+        }
+        else
+        {
+            <div class="col-md-10 col-lg-10 text-center">
+                <br>
+                <br>
+                <p><h4><b>There are no data for this period</b></h4></p>
+            </div>
+        }
 
+        <div class="text-right col-md-2 col-lg-2">
+            @using (Html.BeginForm(new { Start = Model.Start, End = Model.End, BarChart = true, PieChart = false, ColumnChart = false, teamName = Model.ChosenDepartmentOrTeamName }))
+            {
+                <button type="submit" style="padding:0px; margin:3px; border:none">
+                    <image src="~/Content/BarChart.png">
+                </button>
+            }
+            @using (Html.BeginForm(new { Start = Model.Start, End = Model.End, BarChart = false, PieChart = true, ColumnChart = false, teamName = Model.ChosenDepartmentOrTeamName }))
+            {
+                <button type="submit" style="padding:0px; margin:3px; border:none">
+                    <image src="~/Content/PieChart.png">
+                </button>
+            }
+            @using (Html.BeginForm(new { Start = Model.Start, End = Model.End, BarChart = false, PieChart = false, ColumnChart = true, teamName = Model.ChosenDepartmentOrTeamName }))
+            {
+                <button type="submit" style="padding:0px; margin:3px; border:none">
+                    <image src="~/Content/ColumnChart.png">
+                </button>
+            }
         </div>
+
     </div>
+</div>
 
 <script>
     var colorArray = JSON.parse('@ViewBag.Colors');
@@ -359,6 +358,5 @@ function ChangeStyle()
     document.getElementById("End").valueAsDate = endDate;
 }
 </script>
-
 
 

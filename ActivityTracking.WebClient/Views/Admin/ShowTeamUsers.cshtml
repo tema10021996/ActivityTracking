@@ -1,8 +1,10 @@
 ﻿@model ActivityTracking.WebClient.Models.ManagerShowUsersViewModel
-    @{
+@{
+
     ViewBag.Title = "ShowUsers";
-    Layout = "~/Views/Shared/_ManagerLayout.cshtml";
-    }
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
 
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -18,7 +20,7 @@
                 </div>
             }
         </div>
-        <h4 class="text-center"><b>Department: </b> @Model.DepartmentOrTeamName</h4>
+        <h4 class="text-center"><b>Team: </b> @Model.DepartmentOrTeamName</h4>
     </div>
     <div class="panel-body">
         <table class="table table-striped table-condensed table-bordered">
@@ -33,11 +35,11 @@
             @foreach (var userInfoModel in Model.UserInfoModels)
             {
                 <tr>
-                    <td class="text-left">@Html.ActionLink(userInfoModel.userInformarion.Login, "ShowUserReportWithValidation", new { userName = userInfoModel.userInformarion.Login, isDefaultRequest = true })</td>       
+                    <td class="text-left">@Html.ActionLink(userInfoModel.userInformarion.Login, "ShowUserReportWithValidation", new { userName = userInfoModel.userInformarion.Login, isDefaultRequest = true })</td>
                     <td class="text-left">@userInfoModel.userInformarion.FirstName</td>
                     <td class="text-left">@userInfoModel.userInformarion.LastName</td>
                     <td class="text-left">@userInfoModel.userInformarion.Department</td>
-                    <td class="text-left">@userInfoModel.userInformarion.Team</td>                          
+                    <td class="text-left">@userInfoModel.userInformarion.Team</td>
                 </tr>
             }
         </table>

@@ -25,14 +25,14 @@
             }
         </div>
 
-        @using (Html.BeginForm("ShowDepartmentReportByUsersWithValidation", "Manager"))
+        @using (Html.BeginForm("ShowTeamReportByUsersWithValidation", "Manager"))
         {
             @Html.ValidationSummary(true)
 
             <div class="row">
                 <div class="text-center">
                     <p><h4><b>@Model.ChosenDepartmentOrTeamName</b></h4></p>
-                    @Html.Hidden("departmentName", Model.ChosenDepartmentOrTeamName)
+                    @Html.Hidden("teamName", Model.ChosenDepartmentOrTeamName)
                     @{
                         string startMonth = null;
                         string startDay = null;
@@ -83,13 +83,13 @@
 
                     @Html.LabelFor(model => model.End)
 
-                    <input type="date" name="End" id="End" class="Myform-control" value="@endValue"> 
+                    <input type="date" name="End" id="End" class="Myform-control" value="@endValue">
 
                     <button type="submit" class="btn btn-primary btn-sm">Apply</button>
                 </div>
             </div>
 
-        }
+                        }
     </div>
     @{
         bool isEmptyModel = true;
@@ -105,11 +105,11 @@
         }
     }
     @if (isEmptyModel == false)
-    { 
+    {
         <div id="barchart_values"></div>
         <hr>
         <div id="departmentReport"></div>
-   
+
     }
     else
     {
@@ -186,7 +186,7 @@
             var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
             chart.draw(dataTable, options);
         }
-        
+
     </script>
 
     <script type="text/javascript">
