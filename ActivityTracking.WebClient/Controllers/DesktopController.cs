@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ActivityTracking.DomainModel;
-using ActivityTracking.DAL.EntityFramework;
+using ActivityTracking.ServicesForAcessToDB;
 using ActivityTracking.WebClient.Models;
 
 namespace ActivityTracking.WebClient.Controllers
@@ -15,12 +15,12 @@ namespace ActivityTracking.WebClient.Controllers
         [HttpGet]
         public List<String> GetReasonsNames(string id)
          {
-            Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>();
-            if (userRepository.GetList().First(u => u.UserName == id) != null)
+            DBAcessService<ApplicationUser> applicationUserService = new DBAcessService<ApplicationUser>();
+            if (applicationUserService.GetList().First(u => u.UserName == id) != null)
             {
                 string divisionManagerName = GetUserInfo.UserInfo.GetDivisionManagerOfUser(id);
-                Repository<DivisionManager> divManagerRepository = new Repository<DivisionManager>();
-                DivisionManager divisionManger = divManagerRepository.GetList().First(m => m.Login == divisionManagerName);
+                DBAcessService<DivisionManager> divManagerService = new DBAcessService<DivisionManager>();
+                DivisionManager divisionManger = divManagerService.GetList().First(m => m.Login == divisionManagerName);
                 List<string> reasonsNames = new List<string>();
                 foreach (Reason reason in divisionManger.Reasons)
                 {
@@ -32,18 +32,17 @@ namespace ActivityTracking.WebClient.Controllers
             {
                 return new List<string>() {"Default" };
             }
-
         }
 
         [HttpGet]
         public int GetMayAbsentMinutes(string id)
         {
-            Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>();
-            if (userRepository.GetList().First(u => u.UserName == id) != null)
+            DBAcessService<ApplicationUser> applicationUserService = new DBAcessService<ApplicationUser>();
+            if (applicationUserService.GetList().First(u => u.UserName == id) != null)
             {
                 string divisionManagerName = GetUserInfo.UserInfo.GetDivisionManagerOfUser(id);
-                Repository<DivisionManager> divManagerRepository = new Repository<DivisionManager>();
-                DivisionManager divisionManger = divManagerRepository.GetList().First(m => m.Login == divisionManagerName);
+                DBAcessService<DivisionManager> divManagerService = new DBAcessService<DivisionManager>();
+                DivisionManager divisionManger = divManagerService.GetList().First(m => m.Login == divisionManagerName);
                 return divisionManger.MayAbsentMinutes;
             }
             else
@@ -57,13 +56,11 @@ namespace ActivityTracking.WebClient.Controllers
         [HttpPost]
         public bool CreateAbsence(PostModel postModel)
         {
-            ApplicationContext context = new ApplicationContext();
-            Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>(context);
-            Repository<Absence> absenseRepository = new Repository<Absence>(context);
-            if (userRepository.GetList().First(u => u.UserName == postModel.UserName) != null)
+            UnitOfWork unitOfWork = new UnitOfWork();
+            if (unitOfWork.ApplicationUserService.GetList().First(u => u.UserName == postModel.UserName) != null)
             {
-                ApplicationUser user = userRepository.GetList().First(u => u.UserName == postModel.UserName);
-                absenseRepository.Create(new Absence { StartAbsence = postModel.StartAbsence, User = user, Date = DateTime.Today });
+                ApplicationUser user = unitOfWork.ApplicationUserService.GetList().First(u => u.UserName == postModel.UserName);
+                unitOfWork.AbsenceService.Create(new Absence { StartAbsence = postModel.StartAbsence, User = user, Date = DateTime.Today });
                 return true;
             }
             else
@@ -75,12 +72,10 @@ namespace ActivityTracking.WebClient.Controllers
         [HttpPut]
         public bool UpdateAbsence(PutModel putModel)
         {
-            ApplicationContext context = new ApplicationContext();
-            Repository<Reason> reasonsRepository = new Repository<Reason>(context);
+            UnitOfWork unitOfWork = new UnitOfWork();           
             Reason reason = null;
-            reason = reasonsRepository.GetList().First(r => r.Name == putModel.ReasonName);
-            Repository<Absence> absenseRepository = new Repository<Absence>(context);
-            Absence absence = absenseRepository.GetList().Last(a => a.User.UserName == putModel.UserName);
+            reason = unitOfWork.ReasonService.GetList().First(r => r.Name == putModel.ReasonName);;
+            Absence absence = unitOfWork.AbsenceService.GetList().Last(a => a.User.UserName == putModel.UserName);
             if (absence.EndAbsence == null)
             {
                 absence.Reason = reason;
@@ -89,7 +84,7 @@ namespace ActivityTracking.WebClient.Controllers
                 {
                     absence.Comment = putModel.Comment;
                 }
-                absenseRepository.Update(absence);
+                unitOfWork.AbsenceService.Update(absence);
                 return true;
             }
             else

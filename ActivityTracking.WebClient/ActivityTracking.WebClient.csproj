@@ -462,6 +462,10 @@
       <Project>{0b0ece86-ca90-495d-934e-68e9a416f792}</Project>
       <Name>ActivityTracking.GetUserInfo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ActivityTracking.ServicesForAcessToDB\ActivityTracking.ServicesForAcessToDB.csproj">
+      <Project>{4973e4f2-b6d4-4542-a6ed-479a65e4e759}</Project>
+      <Name>ActivityTracking.ServicesForAcessToDB</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

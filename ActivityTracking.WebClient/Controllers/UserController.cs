@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ActivityTracking.WebClient.Models;
-using ActivityTracking.DAL.EntityFramework;
+using ActivityTracking.ServicesForAcessToDB;
 using ActivityTracking.DomainModel;
 using ActivityTracking.GetUserInfo;
 using System.Collections;
@@ -18,8 +18,8 @@ namespace ActivityTracking.WebClient.Controllers
         {
             DateTime Start = new DateTime();
             DateTime End = new DateTime();
-            Repository<WeekBeginningDay> weekBeginingDyRepository = new Repository<WeekBeginningDay>();
-            WeekBeginningDay weekBeginningDay = weekBeginingDyRepository.GetItem(1);
+            DBAcessService<WeekBeginningDay> weekBeginingDayService = new DBAcessService<WeekBeginningDay>();
+            WeekBeginningDay weekBeginningDay = weekBeginingDayService.GetItem(1);
             for (DateTime i = DateTime.Today; i >= DateTime.Now.AddDays(-7).Date; i = i.AddDays(-1))
             {
                 if (i.DayOfWeek.ToString() == weekBeginningDay.DayName)
@@ -39,8 +39,8 @@ namespace ActivityTracking.WebClient.Controllers
             if (Start == null || End == null)
             {
                 TempData["message"] = "You should enter two dates";
-                Repository<WeekBeginningDay> weekBeginingDyRepository = new Repository<WeekBeginningDay>();
-                WeekBeginningDay weekBeginningDay = weekBeginingDyRepository.GetItem(1);
+                DBAcessService<WeekBeginningDay> weekBeginingDayService = new DBAcessService<WeekBeginningDay>();
+                WeekBeginningDay weekBeginningDay = weekBeginingDayService.GetItem(1);
                 for (DateTime i = DateTime.Today; i >= DateTime.Now.AddDays(-7).Date; i = i.AddDays(-1))
                 {
                     if (i.DayOfWeek.ToString() == weekBeginningDay.DayName)
@@ -57,8 +57,8 @@ namespace ActivityTracking.WebClient.Controllers
             else if (Start > End)
             {
                 TempData["message"] = "End date should be bigger then start date";
-                Repository<WeekBeginningDay> weekBeginingDyRepository = new Repository<WeekBeginningDay>();
-                WeekBeginningDay weekBeginningDay = weekBeginingDyRepository.GetItem(1);
+                DBAcessService<WeekBeginningDay> weekBeginingDayService = new DBAcessService<WeekBeginningDay>();
+                WeekBeginningDay weekBeginningDay = weekBeginingDayService.GetItem(1);
                 for (DateTime i = DateTime.Today; i >= DateTime.Now.AddDays(-7).Date; i = i.AddDays(-1))
                 {
                     if (i.DayOfWeek.ToString() == weekBeginningDay.DayName)
@@ -82,18 +82,12 @@ namespace ActivityTracking.WebClient.Controllers
         [HttpPost]
         public ActionResult Index(DateTime Start, DateTime End)
         {
-            ApplicationContext context = new ApplicationContext();
-            Repository<ApplicationUser> userRepository = new Repository<ApplicationUser>(context);
-            var user = userRepository.GetList().First(u => u.UserName == HttpContext.User.Identity.Name);
-
+            DBAcessService<ApplicationUser> applicationUserService = new DBAcessService<ApplicationUser>();
+            var user = applicationUserService.GetList().First(u => u.UserName == HttpContext.User.Identity.Name);
             UserInfoModel info = GetUserInfo.UserInfo.GetTeamOrDepartmentOrUserIformation(null, null, user.UserName, Start, End).First();
-
-
-            Repository<Absence> absenceRepository = new Repository<Absence>(context);
-
+            DBAcessService<Absence> absenceService = new DBAcessService<Absence>();
             ShowUserReportViewModel model = new ShowUserReportViewModel { Start = Start, End = End, listOfWorkAndAbesnceTimeForChart = new List<ChartViewModel>(), UserInfo = info, DaysCount = (End - Start).Days };
             ArrayList colors = new ArrayList();
-
             if (info.WorkTimes == null)
             {
                 for (DateTime start = Start; start <= End; start = start.AddDays(1))
@@ -156,7 +150,7 @@ namespace ActivityTracking.WebClient.Controllers
                     DateTime FirstIn = timeGroupToArray[0].TimeIn;
                     DateTime LastOut = timeGroupToArray[timeGroupToArray.Length - 1].TimeOut;
 
-                    var absences = absenceRepository.GetList().Where(a => a.User.UserName == user.UserName).Where(a => a.Date == timeGroupToArray[0].TimeIn.Date).ToArray();
+                    var absences = absenceService.GetList().Where(a => a.User.UserName == user.UserName).Where(a => a.Date == timeGroupToArray[0].TimeIn.Date).ToArray();
                     List<Absence> absencesOutOfBuilding = new List<Absence>();
 
                     if (timeGroupToArray.Length > 1)
